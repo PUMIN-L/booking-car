@@ -1,6 +1,8 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import { lazy } from "react"
 import LoginPage from "../pages/LoginPage"
+import RedirectIfLogged from "../features/authentication/component/RedirectIfLogged"
+import ProtectedRoute from "../features/authentication/component/ProtectRoute"
 
 
 const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -9,16 +11,15 @@ const MainContainer = lazy(() => import("../layouts/MainContainer"))
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <MainContainer />,
+        element: <ProtectedRoute><MainContainer /></ProtectedRoute>,
         children: [
             { path: "/", element: <h1>test</h1> }
         ]
     },
-    { path: "/login", element: <LoginPage /> }
+    { path: "/login", element: <RedirectIfLogged><LoginPage /></RedirectIfLogged> }
 
 ])
 
 export default function Router() {
-    return <div className="bg-gray-800 fixed inset-0"><RouterProvider router={router} ></RouterProvider></div>
-
+    return <RouterProvider router={router} ></RouterProvider>
 }

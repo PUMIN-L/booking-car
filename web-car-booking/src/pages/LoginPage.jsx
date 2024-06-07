@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+
 import LoginForm from "../features/authentication/component/LoginForm";
 import RegisterContainer from "../features/authentication/component/RegisterContainer";
 
@@ -8,7 +8,7 @@ export default function LoginPage() {
     return (
 
         <div
-            className="bg-neutral-300 max-w-[70rem] m-auto mt-28 rounded-lg shadow-[0_0_6px_rgb(0,0,0,0.2)]
+            className="bg-neutral-300 max-w-[70rem] m-auto mt-24 h-full my-11 rounded-lg shadow-[0_0_6px_rgb(0,0,0,0.2)]
          flex justify-between"
         >
             <div className="pt-24 pl-9">

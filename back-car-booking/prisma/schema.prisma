@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Departments {
+  id    Int     @id @default(autoincrement())
+  name  String  @db.VarChar(100)
+  Users Users[]
+}
+
+model Users {
+  id            Int     @id @default(autoincrement())
+  department_id Int
+  first_name    String  @db.VarChar(100)
+  last_name     String  @db.VarChar(100)
+  password      String  @db.VarChar(256)
+  email         String? @unique @db.VarChar(100)
+  mobile_phone  String  @unique
+  img_user      String?
+  employee_id   String? @db.VarChar(50)
+
+  department Departments @relation(fields: [department_id], references: [id])
+
+  Reservations Reservations[]
+}
+
+model Type_car {
+  id   Int    @id @default(autoincrement())
+  type String @db.VarChar(50)
+  Cars Cars[]
+}
+
+enum Transmission_type {
+  AUTOMATIC_TRANSMISSION
+  MANUAL_TRANSMISSION
+}
+
+model Cars {
+  id            Int               @id @default(autoincrement())
+  type_id       Int
+  brand         String?           @db.VarChar(50)
+  model         String            @db.VarChar(50)
+  transmission  Transmission_type
+  color         String            @db.VarChar(50)
+  license_plate String            @db.VarChar(50)
+  img_car       String?
+
+  type_car     Type_car       @relation(fields: [type_id], references: [id])
+  Reservations Reservations[]
+}
+
+enum Status_reservation {
+  PANDING
+  RESERVED
+  RETURNED
+}
+
+model Reservations {
+  id            Int                @id @default(autoincrement())
+  user_id       Int
+  car_id        Int
+  status        Status_reservation
+  time_pick_up  DateTime
+  time_drop_off DateTime
+
+  user Users @relation(fields: [user_id], references: [id])
+  car  Cars  @relation(fields: [car_id], references: [id])
+}

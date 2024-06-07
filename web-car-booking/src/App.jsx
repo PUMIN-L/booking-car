@@ -1,4 +1,5 @@
-import Login from "./pages/LoginPage"
+
+import AuthContextProvider from "./contexts/AuthContect"
 import Router from "./route"
 
 function App() {
@@ -6,7 +7,9 @@ function App() {
 
   return (
     <>
-      <Router />
+      <AuthContextProvider>
+        <Router />
+      </AuthContextProvider>
     </>
   )
 }

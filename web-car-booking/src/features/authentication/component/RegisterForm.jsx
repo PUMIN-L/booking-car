@@ -1,41 +1,189 @@
+import { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
+import validatorRegister from "../validator/register-validate";
+import autApi from "../../../apis/aut-api";
 
-export default function RegisterForm() {
+const dataUserInit = {
+    first_name: "",
+    last_name: "",
+    password: "",
+    email: "",
+    mobile_phone: "",
+    img_user: "",
+    employee_id: "",
+    department_id: "",
+    confirm_password: ""
+}
+
+const errDataUserInit = {
+    first_name: "",
+    last_name: "",
+    password: "",
+    email: "",
+    mobile_phone: "",
+    img_user: "",
+    employee_id: "",
+    department_id: "",
+    confirm_password: ""
+}
+
+
+export default function RegisterForm({ closeModal }) {
+
+    const [input, setInput] = useState(dataUserInit)
+    const [correctValue, setCorrectValue] = useState(false)
+    const [inputErr, setInputErr] = useState(errDataUserInit)
+
+    const handelChange = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value })
+    }
+
+    const handelChangeIntValue = (e) => {
+        setInput({ ...input, [e.target.name]: +e.target.value })
+    }
+
+    const handelSubmit = async (e) => {
+        try {
+            e.preventDefault()
+            console.log(input["department_id"])
+            console.log(inputErr["department_id"])
+            console.log(input["department_id"] && !inputErr["department_id"])
+            const err = validatorRegister(input)
+            setCorrectValue(true)
+            if (err) {
+                return setInputErr(err)
+            }
+            setInputErr({ ...errDataUserInit })
+            console.log(input)
+
+            await autApi.register(input)
+            setCorrectValue(false)
+            closeModal()
+            setInput(dataUserInit)
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(() => {
+        setCorrectValue(false)
+    }, [])
+
+
+
     return (
         <>
-            <div
-                className=" bg-neutral-300 w-[70rem] m-auto mt-32 rounded-lg
-                 flex justify-between"
+            <form
+                className=" max-w-[31rem] h-[32rem] p-2 grid grid-cols-2 gap-3"
+                onSubmit={(e) => handelSubmit(e)}
             >
-                <div className="m-auto">
-                    <h1 className="text-5xl font-medium p-2">Register</h1>
-                    <form className="max-w-[40rem] p-2 grid grid-cols-2 gap-3 ">
-                        <div><Input placeholder="First name" /></div>
-                        <div><Input placeholder="Lastt name" /></div>
-
-                        <div className="col-span-2">
-                            <Input placeholder="Mobile phone" />
-                        </div>
-
-                        <div className="col-span-2">
-                            <Input placeholder="Email" />
-                        </div>
-                        <div className="col-span-2">
-                            <Input placeholder="Password" />
-                        </div>
-                        <div className="col-span-2">
-                            <Input placeholder="Confirm password" />
-                        </div>
-                        <div className="col-span-2 my-2">
-                            <Button text="Register" color="green" ></Button>
-                        </div>
-                    </form>
+                <div><Input
+                    name="first_name"
+                    onChange={(e) => handelChange(e)}
+                    value={input["first_name"]}
+                    placeholder="First name"
+                    err={inputErr["first_name"]}
+                    correctValue={correctValue}
+                />
                 </div>
-                <div className="max-w-[30rem] max-h-[40rem] object-cover overflow-hidden bg-orange-300">
-                    <img src="../src/assets/car2.jpg" />
+
+                <div><Input name="last_name"
+                    onChange={(e) => handelChange(e)}
+                    value={input["last_name"]}
+                    placeholder="Last name"
+                    err={inputErr["last_name"]}
+                    correctValue={correctValue}
+                />
                 </div>
-            </div>
+
+                <div>
+
+                    <select onChange={(e) => handelChangeIntValue(e)}
+                        role="button"
+                        name="department_id"
+                        value={input["department_id"]}
+                        className={`p-2 rounded-lg bg-neutral-300 border-2  w-full
+             text-lg focus:outline-none ${!input["department_id"] ? "text-gray-500" : ""}   ${(input["department_id"] && !inputErr["department_id"] && correctValue) ? "border-green-600 focus:ring-green-500 text-black" :
+                                inputErr["department_id"] ? "border-red-500 focus:ring-red-400 text-black" :
+                                    "border-neutral-500 focus:ring-neutral-400"} 
+                    
+              `}
+
+                    >
+                        <option value="" >Department</option>
+                        <option className="text-black font-medium" value={1} >Sales</option>
+                        <option className="text-black font-medium" value={2} >Executive</option>
+                        <option className="text-black font-medium" value={3} >Marketing</option>
+                        <option className="text-black font-medium" value={4} >Purchasing</option>
+                        <option className="text-black font-medium" value={5} >Warehouse</option>
+                        <option className="text-black font-medium" value={6} >IT</option>
+                        <option className="text-black font-medium" value={7} >Maintenance</option>
+                        <option className="text-black font-medium" value={8} >Human Resource</option>
+                    </select>
+                    <small className="text-red-500">{inputErr["department_id"]}</small>
+                </div>
+
+
+                <div>
+                    <Input name="employee_id"
+                        onChange={(e) => handelChange(e)}
+                        value={input["employee_id"]}
+                        placeholder="Employee ID"
+                        err={inputErr["employee_id"]}
+                        correctValue={correctValue}
+                    />
+                </div>
+                <div className="col-span-2">
+                    <Input
+                        name="mobile_phone"
+                        onChange={(e) => handelChange(e)}
+                        value={input["mobile_phone"]}
+                        placeholder="Mobile phone"
+                        err={inputErr["mobile_phone"]}
+                        correctValue={correctValue}
+                    />
+                </div>
+
+                <div className="col-span-2">
+                    <Input
+                        name="email"
+                        onChange={(e) => handelChange(e)}
+                        value={input["email"]}
+                        placeholder="Email"
+                        err={inputErr["email"]}
+                        correctValue={correctValue}
+                    />
+
+                </div>
+
+                <div className="col-span-2">
+                    <Input
+                        name="password"
+                        onChange={(e) => handelChange(e)}
+                        value={input["password"]}
+                        placeholder="Password"
+                        err={inputErr["password"]}
+                        correctValue={correctValue}
+                    />
+                </div>
+
+                <div className="col-span-2">
+                    <Input
+                        name="confirm_password"
+                        onChange={(e) => handelChange(e)}
+                        value={input["confirm_password"]}
+                        placeholder="Confirm password"
+                        err={inputErr["confirm_password"]}
+                        correctValue={correctValue}
+                    />
+                </div>
+
+                <div className="col-span-2 my-2">
+                    <Button type="submit" text="Register" color="green" ></Button>
+                </div>
+            </form>
         </>
     )
 }
