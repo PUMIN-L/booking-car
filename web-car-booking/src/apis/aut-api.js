@@ -1,10 +1,10 @@
 import axios from "../config/axios"
 
-const autApi = {}
+const authApi = {}
 
-autApi.register = (body) => axios.post("/auth/register", body)
-autApi.login = (body) => axios.post("/auth/login", body)
-autApi.getMe = () => axios.get("/auth/me")
+authApi.register = (body) => axios.post("/auth/register", body)
+authApi.login = (body) => axios.post("/auth/login", body)
+authApi.getMe = () => axios.get("/auth/me")
 
 
-export default autApi  
+export default authApi  

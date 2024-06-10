@@ -8,7 +8,6 @@ const authenticate = async (req, res, next) => {
     try {
 
         const authentication = req.headers.authorization
-        console.log(authentication)
         if (!authentication || !authentication.startsWith(`Bearer `)) {
             return createError(401, "Unauthenticated")
         }

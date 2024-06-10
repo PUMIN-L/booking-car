@@ -6,8 +6,8 @@ export default function Modal({ onClick, openModal }) {
         <>
             {openModal ? <>
 
-                <div className="fixed inset-0 bg-gray-800 z-20"></div>
-                <div className="fixed inset-0 z-30 mt-24">
+                <div className="fixed inset-0 bg-gray-800 z-20 "></div>
+                <div className="fixed inset-0 z-30 mt-24 overflow-auto mb-20 ">
                     <div
                         className=" bg-neutral-300 w-[75rem] m-auto rounded-lg
                  flex justify-between"
@@ -15,7 +15,7 @@ export default function Modal({ onClick, openModal }) {
 
                         <div className="m-auto pt-5 pb-16">
                             <div className="flex justify-between pr-2 ">
-                                <h1 className="text-5xl font-medium p-2">Register</h1>
+                                <h1 className="text-5xl font-medium p-2 text-black">Register</h1>
                                 <h1
                                     role="button"
                                     className=" bg-gray-700 p-1.5 text-white rounded-md max-h-9 my-auto"

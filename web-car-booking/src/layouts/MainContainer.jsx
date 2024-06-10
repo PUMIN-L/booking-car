@@ -3,10 +3,10 @@ import Header from "./Header";
 
 export default function MainContainer() {
     return (
-        <>
-            <Header />
+        <div>
+            < Header />
             <Outlet />
-        </>
+        </div >
 
     )
 }

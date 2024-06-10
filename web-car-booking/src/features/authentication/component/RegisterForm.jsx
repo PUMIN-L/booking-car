@@ -75,115 +75,120 @@ export default function RegisterForm({ closeModal }) {
 
     return (
         <>
-            <form
-                className=" max-w-[31rem] h-[32rem] p-2 grid grid-cols-2 gap-3"
-                onSubmit={(e) => handelSubmit(e)}
-            >
-                <div><Input
-                    name="first_name"
-                    onChange={(e) => handelChange(e)}
-                    value={input["first_name"]}
-                    placeholder="First name"
-                    err={inputErr["first_name"]}
-                    correctValue={correctValue}
-                />
-                </div>
+            <div className="bg-neutral-300 rounded-l-2xl p-2 mt-[-2rem] ">
+                <h1 className="text-5xl font-medium p-2 text-black ml-2">Register</h1>
+                <form
+                    className="overflow-auto max-w-[31rem] h-[32rem] p-4 rounded-l-xl grid grid-cols-2 gap-3 "
+                    onSubmit={(e) => handelSubmit(e)}
+                >
+                    <div><Input
+                        name="first_name"
+                        onChange={(e) => handelChange(e)}
+                        value={input["first_name"]}
+                        placeholder="First name"
+                        err={inputErr["first_name"]}
+                        correctValue={correctValue}
+                    />
+                    </div>
 
-                <div><Input name="last_name"
-                    onChange={(e) => handelChange(e)}
-                    value={input["last_name"]}
-                    placeholder="Last name"
-                    err={inputErr["last_name"]}
-                    correctValue={correctValue}
-                />
-                </div>
+                    <div><Input name="last_name"
+                        onChange={(e) => handelChange(e)}
+                        value={input["last_name"]}
+                        placeholder="Last name"
+                        err={inputErr["last_name"]}
+                        correctValue={correctValue}
+                    />
+                    </div>
 
-                <div>
+                    <div>
 
-                    <select onChange={(e) => handelChangeIntValue(e)}
-                        role="button"
-                        name="department_id"
-                        value={input["department_id"]}
-                        className={`p-2 rounded-lg bg-neutral-300 border-2  w-full
-             text-lg focus:outline-none ${!input["department_id"] ? "text-gray-500" : ""}   ${(input["department_id"] && !inputErr["department_id"] && correctValue) ? "border-green-600 focus:ring-green-500 text-black" :
-                                inputErr["department_id"] ? "border-red-500 focus:ring-red-400 text-black" :
-                                    "border-neutral-500 focus:ring-neutral-400"} 
+                        <select onChange={(e) => handelChangeIntValue(e)}
+                            role="button"
+                            name="department_id"
+                            value={input["department_id"]}
+                            className={`p-2 rounded-lg bg-neutral-300 border-2  w-full
+             text-lg focus:outline-none ${!input["department_id"] ? "text-gray-500" : "text-black"}   ${(input["department_id"] && !inputErr["department_id"] && correctValue) ? "border-green-600 focus:ring-green-500 text-black" :
+                                    inputErr["department_id"] ? "border-red-500 focus:ring-red-400 text-black" :
+                                        "border-neutral-500 focus:ring-neutral-400"} 
                     
               `}
 
-                    >
-                        <option value="" >Department</option>
-                        <option className="text-black font-medium" value={1} >Sales</option>
-                        <option className="text-black font-medium" value={2} >Executive</option>
-                        <option className="text-black font-medium" value={3} >Marketing</option>
-                        <option className="text-black font-medium" value={4} >Purchasing</option>
-                        <option className="text-black font-medium" value={5} >Warehouse</option>
-                        <option className="text-black font-medium" value={6} >IT</option>
-                        <option className="text-black font-medium" value={7} >Maintenance</option>
-                        <option className="text-black font-medium" value={8} >Human Resource</option>
-                    </select>
-                    <small className="text-red-500">{inputErr["department_id"]}</small>
-                </div>
+                        >
+                            <option value="" >Department</option>
+                            <option className="text-black font-medium" value={1} >Sales</option>
+                            <option className="text-black font-medium" value={2} >Executive</option>
+                            <option className="text-black font-medium" value={3} >Marketing</option>
+                            <option className="text-black font-medium" value={4} >Purchasing</option>
+                            <option className="text-black font-medium" value={5} >Warehouse</option>
+                            <option className="text-black font-medium" value={6} >IT</option>
+                            <option className="text-black font-medium" value={7} >Maintenance</option>
+                            <option className="text-black font-medium" value={8} >Human Resource</option>
+                        </select>
+                        <small className="text-red-500">{inputErr["department_id"]}</small>
+                    </div>
 
 
-                <div>
-                    <Input name="employee_id"
-                        onChange={(e) => handelChange(e)}
-                        value={input["employee_id"]}
-                        placeholder="Employee ID"
-                        err={inputErr["employee_id"]}
-                        correctValue={correctValue}
-                    />
-                </div>
-                <div className="col-span-2">
-                    <Input
-                        name="mobile_phone"
-                        onChange={(e) => handelChange(e)}
-                        value={input["mobile_phone"]}
-                        placeholder="Mobile phone"
-                        err={inputErr["mobile_phone"]}
-                        correctValue={correctValue}
-                    />
-                </div>
+                    <div>
+                        <Input name="employee_id"
+                            onChange={(e) => handelChange(e)}
+                            value={input["employee_id"]}
+                            placeholder="Employee ID"
+                            err={inputErr["employee_id"]}
+                            correctValue={correctValue}
+                        />
+                    </div>
+                    <div className="col-span-2">
+                        <Input
+                            name="mobile_phone"
+                            onChange={(e) => handelChange(e)}
+                            value={input["mobile_phone"]}
+                            placeholder="Mobile phone"
+                            err={inputErr["mobile_phone"]}
+                            correctValue={correctValue}
+                        />
+                    </div>
 
-                <div className="col-span-2">
-                    <Input
-                        name="email"
-                        onChange={(e) => handelChange(e)}
-                        value={input["email"]}
-                        placeholder="Email"
-                        err={inputErr["email"]}
-                        correctValue={correctValue}
-                    />
+                    <div className="col-span-2">
+                        <Input
+                            name="email"
+                            onChange={(e) => handelChange(e)}
+                            value={input["email"]}
+                            placeholder="Email"
+                            err={inputErr["email"]}
+                            correctValue={correctValue}
+                        />
 
-                </div>
+                    </div>
 
-                <div className="col-span-2">
-                    <Input
-                        name="password"
-                        onChange={(e) => handelChange(e)}
-                        value={input["password"]}
-                        placeholder="Password"
-                        err={inputErr["password"]}
-                        correctValue={correctValue}
-                    />
-                </div>
+                    <div className="col-span-2">
+                        <Input
+                            name="password"
+                            onChange={(e) => handelChange(e)}
+                            value={input["password"]}
+                            placeholder="Password"
+                            err={inputErr["password"]}
+                            correctValue={correctValue}
+                        />
+                    </div>
 
-                <div className="col-span-2">
-                    <Input
-                        name="confirm_password"
-                        onChange={(e) => handelChange(e)}
-                        value={input["confirm_password"]}
-                        placeholder="Confirm password"
-                        err={inputErr["confirm_password"]}
-                        correctValue={correctValue}
-                    />
-                </div>
+                    <div className="col-span-2">
+                        <Input
+                            name="confirm_password"
+                            onChange={(e) => handelChange(e)}
+                            value={input["confirm_password"]}
+                            placeholder="Confirm password"
+                            err={inputErr["confirm_password"]}
+                            correctValue={correctValue}
+                        />
+                    </div>
 
-                <div className="col-span-2 my-2">
-                    <Button type="submit" text="Register" color="green" ></Button>
-                </div>
-            </form>
+                    <div className="col-span-2 my-2">
+                        <Button type="submit" text="Register" color="green" ></Button>
+
+                    </div>
+
+                </form>
+            </div>
         </>
     )
 }

@@ -32,9 +32,6 @@ const validatorRegister = (input) => {
         }
         return result
     }
-
-
-
 }
 
 export default validatorRegister

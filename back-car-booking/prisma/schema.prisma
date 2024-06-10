@@ -29,6 +29,7 @@ model Users {
   mobile_phone  String  @unique
   img_user      String?
   employee_id   String? @db.VarChar(50)
+  is_admin      Boolean @default(false)
 
   department Departments @relation(fields: [department_id], references: [id])
 
