@@ -1,9 +1,7 @@
 import { useState } from "react";
 import Button from "../../../components/Button";
-import Modal from "./Modal";
 import Modal2 from "../../../components/Modal2";
-import RegisterCarContainer from "../../createCAr/RegisterCarContainer";
-import RegisterContainer2 from "./RegisterContainer2";
+import RegisterContainer2 from "../component/RegisterContainer2";
 
 export default function RegisterContainer() {
 

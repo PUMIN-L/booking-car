@@ -1,5 +1,6 @@
 
-import AuthContextProvider from "./contexts/AuthContect"
+import AuthContextProvider from "./contexts/AuthContext"
+import BookingContextProvider from "./contexts/BookingContext"
 import CarContextProvider from "./contexts/CarContext"
 import Router from "./route"
 
@@ -10,7 +11,9 @@ function App() {
     <>
       <AuthContextProvider>
         <CarContextProvider>
-          <Router />
+          <BookingContextProvider>
+            <Router />
+          </BookingContextProvider>
         </CarContextProvider>
       </AuthContextProvider>
     </>

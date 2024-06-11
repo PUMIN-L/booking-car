@@ -1,4 +1,8 @@
+
+
 export default function Footer() {
+
+
     return (
         <footer className="footer p-5 bg-neutral text-neutral-content mt-[9rem] flex justify-around ">
             <aside>

@@ -1,0 +1,5 @@
+export const STATUS = {
+    PANDING: "PANDING",
+    RESERVED: "RESERVED",
+    RETURNED: "RETURNED"
+}

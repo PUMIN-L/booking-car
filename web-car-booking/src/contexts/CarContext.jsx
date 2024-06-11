@@ -1,21 +1,33 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import carApi from "../apis/car-api";
+
 
 export const CarContext = createContext()
 
 export default function CarContextProvider({ children }) {
 
+    const [allCarData, setAllCarData] = useState([])
+    const [isLoadingCar, setIsLoagingCar] = useState(true)
+
     useEffect(() => {
         const fetchAllCar = async () => {
             try {
-                const allCarData = await carApi.getAllCar()
-                console.log(allCarData)
+
+                const gatAllCarData = await carApi.getAllCar()
+                if (gatAllCarData) {
+                    setAllCarData(gatAllCarData.data.result)
+                }
+
             } catch (error) {
                 console.log(error)
+            } finally {
+                setIsLoagingCar(false)
             }
         }
         fetchAllCar()
     }, [])
 
-    return <CarContext.Provider value={""} >{children}</CarContext.Provider>
+
+
+    return <CarContext.Provider value={{ isLoadingCar, allCarData, setAllCarData }} >{children}</CarContext.Provider>
 }

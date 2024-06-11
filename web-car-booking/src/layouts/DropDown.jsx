@@ -1,10 +1,9 @@
-import { useState } from "react"
-import useAuth from "../hooks/useAuth"
-import { Link, useNavigate } from "react-router-dom"
 
+import useAuth from "../hooks/useAuth"
+import { useNavigate } from "react-router-dom"
 import Modal2 from "../components/Modal2"
-import RegisterCarFrom from "../features/createCAr/RegisterCarFrom"
-import RegisterCarContainer from "../features/createCAr/RegisterCarContainer"
+import RegisterCarContainer from "../features/createCAr/component/RegisterCarContainer"
+
 
 export default function Dropdown() {
 
