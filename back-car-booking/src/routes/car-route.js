@@ -13,5 +13,6 @@ carRouter.post(
 )
 
 carRouter.get("/", carController.getAllcar)
+carRouter.post("/:carId", carController.getCarById)
 
 module.exports = carRouter

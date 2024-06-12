@@ -14,21 +14,34 @@ export default function CreateBookingForm() {
 
     const car = allCarData
 
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+        console.log(dataCreateBooking)
+    }
+
     return (
         <>
             <div className="max-w-[60rem] min-w-[30rem] bg-neutral text-slate-300 p-12 rounded-xl m-auto border-4 ">
-                <form className="m-auto  w-[20rem]">
+                <form
+                    onSubmit={handleOnSubmit}
+                    className="m-auto  w-[20rem]"
+                >
                     <h1 className="text-x font-bold text-4xl ">Create booking</h1>
                     <TimeForm
                         title="Pick-up (date and time)"
-                        name="time_pick_up"
-                        onChange={(e) => setDataCreateBooking({ ...dataCreateBooking, [e.target.name]: e.target.value })}
+                        onChangeDate={(e) => setDataCreateBooking({ ...dataCreateBooking, "date_pick_up": e.target.value })}
+                        onChangeTime={(e) => setDataCreateBooking({ ...dataCreateBooking, "time_pick_up": e.target.value })}
+                        valueDay={dataCreateBooking.date_pick_up}
+                        valueTime={dataCreateBooking.time_pick_up}
 
                     />
                     <TimeForm
                         title="Return (date and time)"
-                        name="time_drop_off"
-                        onChange={(e) => setDataCreateBooking({ ...dataCreateBooking, [e.target.name]: e.target.value })}
+                        onChangeDate={(e) => setDataCreateBooking({ ...dataCreateBooking, "date_drop_off": e.target.value })}
+                        onChangeTime={(e) => setDataCreateBooking({ ...dataCreateBooking, "time_drop_off": e.target.value })}
+                        valueDay={dataCreateBooking.date_drop_off}
+                        valueTime={dataCreateBooking.time_drop_off}
+
                     />
                     <div className="mt-8">
                         <Button type="submit" text="Search" color="green" />
@@ -41,19 +54,12 @@ export default function CreateBookingForm() {
                     car.map(el => {
                         return <CarCard
                             key={el.id}
-                            brand={el.brand}
+                            el={el}
                             img_car={`http://localhost:8288/${el.img_car}`}
-                            license_plate={el.license_plate}
-                            model={el.model}
-                            transmission={el.transmission}
                         />
 
                     })
-
-
                 }
-
-
             </div>
         </>
     )

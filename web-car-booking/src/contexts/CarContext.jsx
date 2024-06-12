@@ -1,12 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 import carApi from "../apis/car-api";
+import { useParams } from "react-router-dom";
+import useBooking from "../hooks/useBooking";
 
 
 export const CarContext = createContext()
 
 export default function CarContextProvider({ children }) {
 
+    let { carId } = useParams()
+
+    const { dataCreateBooking, setDataCreateBooking } = useBooking()
+
     const [allCarData, setAllCarData] = useState([])
+    const [currentCar, setCurrentCar] = useState({})
     const [isLoadingCar, setIsLoagingCar] = useState(true)
 
     useEffect(() => {
@@ -28,6 +35,21 @@ export default function CarContextProvider({ children }) {
     }, [])
 
 
+    const getCatById = async () => {
+        // console.log(carId)
+        const getCurrentCar = await carApi.getCarById(+carId)
+        // console.log("/////////////////")
+        // console.log(getCurrentCar.data.currentCar)
+        // console.log("/////////////////")
+        setCurrentCar(getCurrentCar.data.currentCar)
+    }
 
-    return <CarContext.Provider value={{ isLoadingCar, allCarData, setAllCarData }} >{children}</CarContext.Provider>
+    const saveCarToBooking = () => {
+        setDataCreateBooking({ ...dataCreateBooking, car_id: +carId })
+    }
+
+
+
+
+    return <CarContext.Provider value={{ isLoadingCar, allCarData, setAllCarData, getCatById, currentCar, saveCarToBooking }} >{children}</CarContext.Provider>
 }

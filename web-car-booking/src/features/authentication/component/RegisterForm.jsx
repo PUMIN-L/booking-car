@@ -29,7 +29,7 @@ const errDataUserInit = {
 }
 
 
-export default function RegisterForm({ closeModal }) {
+export default function RegisterForm({ setIsOpenModal2 }) {
 
     const [input, setInput] = useState(dataUserInit)
     const [correctValue, setCorrectValue] = useState(false)
@@ -56,7 +56,7 @@ export default function RegisterForm({ closeModal }) {
             }
             setInputErr({ ...errDataUserInit })
             console.log(input)
-
+            setIsOpenModal2(false)
             await autApi.register(input)
             setCorrectValue(false)
             closeModal()
@@ -66,6 +66,8 @@ export default function RegisterForm({ closeModal }) {
         }
 
     }
+
+
 
     useEffect(() => {
         setCorrectValue(false)

@@ -10,11 +10,11 @@ function App() {
   return (
     <>
       <AuthContextProvider>
-        <CarContextProvider>
-          <BookingContextProvider>
+        <BookingContextProvider>
+          <CarContextProvider>
             <Router />
-          </BookingContextProvider>
-        </CarContextProvider>
+          </CarContextProvider>
+        </BookingContextProvider>
       </AuthContextProvider>
     </>
   )

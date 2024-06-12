@@ -6,6 +6,8 @@ import ProtectedRoute from "../features/authentication/component/ProtectRoute"
 import MainContainer from "../layouts/MainContainer"
 import LoginPage from "../pages/LoginPage"
 import HomePage from "../pages/HomePage"
+import ConfirmBooking from "../features/createBooking/components/ConfirmBooking";
+import CarContextProvider from "../contexts/CarContext"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -20,7 +22,9 @@ const router = createBrowserRouter([
         path: "/",
         element: (<ProtectedRoute><MainContainer /></ProtectedRoute>),
         children: [
-            { path: "/", element: <HomePage /> }
+            { path: "/", element: <HomePage /> },
+            { path: "/createBooking/:carId", element: <CarContextProvider> <ConfirmBooking /></CarContextProvider> }
+
         ]
     },
     {

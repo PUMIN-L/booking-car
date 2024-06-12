@@ -23,7 +23,7 @@ export default function RegisterContainer() {
                 y="mt-[-2.2rem]"
                 x="ml-[-5rem]"
 
-            ><RegisterContainer2 /></Modal2>}
+            ><RegisterContainer2 setIsOpenModal2={setIsOpenModal2} /></Modal2>}
         </>
 
     )

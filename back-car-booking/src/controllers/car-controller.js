@@ -31,4 +31,15 @@ carController.getAllcar = async (req, res, next) => {
     }
 }
 
-module.exports = carController
+carController.getCarById = async (req, res, next) => {
+    try {
+        const currentCar = await carService.getCarById(+req.params.carId)
+        console.log(currentCar)
+        res.status(200).json({ message: "find car by Id is OK", currentCar })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+module.exports = carController 

@@ -6,21 +6,22 @@ import useAuth from "../hooks/useAuth";
 
 export const BookingContext = createContext()
 
+
+
 export default function BookingContextProvider({ children }) {
-
-    const { authUser, setIsAuthUserLoading } = useAuth()
-
-
-    const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
+    const { authUser } = useAuth()
 
     const dataCreateBookingInit = {
+        car_id: 0,
         user_id: authUser?.id,
-        car_id: "",
         status: STATUS.PANDING,
+        date_pick_up: "",
         time_pick_up: "",
+        date_drop_off: "",
         time_drop_off: ""
     }
 
+    const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
 
     useEffect(() => {
@@ -42,8 +43,6 @@ export default function BookingContextProvider({ children }) {
 
     useEffect(() => {
         console.log(dataCreateBooking)
-        console.log(dataCreateBooking.time_pick_up)
-        console.log(dataCreateBooking.time_drop_off)
     }, [dataCreateBooking])
 
     // useEffect(() => {
