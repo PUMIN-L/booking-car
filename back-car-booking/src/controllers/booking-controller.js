@@ -13,4 +13,14 @@ bookingController.createBooking = async (req, res, next) => {
     }
 }
 
+bookingController.getBookingById = async (req, res, next) => {
+    try {
+        const myBooking = await bookingService.getBookingByUserId(req.body.id)
+        res.status(200).json({ message: "get Bookin By Id id ok", myBooking })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
 module.exports = bookingController

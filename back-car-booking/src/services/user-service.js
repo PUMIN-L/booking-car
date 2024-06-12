@@ -19,4 +19,6 @@ userService.findUserById = (id) => prisma.users.findUnique({
     }
 })
 
+
+
 module.exports = userService 

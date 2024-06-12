@@ -9,6 +9,10 @@ export default function Button({ text, color = "yellow", type, onClick }) {
         red: "bg-red-600 hover:bg-red-700"
     }
 
+    const widthObj = {
+
+    }
+
     return (
         <button
             className={`${background[color]} rounded-md text-white font-normal

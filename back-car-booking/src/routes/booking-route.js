@@ -5,6 +5,7 @@ const bookingRoute = express.Router()
 
 
 bookingRoute.post("/createBooking", bookingController.createBooking)
+bookingRoute.post("/getMyBooking", bookingController.getBookingById)
 
 
 module.exports = bookingRoute

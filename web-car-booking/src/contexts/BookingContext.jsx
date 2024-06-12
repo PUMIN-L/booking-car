@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { STATUS } from "../constants";
 import useAuth from "../hooks/useAuth";
+import bookingApi from "../apis/booking-api";
 
 
 
@@ -23,6 +24,7 @@ export default function BookingContextProvider({ children }) {
 
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
+    const [myBooking, setMyBooking] = useState([])
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {
@@ -39,18 +41,34 @@ export default function BookingContextProvider({ children }) {
         }
         saveUserDatatoBooking()
 
+        const getBookingByUserId = async () => {
+            if (authUser?.id) {
+                const objId = { id: authUser?.id }
+                const myBooking = await bookingApi.getBookingBiUserId(objId)
+                setMyBooking(myBooking.data.myBooking)
+            }
+
+        }
+
+        getBookingByUserId()
+
     }, [authUser])
 
     useEffect(() => {
         console.log(dataCreateBooking)
     }, [dataCreateBooking])
 
-    // useEffect(() => {
-    //     console.log(dataCreateBooking)
-    // }, [dataCreateBooking])
 
 
-    return <BookingContext.Provider value={{ dataCreateBookingLoading, setDataCreateBooking, dataCreateBooking }}>  {children}</BookingContext.Provider>
+    return <BookingContext.Provider value={{
+        dataCreateBookingLoading,
+        setDataCreateBooking,
+        dataCreateBooking,
+        myBooking
+    }} >
+
+        {children}
+    </BookingContext.Provider>
 
 
 

@@ -1,6 +1,7 @@
 import useAuth from "../hooks/useAuth";
 import Dropdown from "./DropDown";
 
+
 export default function Header() {
 
     const { authUser, logout } = useAuth()
