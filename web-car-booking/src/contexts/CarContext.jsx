@@ -36,11 +36,8 @@ export default function CarContextProvider({ children }) {
 
 
     const getCatById = async () => {
-        // console.log(carId)
+
         const getCurrentCar = await carApi.getCarById(+carId)
-        // console.log("/////////////////")
-        // console.log(getCurrentCar.data.currentCar)
-        // console.log("/////////////////")
         setCurrentCar(getCurrentCar.data.currentCar)
     }
 

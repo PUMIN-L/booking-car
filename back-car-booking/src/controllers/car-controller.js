@@ -1,10 +1,14 @@
 
 const carService = require("../services/car-service");
+const createError = require("../utils/create-error");
 
 const carController = {}
 
 carController.registerCar = async (req, res, next) => {
     try {
+        if (req.user.id !== 1) {
+            createError(400, "User is Invalid, You are not admin")
+        }
         let data = {}
         if (req.file) {
             data.img_car = req.file.path;

@@ -9,6 +9,7 @@ import HomePage from "../pages/HomePage"
 import ConfirmBooking from "../features/createBooking/components/ConfirmBooking";
 import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
+import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <HomePage /> },
             { path: "/createBooking/:carId", element: <CarContextProvider> <ConfirmBooking /></CarContextProvider> },
-            { path: "/myBooking", element: <MyBooking /> }
+            { path: "/myBooking", element: <MyBooking /> },
+            { path: "/myBooking/editMyBooking/:bookingId", element: <EditBookingFrom /> }
 
         ]
     },

@@ -5,17 +5,21 @@ import bookingApi from "../apis/booking-api";
 
 
 
+
 export const BookingContext = createContext()
 
 
 
 export default function BookingContextProvider({ children }) {
+
+
+
     const { authUser } = useAuth()
 
     const dataCreateBookingInit = {
         car_id: 0,
         user_id: authUser?.id,
-        status: STATUS.PANDING,
+        status: STATUS.RESERVED,
         date_pick_up: "",
         time_pick_up: "",
         date_drop_off: "",
@@ -39,8 +43,6 @@ export default function BookingContextProvider({ children }) {
             try {
                 if (authUser?.id) {
                     setDataCreateBooking({ ...dataCreateBooking, "user_id": authUser.id })
-
-
                 }
 
             } catch (error) {
@@ -54,7 +56,7 @@ export default function BookingContextProvider({ children }) {
         const getBookingByUserId = async () => {
             if (authUser?.id) {
                 const objId = { id: authUser?.id }
-                const myBooking = await bookingApi.getBookingBiUserId(objId)
+                const myBooking = await bookingApi.getBookingByUserId(objId)
                 setMyBooking(myBooking.data.myBooking)
             }
 
@@ -79,7 +81,10 @@ export default function BookingContextProvider({ children }) {
         setDataCreateBooking,
         dataCreateBooking,
         myBooking,
-        showDataBooking
+        showDataBooking,
+        setMyBooking,
+
+
     }} >
 
         {children}

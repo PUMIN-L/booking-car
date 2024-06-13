@@ -2,17 +2,18 @@ const express = require("express")
 const upload = require("../middleware/upload")
 const carController = require("../controllers/car-controller")
 const { registerCarValidator } = require("../middleware/validator-car-middleware")
+const authenticate = require("../middleware/authenticate-user")
 
 const carRouter = express.Router()
 
 carRouter.post(
-    "/registerCar",
+    "/registerCar", authenticate,
     registerCarValidator,
     upload.single("img_car"),
     carController.registerCar
 )
 
-carRouter.get("/", carController.getAllcar)
-carRouter.post("/:carId", carController.getCarById)
+carRouter.get("/", authenticate, carController.getAllcar)
+carRouter.post("/:carId", authenticate, carController.getCarById)
 
 module.exports = carRouter

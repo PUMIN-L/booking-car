@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import useBooking from "../../../hooks/useBooking";
 import Footer from "./Footer";
 import { MONTH, TIME } from "../../../constants";
+import bookingApi from "../../../apis/booking-api";
 
 
 
@@ -14,13 +15,20 @@ export default function ConfirmBooking() {
     const navigate = useNavigate()
 
     const { getCatById, currentCar, saveCarToBooking } = useCar()
-    const { dataCreateBooking, showDataBooking } = useBooking()
+    const { dataCreateBooking, showDataBooking, setMyBooking, myBooking } = useBooking()
 
     useEffect(() => {
         getCatById()
         saveCarToBooking()
-        console.log("Thiss--++", showDataBooking)
+
     }, [])
+
+    const handleClickBookNow = async () => {
+        const result = await bookingApi.createBooking(dataCreateBooking)
+        console.log(result)
+        navigate("/myBooking")
+        setMyBooking([result.data.result, ...myBooking])
+    }
 
     return (
         <>
@@ -69,7 +77,7 @@ export default function ConfirmBooking() {
                     </div>
                     {/* Button */}
                     <div className="flex flex-col gap-5 mt-8 ">
-                        <Button text="BOOK NOW" color="green" type="submit" />
+                        <Button text="BOOK NOW" color="green" onClick={handleClickBookNow} />
                         <Button text="CANCEL" color="red" onClick={() => navigate("/")} />
                     </div>
                 </div>
