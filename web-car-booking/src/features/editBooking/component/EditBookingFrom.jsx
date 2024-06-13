@@ -6,6 +6,8 @@ import useCar from "../../../hooks/useCar"
 import TimeForm from "../../createBooking/components/TimeForm"
 
 
+
+
 export default function EditBookingFrom() {
 
 
@@ -16,29 +18,56 @@ export default function EditBookingFrom() {
 
     const [currentCar, setCurrentCar] = useState([])
     const [currentBooking, setCurrentBooking] = useState({})
+    const [dataDateAndTime, setDataDateAndTime] = useState({})
+
 
     useEffect(() => {
         const getBooking = async () => {
             const booking = await bookingApi.getBookingById(bookingId)
             setCurrentBooking(booking.data)
+
         }
         getBooking()
+
     }, [])
 
     useEffect(() => {
         console.log("booking", currentBooking)
         const car = allCarData.filter(item => item.id === currentBooking.car_id)
         setCurrentCar(car[0])
+
+        const dataDateAndTimeInit = {
+            datePickUp: currentBooking?.date_pick_up?.split("").slice(0, 10).join(""),
+            timePickUp: currentBooking?.time_pick_up?.split("").slice(11, 16).join(""),
+            dateDropOff: currentBooking?.date_drop_off?.split("").slice(0, 10).join(""),
+            timeDropOff: currentBooking?.time_drop_off?.split("").slice(11, 16).join("")
+        }
+        setDataDateAndTime(dataDateAndTimeInit)
     }, [currentBooking])
 
     useEffect(() => {
         console.log("car", currentCar)
+
     }, [currentCar])
 
 
 
     const handleClickEditNow = () => {
-        console.log("Click Edit Now")
+        if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
+            return alert("ERROR !! You have to select Date-Time PickUp and Date-Time Drop off")
+        }
+        // const dateTimePickUp = `${dataDateAndTime.datePickUp} ${dataDateAndTime.timePickUp}`
+        // const dateTimePickUpDayJs = dayjs(dateTimePickUp).toISOString()
+
+        // const dateTimeDropOff = `${dataDateAndTime.dateDropOff} ${dataDateAndTime.timeDropOff}`
+        // const dateTimeDropOffDayJs = dayjs(dateTimeDropOff).toISOString()
+
+        // console.log(dataDateAndTime)
+
+        // setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
+        // setDataCreateBooking(prev => ({ ...prev, "time_pick_up": dateTimePickUpDayJs }))
+        // setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
+        // setDataCreateBooking(prev => ({ ...prev, "time_drop_off": dateTimeDropOffDayJs }))
     }
 
     return (
@@ -73,33 +102,29 @@ export default function EditBookingFrom() {
                     Edit Booking
                 </h3>
                 <div className="flex gap-5 items-center mt-5">
-                    {/* <p className="mt-[-0.2rem] text-2xl">o</p> */}
+
                     <div className="bg-pink font-semibold text-xl mt-[-2rem] ">
 
                         <TimeForm
                             title="Pick up"
-                        // onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
-                        // onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
-                        // valueDay={dataDateAndTime.dateDropOff}
-                        // valueTime={dataDateAndTime.timeDropOff}
+                            onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })}
+                            onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })}
+                            valueDay={dataDateAndTime.datePickUp}
+                            valueTime={dataDateAndTime.timePickUp}
 
                         />
-                        {/* {` ${MONTH[showDataBooking.monthPickUp] || "--"} ${showDataBooking.dayPickUp || "--"}, 2024 - Time ${dataCreateBooking?.time_pick_up || "--:--"} `} */}
+
                     </div>
                 </div>
 
-                {/* <div className=" border-l-2 ml-[0.35rem] h-16 border-neutral-400"></div> */}
-
-
                 <div className="flex gap-5 items-center mt-[2rem]">
-                    {/* <p className="mt-[-0.2rem] text-2xl">o</p> */}
                     <div className="bg-pink font-semibold text-xl mt-[-2rem] ">
                         <TimeForm
                             title="Drop off"
-                        // onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
-                        // onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
-                        // valueDay={dataDateAndTime.dateDropOff}
-                        // valueTime={dataDateAndTime.timeDropOff}
+                            onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
+                            onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
+                            valueDay={dataDateAndTime.dateDropOff}
+                            valueTime={dataDateAndTime.timeDropOff}
 
                         />
                     </div>
