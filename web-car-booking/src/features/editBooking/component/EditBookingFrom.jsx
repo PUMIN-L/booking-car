@@ -106,7 +106,7 @@ export default function EditBookingFrom() {
                     <div className="bg-pink font-semibold text-xl mt-[-2rem] ">
 
                         <TimeForm
-                            title="Pick up"
+                            title="Pick up (month-date-year)"
                             onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })}
                             onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })}
                             valueDay={dataDateAndTime.datePickUp}
@@ -120,7 +120,7 @@ export default function EditBookingFrom() {
                 <div className="flex gap-5 items-center mt-[2rem]">
                     <div className="bg-pink font-semibold text-xl mt-[-2rem] ">
                         <TimeForm
-                            title="Drop off"
+                            title="Drop off (month-date-year)"
                             onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
                             onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
                             valueDay={dataDateAndTime.dateDropOff}

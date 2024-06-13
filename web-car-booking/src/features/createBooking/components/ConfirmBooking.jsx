@@ -1,26 +1,58 @@
 import { useNavigate } from "react-router-dom"
 import Button from "../../../components/Button";
 import useCar from "../../../hooks/useCar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useBooking from "../../../hooks/useBooking";
 import Footer from "./Footer";
 import { MONTH, TIME } from "../../../constants";
 import bookingApi from "../../../apis/booking-api";
+import dayjs from 'dayjs'
 
 
-
+const init = {
+    dayPickUp: "",
+    monthPickUp: "",
+    yearPickUp: "",
+    timePickUp: "",
+    dayDropOff: "",
+    monthDropOff: "",
+    yearDropOff: "",
+    timeDropOff: "",
+}
 
 export default function ConfirmBooking() {
 
     const navigate = useNavigate()
 
     const { getCatById, currentCar, saveCarToBooking } = useCar()
-    const { dataCreateBooking, showDataBooking, setMyBooking, myBooking } = useBooking()
+    const { dataCreateBooking, setMyBooking, myBooking } = useBooking()
+
+    const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 
     useEffect(() => {
         getCatById()
         saveCarToBooking()
 
+        const timeP = dayjs(`${dataCreateBooking.date_pick_up}`).get('hour')
+        const dayP = dayjs(`${dataCreateBooking.date_pick_up}`).get("date") // 6 //06
+        const monthP = dayjs(`${dataCreateBooking.date_pick_up}`).get("month") // 5 //June
+        const yearP = dayjs(`${dataCreateBooking.date_pick_up}`).get("year") // 2024
+
+        const timeD = dayjs(`${dataCreateBooking.date_drop_off}`).get('hour')
+        const dayD = dayjs(`${dataCreateBooking.date_drop_off}`).get("date") // 6 //06
+        const monthD = dayjs(`${dataCreateBooking.date_drop_off}`).get("month") // 5 //June
+        const yearD = dayjs(`${dataCreateBooking.date_drop_off}`).get("year") // 2024
+
+        setDateTimeShowConfirm(prev => ({ ...prev, timePickUp: timeP }))
+        setDateTimeShowConfirm(prev => ({ ...prev, dayPickUp: dayP }))
+        setDateTimeShowConfirm(prev => ({ ...prev, monthPickUp: monthP }))
+        setDateTimeShowConfirm(prev => ({ ...prev, yearPickUp: yearP }))
+        setDateTimeShowConfirm(prev => ({ ...prev, timeDropOff: timeD }))
+        setDateTimeShowConfirm(prev => ({ ...prev, dayDropOff: dayD }))
+        setDateTimeShowConfirm(prev => ({ ...prev, monthDropOff: monthD }))
+        setDateTimeShowConfirm(prev => ({ ...prev, yearDropOff: yearD }))
+
+        console.log("show", dateTimeShowConfirm)
     }, [])
 
     const handleClickBookNow = async () => {
@@ -62,7 +94,7 @@ export default function ConfirmBooking() {
                     <div className="flex gap-5 items-center mt-5">
                         <p className="mt-[-0.2rem] text-2xl">o</p>
                         <h2 className="bg-pink font-semibold text-2xl">
-                            {` ${MONTH[showDataBooking.monthPickUp] || "--"} ${showDataBooking.dayPickUp || "--"}, 2024 - Time ${dataCreateBooking?.time_pick_up || "--:--"} `}
+                            {` ${MONTH[dateTimeShowConfirm.monthPickUp] || "--"} ${dateTimeShowConfirm.dayPickUp || "--"}, ${dateTimeShowConfirm.yearPickUp || "----"} - Time ${TIME[dateTimeShowConfirm.timePickUp] || "--:--"} `}
                         </h2>
                     </div>
 
@@ -72,7 +104,7 @@ export default function ConfirmBooking() {
                     <div className="flex gap-5 items-center mt-[-0.1rem]">
                         <p className="mt-[-0.2rem] text-2xl">o</p>
                         <h2 className="bg-pink font-semibold text-2xl ">
-                            {` ${MONTH[showDataBooking.monthDropOff] || "--"} ${showDataBooking.dayDropOff || "--"}, 2024 - Time ${dataCreateBooking?.time_drop_off || "--:--"} `}
+                            {` ${MONTH[dateTimeShowConfirm.monthDropOff] || "--"} ${dateTimeShowConfirm.dayDropOff || "--"}, ${dateTimeShowConfirm.yearDropOff || "----"} - Time ${TIME[dateTimeShowConfirm.timeDropOff] || "--:--"} `}
                         </h2>
                     </div>
                     {/* Button */}

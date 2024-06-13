@@ -25,7 +25,13 @@ export default function CreateBookingForm() {
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        console.log(dataCreateBooking)
+        // console.log(dataCreateBooking)
+        // console.log("dateJSP", dataCreateBooking.date_pick_up)
+        // console.log("timeJSP", dataCreateBooking.time_pick_up)
+        // console.log("ConTimeP", dayjs(`${dataCreateBooking.time_pick_up}`))
+        // console.log("dateJSD", dataCreateBooking.date_drop_off)
+        // console.log("timeJSD", dataCreateBooking.time_drop_off)
+        // console.log("ConTimeD", dayjs(`${dataCreateBooking.time_drop_off}`))
     }
 
 
