@@ -72,10 +72,8 @@ model Reservations {
   user_id       Int
   car_id        Int
   status        Status_reservation
-  date_pick_up  DateTime           @db.Date
-  date_drop_off DateTime           @db.Date
-  time_pick_up  DateTime           @db.Time
-  time_drop_off DateTime           @db.Time
+  date_pick_up  DateTime
+  date_drop_off DateTime
 
   user Users @relation(fields: [user_id], references: [id])
   car  Cars  @relation(fields: [car_id], references: [id])
