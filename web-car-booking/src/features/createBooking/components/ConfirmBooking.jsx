@@ -14,18 +14,12 @@ export default function ConfirmBooking() {
     const navigate = useNavigate()
 
     const { getCatById, currentCar, saveCarToBooking } = useCar()
-    const { dataCreateBooking } = useBooking()
-
-    const monthPickUp = dataCreateBooking.date_pick_up.split("").slice(5, 7).join("")
-    const monthDropOff = dataCreateBooking.date_drop_off.split("").slice(5, 7).join("")
-    const dayPickUp = dataCreateBooking.date_pick_up.split("").slice(8, 10).join("")
-    const dayDropOff = dataCreateBooking.date_drop_off.split("").slice(8, 10).join("")
+    const { dataCreateBooking, showDataBooking } = useBooking()
 
     useEffect(() => {
         getCatById()
         saveCarToBooking()
-        const date = new Date(2024 - 5 - 6)
-        console.log(date)
+        console.log("Thiss--++", showDataBooking)
     }, [])
 
     return (
@@ -60,7 +54,7 @@ export default function ConfirmBooking() {
                     <div className="flex gap-5 items-center mt-5">
                         <p className="mt-[-0.2rem] text-2xl">o</p>
                         <h2 className="bg-pink font-semibold text-2xl">
-                            {` ${MONTH[monthPickUp]} ${dayPickUp}, 2024 - Time ${TIME[dataCreateBooking.time_pick_up]} `}
+                            {` ${MONTH[showDataBooking.monthPickUp] || "--"} ${showDataBooking.dayPickUp || "--"}, 2024 - Time ${dataCreateBooking?.time_pick_up || "--:--"} `}
                         </h2>
                     </div>
 
@@ -70,7 +64,7 @@ export default function ConfirmBooking() {
                     <div className="flex gap-5 items-center mt-[-0.1rem]">
                         <p className="mt-[-0.2rem] text-2xl">o</p>
                         <h2 className="bg-pink font-semibold text-2xl ">
-                            {` ${MONTH[monthDropOff]} ${dayDropOff}, 2024 - Time ${TIME[dataCreateBooking.time_drop_off]} `}
+                            {` ${MONTH[showDataBooking.monthDropOff] || "--"} ${showDataBooking.dayDropOff || "--"}, 2024 - Time ${dataCreateBooking?.time_drop_off || "--:--"} `}
                         </h2>
                     </div>
                     {/* Button */}

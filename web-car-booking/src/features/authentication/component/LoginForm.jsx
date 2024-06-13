@@ -2,9 +2,10 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import validateLogin from "../validator/login-validate";
-import autApi from "../../../apis/aut-api";
 import { useNavigate } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth";
+import useCar from "../../../hooks/useCar";
+import carApi from "../../../apis/car-api";
 
 
 const inputLoginInit = {
@@ -23,6 +24,7 @@ export default function LoginForm() {
     const navigate = useNavigate()
 
     const { login } = useAuth()
+    const { setAllCarData } = useCar()
 
     const [inputLogin, setInputLogin] = useState(inputLoginInit)
     const [errInputLogin, setErrInputLogin] = useState(errInputLoginInit)
@@ -41,6 +43,10 @@ export default function LoginForm() {
             }
             setErrInputLogin(errInputLoginInit)
             await login(inputLogin)
+            const gatAllCarData = await carApi.getAllCar()
+            if (gatAllCarData) {
+                setAllCarData(gatAllCarData.data.result)
+            }
             navigate("/")
         } catch (error) {
             console.log(error)

@@ -25,30 +25,30 @@ export default function TimeForm({ title = "", onChangeDate, name, onChangeTime,
                          `}
                 >
                     <option className="text-gray-500 font-normal  " value="" >Time</option>
-                    <option className="text-gray-100 font-normal" value="1" >01:00</option>
-                    <option className="text-gray-100 font-normal" value="2" >02:00</option>
-                    <option className="text-gray-100 font-normal" value="3" >03:00</option>
-                    <option className="text-gray-100 font-normal" value="4" >04:00</option>
-                    <option className="text-gray-100 font-normal" value="5" >05:00</option>
-                    <option className="text-gray-100 font-normal" value="6" >06:00</option>
-                    <option className="text-gray-100 font-normal" value="7" >07:00</option>
-                    <option className="text-gray-100 font-normal" value="8" >08:00</option>
-                    <option className="text-gray-100 font-normal" value="9" >09:00</option>
-                    <option className="text-gray-100 font-normal" value="10" >10:00</option>
-                    <option className="text-gray-100 font-normal" value="11" >11:00</option>
-                    <option className="text-gray-100 font-normal" value="12" >12:00</option>
-                    <option className="text-gray-100 font-normal" value="13" >13:00</option>
-                    <option className="text-gray-100 font-normal" value="14" >14:00</option>
-                    <option className="text-gray-100 font-normal" value="15" >15:00</option>
-                    <option className="text-gray-100 font-normal" value="16" >16:00</option>
-                    <option className="text-gray-100 font-normal" value="17" >17:00</option>
-                    <option className="text-gray-100 font-normal" value="18" >18:00</option>
-                    <option className="text-gray-100 font-normal" value="19" >19:00</option>
-                    <option className="text-gray-100 font-normal" value="20" >20:00</option>
-                    <option className="text-gray-100 font-normal" value="21" >21:00</option>
-                    <option className="text-gray-100 font-normal" value="22" >22:00</option>
-                    <option className="text-gray-100 font-normal" value="23" >23:00</option>
-                    <option className="text-gray-100 font-normal" value="0" >0:00</option>
+                    <option className="text-gray-100 font-normal" value="01:00" >01:00</option>
+                    <option className="text-gray-100 font-normal" value="02:00" >02:00</option>
+                    <option className="text-gray-100 font-normal" value="03:00" >03:00</option>
+                    <option className="text-gray-100 font-normal" value="04:00" >04:00</option>
+                    <option className="text-gray-100 font-normal" value="05:00" >05:00</option>
+                    <option className="text-gray-100 font-normal" value="06:00" >06:00</option>
+                    <option className="text-gray-100 font-normal" value="07:00" >07:00</option>
+                    <option className="text-gray-100 font-normal" value="08:00" >08:00</option>
+                    <option className="text-gray-100 font-normal" value="09:00" >09:00</option>
+                    <option className="text-gray-100 font-normal" value="10:00" >10:00</option>
+                    <option className="text-gray-100 font-normal" value="11:00" >11:00</option>
+                    <option className="text-gray-100 font-normal" value="12:00" >12:00</option>
+                    <option className="text-gray-100 font-normal" value="13:00" >13:00</option>
+                    <option className="text-gray-100 font-normal" value="14:00" >14:00</option>
+                    <option className="text-gray-100 font-normal" value="15:00" >15:00</option>
+                    <option className="text-gray-100 font-normal" value="16:00" >16:00</option>
+                    <option className="text-gray-100 font-normal" value="17:00" >17:00</option>
+                    <option className="text-gray-100 font-normal" value="18:00" >18:00</option>
+                    <option className="text-gray-100 font-normal" value="19:00" >19:00</option>
+                    <option className="text-gray-100 font-normal" value="20:00" >20:00</option>
+                    <option className="text-gray-100 font-normal" value="21:00" >21:00</option>
+                    <option className="text-gray-100 font-normal" value="22:00" >22:00</option>
+                    <option className="text-gray-100 font-normal" value="23:00" >23:00</option>
+                    <option className="text-gray-100 font-normal" value="00:00" >0:00</option>
                 </select>
             </div>
 
