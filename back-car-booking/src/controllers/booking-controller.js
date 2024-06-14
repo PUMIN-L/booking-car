@@ -61,4 +61,17 @@ bookingController.getBookingById = async (req, res, next) => {
     }
 }
 
+bookingController.updateBooking = async (req, res, next) => {
+    try {
+        if (req.user.id !== req.body.user_id) {
+            createError(400, "Invalid user")
+        }
+        result = await bookingService.updateBooking(+req.body.id, req.body)
+        res.status(200).json({ result })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
 module.exports = bookingController

@@ -9,5 +9,4 @@ authenticateRoute.post("/register", registerValidator, authenticateController.cr
 authenticateRoute.post("/login", loginValidation, authenticateController.login)
 authenticateRoute.get("/me", authenticate, authenticateController.getMe)
 
-
 module.exports = authenticateRoute

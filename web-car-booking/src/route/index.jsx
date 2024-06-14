@@ -10,6 +10,7 @@ import ConfirmBooking from "../features/createBooking/components/ConfirmBooking"
 import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
+import IsBookingLoading from "../features/editBooking/component/IsBookingLoading"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))

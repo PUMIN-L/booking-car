@@ -5,6 +5,7 @@ import useCar from "../../hooks/useCar"
 import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
 import MyBooking from "./MyBooking"
+import useBooking from "../../hooks/useBooking"
 
 const init = {
     dayPickUp: "",
@@ -22,32 +23,16 @@ function BookingCard({ el, handleClikeDelete, handleClickEdit }) {
 
     const { allCarData } = useCar()
 
+
     const [carInformation, setCarInformation] = useState([])
     const [dateTimeShow, setDateTimeShow] = useState(init)
 
-    const datePickUp = dayjs(el.date_pick_up).get('date')
-    const dateDropOff = dayjs(el.date_drop_off).get('date')
-    const monthPickUp = dayjs(el.date_pick_up).get('month')
-    const monthDropOff = dayjs(el.date_drop_off).get('month')
-    const timePickUp = dayjs(el.time_pick_up).get("hour")
-    const timeDropOff = el.time_drop_off.split("").slice(11, 16).join("")
-    const yearPickUp = el.date_pick_up.split("").slice(0, 4).join("")
-    const yearDropOff = el.date_drop_off.split("").slice(0, 4).join("")
-    // console.log("day-js-datePickUp", datePickUp)
-    // console.log("ddddddddddd")
-    // console.log(typeof (datePickUp))
-    // const datePickUp = el.date_pick_up.split("").slice(8, 10).join("")
-    // const dateDropOff = el.date_drop_off.split("").slice(8, 10).join("")
-    // const monthPickUp = el.date_pick_up.split("").slice(5, 7).join("")
-    // const monthDropOff = el.date_drop_off.split("").slice(5, 7).join("")
-    // const timePickUp = el.time_pick_up.split("").slice(11, 16).join("")
-    // const timeDropOff = el.time_drop_off.split("").slice(11, 16).join("")
-    // const yearPickUp = el.date_pick_up.split("").slice(0, 4).join("")
-    // const yearDropOff = el.date_drop_off.split("").slice(0, 4).join("")
 
     useEffect(() => {
         setCarInformation(allCarData.filter(item => item.id === el.car_id))
         console.log(el)
+
+
         const timeP = dayjs(`${el.date_pick_up}`).get('hour')
         const dayP = dayjs(`${el.date_pick_up}`).get("date") // 6 //06
         const monthP = dayjs(`${el.date_pick_up}`).get("month") // 5 //June

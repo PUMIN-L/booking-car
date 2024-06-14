@@ -4,30 +4,46 @@ import Button from "../../../components/Button"
 import { useNavigate, useParams } from "react-router-dom"
 import useCar from "../../../hooks/useCar"
 import TimeForm from "../../createBooking/components/TimeForm"
+import { DAY, MONTHNUM, TIME } from "../../../constants"
+import dayjs from 'dayjs'
+import useBooking from "../../../hooks/useBooking"
 
-
-
+const init = {
+    dayPickUp: "",
+    monthPickUp: "",
+    yearPickUp: "",
+    timePickUp: "",
+    dayDropOff: "",
+    monthDropOff: "",
+    yearDropOff: "",
+    timeDropOff: "",
+}
 
 export default function EditBookingFrom() {
-
 
     const navigate = useNavigate()
 
     const { bookingId } = useParams()
     const { allCarData } = useCar()
+    const { myBooking, setMyBooking } = useBooking()
 
     const [currentCar, setCurrentCar] = useState([])
     const [currentBooking, setCurrentBooking] = useState({})
-    const [dataDateAndTime, setDataDateAndTime] = useState({})
-
+    const [newBooking, setNewBooking] = useState({})
+    const [dateTimeShow, setDateTimeShow] = useState(init)
+    const [valueInputTime, setValueInputTime] = useState({})
+    const [newArr, SetNewArr] = useState([])
 
     useEffect(() => {
         const getBooking = async () => {
             const booking = await bookingApi.getBookingById(bookingId)
             setCurrentBooking(booking.data)
-
+            setNewBooking(booking.data)
+            SetNewArr([...myBooking])
         }
         getBooking()
+
+
 
     }, [])
 
@@ -36,39 +52,81 @@ export default function EditBookingFrom() {
         const car = allCarData.filter(item => item.id === currentBooking.car_id)
         setCurrentCar(car[0])
 
-        const dataDateAndTimeInit = {
-            datePickUp: currentBooking?.date_pick_up?.split("").slice(0, 10).join(""),
-            timePickUp: currentBooking?.time_pick_up?.split("").slice(11, 16).join(""),
-            dateDropOff: currentBooking?.date_drop_off?.split("").slice(0, 10).join(""),
-            timeDropOff: currentBooking?.time_drop_off?.split("").slice(11, 16).join("")
+        const timeP = dayjs(`${currentBooking.date_pick_up}`).get('hour')
+        const dayP = dayjs(`${currentBooking.date_pick_up}`).get("date")
+        const monthP = dayjs(`${currentBooking.date_pick_up}`).get("month")
+        const yearP = dayjs(`${currentBooking.date_pick_up}`).get("year")
+
+        const timeD = dayjs(`${currentBooking.date_drop_off}`).get('hour')
+        const dayD = dayjs(`${currentBooking.date_drop_off}`).get("date")
+        const monthD = dayjs(`${currentBooking.date_drop_off}`).get("month")
+        const yearD = dayjs(`${currentBooking.date_drop_off}`).get("year")
+
+        setDateTimeShow(prev => ({ ...prev, timePickUp: timeP }))
+        setDateTimeShow(prev => ({ ...prev, dayPickUp: dayP }))
+        setDateTimeShow(prev => ({ ...prev, monthPickUp: monthP }))
+        setDateTimeShow(prev => ({ ...prev, yearPickUp: yearP }))
+        setDateTimeShow(prev => ({ ...prev, timeDropOff: timeD }))
+        setDateTimeShow(prev => ({ ...prev, dayDropOff: dayD }))
+        setDateTimeShow(prev => ({ ...prev, monthDropOff: monthD }))
+        setDateTimeShow(prev => ({ ...prev, yearDropOff: yearD }))
+
+        const valueTimeInit = {
+            datePickUpInput: `${dateTimeShow.yearPickUp}-${MONTHNUM[dateTimeShow.monthPickUp]}-${DAY[dateTimeShow.dayPickUp]}`,
+            dateDropOffInput: `${dateTimeShow.yearDropOff}-${MONTHNUM[dateTimeShow.monthDropOff]}-${DAY[dateTimeShow.dayDropOff]}`,
+            timePickUpInput: `${TIME[dateTimeShow.timePickUp]}`,
+            timeDropOffInput: `${TIME[dateTimeShow.timeDropOff]}`
         }
-        setDataDateAndTime(dataDateAndTimeInit)
+        setValueInputTime(valueTimeInit)
+
+
     }, [currentBooking])
 
     useEffect(() => {
         console.log("car", currentCar)
+        console.log("Value-input", valueInputTime)
+        // console.log("currentBooking", currentBooking)
+    }, [currentCar, valueInputTime, currentBooking])
 
-    }, [currentCar])
+    const onChangeDatePickUpFunction = (e) => {
+        setValueInputTime({ ...valueInputTime, datePickUpInput: e.target.value })
+    }
+
+    const onChangeTimePickUpFunction = (e) => {
+        setValueInputTime({ ...valueInputTime, timePickUpInput: e.target.value })
+    }
+
+    const onChangeDateDropOffFunction = (e) => {
+        setValueInputTime({ ...valueInputTime, dateDropOffInput: e.target.value })
+    }
+
+    const onChangeTimeDropOffFunction = (e) => {
+        setValueInputTime({ ...valueInputTime, timeDropOffInput: e.target.value })
+    }
 
 
-
-    const handleClickEditNow = () => {
-        if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
+    const handleClickEditNow = async () => {
+        if (!valueInputTime.datePickUpInput || !valueInputTime.timePickUpInput || !valueInputTime.dateDropOffInput || !valueInputTime.timeDropOffInput) {
             return alert("ERROR !! You have to select Date-Time PickUp and Date-Time Drop off")
         }
-        // const dateTimePickUp = `${dataDateAndTime.datePickUp} ${dataDateAndTime.timePickUp}`
-        // const dateTimePickUpDayJs = dayjs(dateTimePickUp).toISOString()
+        const newDatePickUp = dayjs(`${valueInputTime.datePickUpInput} ${valueInputTime.timePickUpInput}`).toISOString()
+        const newDateDropOff = dayjs(`${valueInputTime.dateDropOffInput} ${valueInputTime.timeDropOffInput}`).toISOString()
+        console.log("newDatePickUp", newDatePickUp)
+        console.log("newDateDropOff", newDateDropOff)
 
-        // const dateTimeDropOff = `${dataDateAndTime.dateDropOff} ${dataDateAndTime.timeDropOff}`
-        // const dateTimeDropOffDayJs = dayjs(dateTimeDropOff).toISOString()
+        setNewBooking(prev => ({ ...prev, date_pick_up: newDatePickUp }))
+        setNewBooking(prev => ({ ...prev, date_drop_off: newDateDropOff }))
 
-        // console.log(dataDateAndTime)
-
-        // setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
-        // setDataCreateBooking(prev => ({ ...prev, "time_pick_up": dateTimePickUpDayJs }))
-        // setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
-        // setDataCreateBooking(prev => ({ ...prev, "time_drop_off": dateTimeDropOffDayJs }))
+        console.log("AfterClickEditNow", { ...newBooking, date_pick_up: newDatePickUp, date_drop_off: newDateDropOff })
+        const result = await bookingApi.updateBooking({ ...newBooking, date_pick_up: newDatePickUp, date_drop_off: newDateDropOff })
+        console.log("result", result)
+        const number = myBooking.findIndex(el => el.id === result.data.result.id)
+        console.log("numberrr", number)
+        newArr[number] = result.data.result
+        setMyBooking([...newArr])
+        navigate("/mybooking")
     }
+
 
     return (
         <section className="flex gap-16 p-8 m-auto mt-10 border-4 rounded-3xl max-w-[57rem]">
@@ -107,11 +165,10 @@ export default function EditBookingFrom() {
 
                         <TimeForm
                             title="Pick up (month-date-year)"
-                            onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })}
-                            onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })}
-                            valueDay={dataDateAndTime.datePickUp}
-                            valueTime={dataDateAndTime.timePickUp}
-
+                            onChangeDate={(e) => onChangeDatePickUpFunction(e)}
+                            onChangeTime={(e) => onChangeTimePickUpFunction(e)}
+                            valueDay={valueInputTime.datePickUpInput}
+                            valueTime={valueInputTime.timePickUpInput}
                         />
 
                     </div>
@@ -121,11 +178,10 @@ export default function EditBookingFrom() {
                     <div className="bg-pink font-semibold text-xl mt-[-2rem] ">
                         <TimeForm
                             title="Drop off (month-date-year)"
-                            onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
-                            onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
-                            valueDay={dataDateAndTime.dateDropOff}
-                            valueTime={dataDateAndTime.timeDropOff}
-
+                            onChangeDate={(e) => onChangeDateDropOffFunction(e)}
+                            onChangeTime={(e) => onChangeTimeDropOffFunction(e)}
+                            valueDay={valueInputTime.dateDropOffInput}
+                            valueTime={valueInputTime.timeDropOffInput}
                         />
                     </div>
                 </div>

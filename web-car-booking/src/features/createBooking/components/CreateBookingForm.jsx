@@ -45,12 +45,13 @@ export default function CreateBookingForm() {
         const dateTimeDropOff = `${dataDateAndTime.dateDropOff} ${dataDateAndTime.timeDropOff}`
         const dateTimeDropOffDayJs = dayjs(dateTimeDropOff).toISOString()
 
-        console.log(dataDateAndTime)
+        console.log("this", dataDateAndTime)
+        console.log(dateTimePickUpDayJs)
+        console.log(dateTimeDropOffDayJs)
 
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
-        setDataCreateBooking(prev => ({ ...prev, "time_pick_up": dateTimePickUpDayJs }))
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
-        setDataCreateBooking(prev => ({ ...prev, "time_drop_off": dateTimeDropOffDayJs }))
+
     }
 
 
