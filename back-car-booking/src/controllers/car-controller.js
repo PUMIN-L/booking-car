@@ -46,4 +46,15 @@ carController.getCarById = async (req, res, next) => {
     }
 }
 
+carController.getAvailableCar = async (req, res, next) => {
+    try {
+        console.log(req.query)
+        const result = await carService.getAvailableCar(req.query.pickUp, req.query.dropOff)
+        res.status(200).json({ result })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
 module.exports = carController 

@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import Button from "../../../components/Button";
 import useCar from "../../../hooks/useCar";
 import { useEffect, useState } from "react";
@@ -24,6 +24,13 @@ export default function ConfirmBooking() {
 
     const navigate = useNavigate()
 
+    const [searchParams] = useSearchParams()
+    const pickUp = searchParams.get("pickUp")
+    const dropOff = searchParams.get("dropOff")
+
+    // console.log("PicKKKK", pickUp)
+    // console.log("Droppp", dropOff)
+
     const { getCatById, currentCar, saveCarToBooking } = useCar()
     const { dataCreateBooking, setMyBooking, myBooking } = useBooking()
 
@@ -32,16 +39,25 @@ export default function ConfirmBooking() {
     useEffect(() => {
         getCatById()
         saveCarToBooking()
+        const timeP = dayjs(`${pickUp}`).get('hour')
+        const dayP = dayjs(`${pickUp}`).get("date") // 6 //06
+        const monthP = dayjs(`${pickUp}`).get("month") // 5 //June
+        const yearP = dayjs(`${pickUp}`).get("year") // 2024
 
-        const timeP = dayjs(`${dataCreateBooking.date_pick_up}`).get('hour')
-        const dayP = dayjs(`${dataCreateBooking.date_pick_up}`).get("date") // 6 //06
-        const monthP = dayjs(`${dataCreateBooking.date_pick_up}`).get("month") // 5 //June
-        const yearP = dayjs(`${dataCreateBooking.date_pick_up}`).get("year") // 2024
+        const timeD = dayjs(`${dropOff}`).get('hour')
+        const dayD = dayjs(`${dropOff}`).get("date") // 6 //06
+        const monthD = dayjs(`${dropOff}`).get("month") // 5 //June
+        const yearD = dayjs(`${dropOff}`).get("year") // 2024
 
-        const timeD = dayjs(`${dataCreateBooking.date_drop_off}`).get('hour')
-        const dayD = dayjs(`${dataCreateBooking.date_drop_off}`).get("date") // 6 //06
-        const monthD = dayjs(`${dataCreateBooking.date_drop_off}`).get("month") // 5 //June
-        const yearD = dayjs(`${dataCreateBooking.date_drop_off}`).get("year") // 2024
+        // const timeP = dayjs(`${dataCreateBooking.date_pick_up}`).get('hour')
+        // const dayP = dayjs(`${dataCreateBooking.date_pick_up}`).get("date") // 6 //06
+        // const monthP = dayjs(`${dataCreateBooking.date_pick_up}`).get("month") // 5 //June
+        // const yearP = dayjs(`${dataCreateBooking.date_pick_up}`).get("year") // 2024
+
+        // const timeD = dayjs(`${dataCreateBooking.date_drop_off}`).get('hour')
+        // const dayD = dayjs(`${dataCreateBooking.date_drop_off}`).get("date") // 6 //06
+        // const monthD = dayjs(`${dataCreateBooking.date_drop_off}`).get("month") // 5 //June
+        // const yearD = dayjs(`${dataCreateBooking.date_drop_off}`).get("year") // 2024
 
         setDateTimeShowConfirm(prev => ({ ...prev, timePickUp: timeP }))
         setDateTimeShowConfirm(prev => ({ ...prev, dayPickUp: dayP }))
@@ -57,7 +73,7 @@ export default function ConfirmBooking() {
 
     const handleClickBookNow = async () => {
         const result = await bookingApi.createBooking(dataCreateBooking)
-        console.log(result)
+        // console.log(result)
         navigate("/myBooking")
         setMyBooking([result.data.result, ...myBooking])
     }

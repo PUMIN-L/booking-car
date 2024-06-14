@@ -5,7 +5,8 @@ import TimeForm from "./TimeForm";
 import useBooking from "../../../hooks/useBooking"
 import useCar from "../../../hooks/useCar";
 import dayjs from 'dayjs'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import carApi from "../../../apis/car-api";
 
 const dataDateAndTimeInit = {
     datePickUp: "",
@@ -17,21 +18,14 @@ const dataDateAndTimeInit = {
 export default function CreateBookingForm() {
 
     const { dataCreateBooking, setDataCreateBooking } = useBooking()
-    const { allCarData } = useCar()
+    const { allCarData, setAllCarData } = useCar()
 
-    const car = allCarData
+    let car = allCarData
 
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
-        // console.log(dataCreateBooking)
-        // console.log("dateJSP", dataCreateBooking.date_pick_up)
-        // console.log("timeJSP", dataCreateBooking.time_pick_up)
-        // console.log("ConTimeP", dayjs(`${dataCreateBooking.time_pick_up}`))
-        // console.log("dateJSD", dataCreateBooking.date_drop_off)
-        // console.log("timeJSD", dataCreateBooking.time_drop_off)
-        // console.log("ConTimeD", dayjs(`${dataCreateBooking.time_drop_off}`))
     }
 
 
@@ -51,11 +45,23 @@ export default function CreateBookingForm() {
 
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
-
     }
 
+    useEffect(() => {
+        // console.log("dataCreateBooking.date_pick_up", dataCreateBooking.date_pick_up)
+        // console.log("dataCreateBooking.date_drop_off", dataCreateBooking.date_drop_off)
+        const getCarSelect = async () => {
+            try {
+                const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
+                console.log("selectCar", selectCar)
+                setAllCarData(selectCar.data.result)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getCarSelect()
 
-
+    }, [dataCreateBooking])
 
     return (
         <>
@@ -94,6 +100,7 @@ export default function CreateBookingForm() {
                             key={el.id}
                             el={el}
                             img_car={`http://localhost:8288/${el.img_car}`}
+                            dataDateAndTime={dataDateAndTime}
                         />
 
                     })
