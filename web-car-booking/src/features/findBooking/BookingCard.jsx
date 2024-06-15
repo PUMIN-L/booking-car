@@ -4,8 +4,8 @@ import Button from "../../components/Button"
 import useCar from "../../hooks/useCar"
 import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
-import MyBooking from "./MyBooking"
-import useBooking from "../../hooks/useBooking"
+import { useNavigate } from "react-router-dom"
+
 
 const init = {
     dayPickUp: "",
@@ -18,44 +18,46 @@ const init = {
     timeDropOff: "",
 }
 
-function BookingCard({ el, handleClikeDelete, handleClickEdit }) {
+function BookingCard({ el, handleClikeDelete }) {
 
+    const navigate = useNavigate()
 
     const { allCarData } = useCar()
-
 
     const [carInformation, setCarInformation] = useState([])
     const [dateTimeShow, setDateTimeShow] = useState(init)
 
-
     useEffect(() => {
         setCarInformation(allCarData.filter(item => item.id === el.car_id))
-        console.log(el)
-
 
         const timeP = dayjs(`${el.date_pick_up}`).get('hour')
-        const dayP = dayjs(`${el.date_pick_up}`).get("date") // 6 //06
-        const monthP = dayjs(`${el.date_pick_up}`).get("month") // 5 //June
-        const yearP = dayjs(`${el.date_pick_up}`).get("year") // 2024
+        const dayP = dayjs(`${el.date_pick_up}`).get("date")
+        const monthP = dayjs(`${el.date_pick_up}`).get("month")
+        const yearP = dayjs(`${el.date_pick_up}`).get("year")
 
         const timeD = dayjs(`${el.date_drop_off}`).get('hour')
-        const dayD = dayjs(`${el.date_drop_off}`).get("date") // 6 //06
-        const monthD = dayjs(`${el.date_drop_off}`).get("month") // 5 //June
-        const yearD = dayjs(`${el.date_drop_off}`).get("year") // 2024
+        const dayD = dayjs(`${el.date_drop_off}`).get("date")
+        const monthD = dayjs(`${el.date_drop_off}`).get("month")
+        const yearD = dayjs(`${el.date_drop_off}`).get("year")
 
-        setDateTimeShow(prev => ({ ...prev, timePickUp: timeP }))
-        setDateTimeShow(prev => ({ ...prev, dayPickUp: dayP }))
-        setDateTimeShow(prev => ({ ...prev, monthPickUp: monthP }))
-        setDateTimeShow(prev => ({ ...prev, yearPickUp: yearP }))
-        setDateTimeShow(prev => ({ ...prev, timeDropOff: timeD }))
-        setDateTimeShow(prev => ({ ...prev, dayDropOff: dayD }))
-        setDateTimeShow(prev => ({ ...prev, monthDropOff: monthD }))
-        setDateTimeShow(prev => ({ ...prev, yearDropOff: yearD }))
+        setDateTimeShow({
+            ...dateTimeShow, yearDropOff: yearD,
+            dayPickUp: dayP, timePickUp: timeP, monthPickUp: monthP,
+            yearPickUp: yearP, timeDropOff: timeD, dayDropOff: dayD, monthDropOff: monthD
+        })
         console.log("show", dateTimeShow)
     }, [])
 
+    const handleClickEdit = (el) => {
+        navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}&carId=${el.car_id}`)
+    }
+
+
     return (
-        <div className="flex m-auto w-11/12 bg-neutral-950 rounded-2xl items-center justify-between shadow-[0_0_6px_rgb(0,0,0,0.2)]">
+        <div
+            className="flex m-auto w-11/12 bg-neutral-950 rounded-2xl 
+        items-center justify-between shadow-[0_0_6px_rgb(0,0,0,0.2)]"
+        >
             <div className=" bg-neutral w-[14rem] h-[10rem] object-cover flex items-center justify-center rounded-l-2xl">
                 <img
                     className="w-full h-full object-cover rounded-l-2xl"
@@ -67,14 +69,16 @@ function BookingCard({ el, handleClikeDelete, handleClickEdit }) {
                     <div className="flex gap-6 justify-start items-center  mb-2">
                         <h3 className="text-2xl font-bold">Pick-up</h3>
                         <h2 className="pl-[1.85rem] text-xl font-semibold">
-                            {` ${MONTH[dateTimeShow.monthPickUp] || "--"} ${dateTimeShow.dayPickUp || "--"}, ${dateTimeShow.yearPickUp || "----"} - Time ${TIME[dateTimeShow.timePickUp] || "--:--"} `}
+                            {` ${MONTH[dateTimeShow.monthPickUp] || "--"} ${dateTimeShow.dayPickUp || "--"},
+                             ${dateTimeShow.yearPickUp || "----"} - Time ${TIME[dateTimeShow.timePickUp] || "--:--"} `}
                         </h2>
                     </div>
 
                     <div className="flex gap-6 justify-start items-center">
                         <h3 className="text-2xl font-bold">Droup-off</h3>
                         <h2 className="text-xl font-semibold">
-                            {` ${MONTH[dateTimeShow.monthDropOff] || "--"} ${dateTimeShow.dayDropOff || "--"}, ${dateTimeShow.yearDropOff || "----"} - Time ${TIME[dateTimeShow.timeDropOff] || "--:--"} `}
+                            {` ${MONTH[dateTimeShow.monthDropOff] || "--"} ${dateTimeShow.dayDropOff || "--"}, 
+                            ${dateTimeShow.yearDropOff || "----"} - Time ${TIME[dateTimeShow.timeDropOff] || "--:--"} `}
                         </h2>
                     </div>
                 </div>
@@ -85,7 +89,7 @@ function BookingCard({ el, handleClikeDelete, handleClickEdit }) {
                 <h2 className="text-2xl font-bold">Status</h2>
                 <h2 className="text-2xl font-bold">RESERVED</h2>
                 <div className="flex gap-2">
-                    <Button text="Edit" color="green" onClick={() => handleClickEdit(el.id)} />
+                    <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />
                     <Button text="Delete" color="red" onClick={() => handleClikeDelete(el.id)} />
                 </div>
             </div>

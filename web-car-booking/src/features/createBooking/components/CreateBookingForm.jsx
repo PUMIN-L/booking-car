@@ -8,26 +8,14 @@ import dayjs from 'dayjs'
 import { useEffect, useState } from "react";
 import carApi from "../../../apis/car-api";
 
-const dataDateAndTimeInit = {
-    datePickUp: "",
-    timePickUp: "",
-    dateDropOff: "",
-    timeDropOff: ""
-}
-
 export default function CreateBookingForm() {
 
-    const { dataCreateBooking, setDataCreateBooking } = useBooking()
+    const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime } = useBooking()
     const { allCarData, setAllCarData } = useCar()
-
-    let car = allCarData
-
-    const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
 
     const handleOnSubmit = (e) => {
         e.preventDefault()
     }
-
 
     const handleClickSearch = () => {
         if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
@@ -48,12 +36,10 @@ export default function CreateBookingForm() {
     }
 
     useEffect(() => {
-        // console.log("dataCreateBooking.date_pick_up", dataCreateBooking.date_pick_up)
-        // console.log("dataCreateBooking.date_drop_off", dataCreateBooking.date_drop_off)
         const getCarSelect = async () => {
             try {
                 const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
-                console.log("selectCar", selectCar)
+                console.log("dataCreateBooking", dataCreateBooking)
                 setAllCarData(selectCar.data.result)
             } catch (error) {
                 console.log(error)
@@ -95,12 +81,11 @@ export default function CreateBookingForm() {
             </div>
             <div className="max-w-[30rem] min-w-[30rem] h-[30rem] p-4 rounded-xl m-auto overflow-auto">
                 {
-                    car.map(el => {
+                    allCarData.map(el => {
                         return <CarCard
                             key={el.id}
                             el={el}
                             img_car={`http://localhost:8288/${el.img_car}`}
-                            dataDateAndTime={dataDateAndTime}
                         />
 
                     })
@@ -109,25 +94,3 @@ export default function CreateBookingForm() {
         </>
     )
 }
-
-
-// const
-// var d = new Date(e.target.value)
-// var day = dayjs(d)
-// console.log(day.$d)
-// const test = dayjs('2018-04-04T16:00:00.000Z')
-// console.log("test", test)
-
-// const handleDatePickUp = (e) => {
-//     // console.log(e.target.value)
-//     const datePickUp = dayjs(e.target.value).toISOString()
-//     // console.log(datePickUp)
-//     setDataCreateBooking({ ...dataCreateBooking, "date_pick_up": datePickUp })
-// }
-
-// const handleTimePickUp = (e) => {
-//     console.log(e.target.value)
-//     const timePickUp = dayjs(`2018-08-22T${e.target.value}`).toISOString()
-//     console.log(timePickUp)
-//     // setDataCreateBooking({ ...dataCreateBooking, "time_pick_up": e.target.value })
-// }

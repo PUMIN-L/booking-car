@@ -32,12 +32,20 @@ export default function BookingContextProvider({ children }) {
         dayDropOff: "",
     }
 
+    const dataDateAndTimeInit = {
+        datePickUp: "",
+        timePickUp: "",
+        dateDropOff: "",
+        timeDropOff: ""
+    }
+
 
 
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
     const [showDataBooking, setShowDataBooking] = useState(showDataBookingInit)
     const [myBooking, setMyBooking] = useState([])
+    const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
     // const [currentBooking, setCurrentBooking] = useState({})
     // const [isBookingLoading, setIsBookingLoading] = useState(true)
 
@@ -102,6 +110,7 @@ export default function BookingContextProvider({ children }) {
         myBooking,
         showDataBooking,
         setMyBooking,
+        dataDateAndTime, setDataDateAndTime
     }} >
 
         {children}

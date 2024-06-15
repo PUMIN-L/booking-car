@@ -25,6 +25,7 @@ export default function ConfirmBooking() {
     const navigate = useNavigate()
 
     const [searchParams] = useSearchParams()
+
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
 
@@ -32,7 +33,7 @@ export default function ConfirmBooking() {
     // console.log("Droppp", dropOff)
 
     const { getCatById, currentCar, saveCarToBooking } = useCar()
-    const { dataCreateBooking, setMyBooking, myBooking } = useBooking()
+    const { dataCreateBooking, setDataCreateBooking, setMyBooking, myBooking, setDataDateAndTime } = useBooking()
 
     const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 
@@ -74,8 +75,17 @@ export default function ConfirmBooking() {
     const handleClickBookNow = async () => {
         const result = await bookingApi.createBooking(dataCreateBooking)
         // console.log(result)
+        setMyBooking([...myBooking, result.data.result])
+
+        setDataCreateBooking(prev => ({ ...prev, date_pick_up: "" }))
+        setDataCreateBooking(prev => ({ ...prev, date_drop_off: "" }))
+
+        setDataDateAndTime(prev => ({ ...prev, datePickUp: "" }))
+        setDataDateAndTime(prev => ({ ...prev, timePickUp: "" }))
+        setDataDateAndTime(prev => ({ ...prev, dateDropOff: "" }))
+        setDataDateAndTime(prev => ({ ...prev, timeDropOff: "" }))
+
         navigate("/myBooking")
-        setMyBooking([result.data.result, ...myBooking])
     }
 
     return (
