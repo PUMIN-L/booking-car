@@ -13,9 +13,7 @@ export default function CreateBookingForm() {
     const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime } = useBooking()
     const { allCarData, setAllCarData } = useCar()
 
-    const handleOnSubmit = (e) => {
-        e.preventDefault()
-    }
+    const [allCars, setAllCars] = useState()
 
     const handleClickSearch = () => {
         if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
@@ -32,10 +30,11 @@ export default function CreateBookingForm() {
     }
 
     useEffect(() => {
+
         const getCarSelect = async () => {
             try {
                 const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
-                setAllCarData(selectCar.data.result)
+                setAllCars(selectCar.data.result)
             } catch (error) {
                 console.log(error)
             }
@@ -44,11 +43,16 @@ export default function CreateBookingForm() {
 
     }, [dataCreateBooking])
 
+    useEffect(() => {
+        setAllCars(allCarData)
+    }, [allCarData])
+
+
     return (
         <>
             <div className="max-w-[60rem] min-w-[30rem] bg-neutral text-slate-300 p-12 rounded-xl m-auto border-4 ">
                 <form
-                    onSubmit={handleOnSubmit}
+                    onSubmit={(e) => e.preventDefault()}
                     className="m-auto  w-[20rem]"
                 >
                     <h1 className="text-x font-bold text-4xl ">Create booking</h1>
@@ -76,7 +80,7 @@ export default function CreateBookingForm() {
             </div>
             <div className="max-w-[30rem] min-w-[30rem] h-[30rem] p-4 rounded-xl m-auto overflow-auto">
                 {
-                    allCarData.map(el => {
+                    allCars?.map(el => {
                         return <CarCard
                             key={el.id}
                             el={el}

@@ -5,7 +5,7 @@ import useCar from "../../../hooks/useCar";
 
 export default function ProtectedRoute({ children }) {
     const { authUser, isAuthUserLoading } = useAuth()
-    const { isLoadingCar } = useCar()
+    // const { isLoadingCar } = useCar()
 
 
     if (!authUser && !isAuthUserLoading) {
@@ -14,7 +14,7 @@ export default function ProtectedRoute({ children }) {
 
     return (
         <>
-            {isLoadingCar && <Spinner />}
+            {/* {isLoadingCar && <Spinner />} */}
             {isAuthUserLoading && <Spinner />}
 
             {children}

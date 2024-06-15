@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import useCar from "../../../hooks/useCar"
 import useBooking from "../../../hooks/useBooking"
+import { GEAR } from "../../../constants"
 
 export default function CarCard({ el }) {
 
@@ -22,7 +23,7 @@ export default function CarCard({ el }) {
 
 
     return (
-        // <Link to={`/createBooking/${el.id}`}>
+
         <div
             role="button"
             onClick={handleOnClickCard}
@@ -37,11 +38,11 @@ export default function CarCard({ el }) {
                 </div>
 
                 <div className="flex gap-2 mt-[-0.7rem]">
-                    <p className="text-neutral-content font-medium text-sm mb-4">{el.transmission}</p>
+                    <p className="text-neutral-content font-medium text-sm mb-4">{GEAR[el.transmission]}</p>
                 </div>
             </div>
         </div>
-        // </Link>
+
 
     )
 }

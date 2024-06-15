@@ -36,7 +36,7 @@ bookingController.deleteBooking = async (req, res, next) => {
     try {
 
         const getBookingById = await bookingService.getBookingById(+req.params.idBooking)
-        if (req.user.id !== getBookingById.user_id) {
+        if (req.user.id !== getBookingById.user_id && !req.user.is_admin) {
             createError(400, "User is Invalid")
         }
         const result = await bookingService.deleteBookingById(+req.params.idBooking)
@@ -59,7 +59,7 @@ bookingController.getBookingById = async (req, res, next) => {
 
 bookingController.updateBooking = async (req, res, next) => {
     try {
-        if (req.user.id !== req.body.user_id) {
+        if (req.user.id !== req.body.user_id && !req.user.is_admin) {
             createError(400, "Invalid user")
         }
         result = await bookingService.updateBooking(+req.body.id, req.body)

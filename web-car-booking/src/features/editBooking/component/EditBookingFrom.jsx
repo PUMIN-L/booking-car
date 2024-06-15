@@ -171,8 +171,3 @@ export default function EditBookingFrom() {
         </section>
     )
 }
-
-
-
-
-

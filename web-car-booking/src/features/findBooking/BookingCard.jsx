@@ -19,7 +19,7 @@ const init = {
     timeDropOff: "",
 }
 
-function BookingCard({ el, handleClikeDelete }) {
+function BookingCard({ el, handleClikeDelete, path }) {
 
     const navigate = useNavigate()
 
@@ -51,13 +51,14 @@ function BookingCard({ el, handleClikeDelete }) {
         // console.log(el.user_id)
         const dataUser = allUser.filter(user => user.id === el.user_id)
         setUser(dataUser)
+        console.log("reeee")
 
-
-    }, [])
+    }, [allUser])
 
 
     const handleClickEdit = (el) => {
-        navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}&carId=${el.car_id}`)
+        navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}
+            &carId=${el.car_id}&path=${path}`)
     }
 
 

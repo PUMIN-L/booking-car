@@ -44,7 +44,8 @@ export default function FindAllBooking() {
             </div>
 
             <div className="  max-w-[65rem] m-auto flex flex-col gap-3 p-5 pb-10 ">
-                {bookingFromSelect.toReversed().map(el => <BookingCard key={el.id} el={el} handleClikeDelete={handleClikeDelete} />)}
+                {bookingFromSelect.toReversed().map(el => <BookingCard key={el.id} el={el} handleClikeDelete={handleClikeDelete}
+                    path="/allBooking" />)}
             </div>
         </>
     )

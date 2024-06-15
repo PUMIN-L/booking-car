@@ -94,3 +94,8 @@ export const DAY = {
     30: "30",
     31: "31"
 }
+
+export const GEAR = {
+    AUTOMATIC_TRANSMISSION: "Automatic Gear",
+    MANUAL_TRANSMISSION: "Manual Gear"
+}
