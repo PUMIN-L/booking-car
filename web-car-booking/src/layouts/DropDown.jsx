@@ -36,6 +36,11 @@ export default function Dropdown() {
         navigate("/myBooking")
     }
 
+    const handleClinkToAllBooking = () => {
+        setOpenDropDown(false)
+        navigate("/allBooking")
+    }
+
     return (
         <>
             <div className="dropdown dropdown-end">
@@ -53,6 +58,7 @@ export default function Dropdown() {
                     <li onClick={handleClinkToHome}><a>Home page</a></li>
                     <li onClick={handleClinkToMyBooking}><a>My booking</a></li>
                     {authUser?.is_admin ? <li onClick={() => setIsOpenModal2(true)}><a>Register Car</a></li> : null}
+                    {authUser?.is_admin ? <li onClick={handleClinkToAllBooking}><a>All Booking</a></li> : null}
                     <li><a>Edit profile</a></li>
 
                     <li onClick={handleClickLogout} ><a>Logout</a></li>

@@ -29,9 +29,6 @@ export default function ConfirmBooking() {
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
 
-    // console.log("PicKKKK", pickUp)
-    // console.log("Droppp", dropOff)
-
     const { getCatById, currentCar, saveCarToBooking } = useCar()
     const { dataCreateBooking, setDataCreateBooking, setMyBooking, myBooking, setDataDateAndTime } = useBooking()
 
@@ -41,49 +38,33 @@ export default function ConfirmBooking() {
         getCatById()
         saveCarToBooking()
         const timeP = dayjs(`${pickUp}`).get('hour')
-        const dayP = dayjs(`${pickUp}`).get("date") // 6 //06
-        const monthP = dayjs(`${pickUp}`).get("month") // 5 //June
-        const yearP = dayjs(`${pickUp}`).get("year") // 2024
+        const dayP = dayjs(`${pickUp}`).get("date")
+        const monthP = dayjs(`${pickUp}`).get("month")
+        const yearP = dayjs(`${pickUp}`).get("year")
 
         const timeD = dayjs(`${dropOff}`).get('hour')
-        const dayD = dayjs(`${dropOff}`).get("date") // 6 //06
-        const monthD = dayjs(`${dropOff}`).get("month") // 5 //June
-        const yearD = dayjs(`${dropOff}`).get("year") // 2024
+        const dayD = dayjs(`${dropOff}`).get("date")
+        const monthD = dayjs(`${dropOff}`).get("month")
+        const yearD = dayjs(`${dropOff}`).get("year")
 
-        // const timeP = dayjs(`${dataCreateBooking.date_pick_up}`).get('hour')
-        // const dayP = dayjs(`${dataCreateBooking.date_pick_up}`).get("date") // 6 //06
-        // const monthP = dayjs(`${dataCreateBooking.date_pick_up}`).get("month") // 5 //June
-        // const yearP = dayjs(`${dataCreateBooking.date_pick_up}`).get("year") // 2024
+        setDateTimeShowConfirm(prev => ({
+            ...prev, yearDropOff: yearD, timePickUp: timeP
+            , dayPickUp: dayP, monthPickUp: monthP, yearPickUp: yearP, timeDropOff: timeD,
+            dayDropOff: dayD, monthDropOff: monthD
+        }))
 
-        // const timeD = dayjs(`${dataCreateBooking.date_drop_off}`).get('hour')
-        // const dayD = dayjs(`${dataCreateBooking.date_drop_off}`).get("date") // 6 //06
-        // const monthD = dayjs(`${dataCreateBooking.date_drop_off}`).get("month") // 5 //June
-        // const yearD = dayjs(`${dataCreateBooking.date_drop_off}`).get("year") // 2024
-
-        setDateTimeShowConfirm(prev => ({ ...prev, timePickUp: timeP }))
-        setDateTimeShowConfirm(prev => ({ ...prev, dayPickUp: dayP }))
-        setDateTimeShowConfirm(prev => ({ ...prev, monthPickUp: monthP }))
-        setDateTimeShowConfirm(prev => ({ ...prev, yearPickUp: yearP }))
-        setDateTimeShowConfirm(prev => ({ ...prev, timeDropOff: timeD }))
-        setDateTimeShowConfirm(prev => ({ ...prev, dayDropOff: dayD }))
-        setDateTimeShowConfirm(prev => ({ ...prev, monthDropOff: monthD }))
-        setDateTimeShowConfirm(prev => ({ ...prev, yearDropOff: yearD }))
-
-        console.log("show", dateTimeShowConfirm)
     }, [])
 
     const handleClickBookNow = async () => {
         const result = await bookingApi.createBooking(dataCreateBooking)
-        // console.log(result)
         setMyBooking([...myBooking, result.data.result])
 
-        setDataCreateBooking(prev => ({ ...prev, date_pick_up: "" }))
-        setDataCreateBooking(prev => ({ ...prev, date_drop_off: "" }))
+        setDataDateAndTime(prev => ({
+            ...prev, timeDropOff: "", date_pick_up: "",
+            date_drop_off: "", datePickUp: "", timePickUp: "", dateDropOff: ""
+        }))
 
-        setDataDateAndTime(prev => ({ ...prev, datePickUp: "" }))
-        setDataDateAndTime(prev => ({ ...prev, timePickUp: "" }))
-        setDataDateAndTime(prev => ({ ...prev, dateDropOff: "" }))
-        setDataDateAndTime(prev => ({ ...prev, timeDropOff: "" }))
+        setDataCreateBooking({ ...dataCreateBooking, date_pick_up: "", date_drop_off: "" })
 
         navigate("/myBooking")
     }
@@ -141,7 +122,7 @@ export default function ConfirmBooking() {
                 </div>
 
             </section>
-            <Footer />
+
         </>
     )
 }

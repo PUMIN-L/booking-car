@@ -10,7 +10,7 @@ import ConfirmBooking from "../features/createBooking/components/ConfirmBooking"
 import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
-import IsBookingLoading from "../features/editBooking/component/IsBookingLoading"
+import FindAllBooking from "../features/findAllBooking/FindAllBooking"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -28,7 +28,8 @@ const router = createBrowserRouter([
             { path: "/", element: <HomePage /> },
             { path: "/createBooking/:carId", element: <CarContextProvider> <ConfirmBooking /></CarContextProvider> },
             { path: "/myBooking", element: <MyBooking /> },
-            { path: "/myBooking/editMyBooking/:bookingId", element: <EditBookingFrom /> }
+            { path: "/myBooking/editMyBooking/:bookingId", element: <EditBookingFrom /> },
+            { path: "/allBooking", element: <FindAllBooking /> }
 
         ]
     },

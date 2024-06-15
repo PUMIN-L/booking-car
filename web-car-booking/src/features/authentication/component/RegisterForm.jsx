@@ -46,20 +46,16 @@ export default function RegisterForm({ setIsOpenModal2 }) {
     const handelSubmit = async (e) => {
         try {
             e.preventDefault()
-            console.log(input["department_id"])
-            console.log(inputErr["department_id"])
-            console.log(input["department_id"] && !inputErr["department_id"])
             const err = validatorRegister(input)
             setCorrectValue(true)
             if (err) {
                 return setInputErr(err)
             }
             setInputErr({ ...errDataUserInit })
-            console.log(input)
             setIsOpenModal2(false)
             await autApi.register(input)
             setCorrectValue(false)
-            closeModal()
+            alert("Create user is success")
             setInput(dataUserInit)
         } catch (error) {
             console.log(error)

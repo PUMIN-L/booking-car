@@ -88,8 +88,6 @@ export default function EditBookingFrom() {
         }
         const newDatePickUp = dayjs(`${valueInputTime.datePickUpInput} ${valueInputTime.timePickUpInput}`).toISOString()
         const newDateDropOff = dayjs(`${valueInputTime.dateDropOffInput} ${valueInputTime.timeDropOffInput}`).toISOString()
-        console.log("newDatePickUp", newDatePickUp)
-        console.log("newDateDropOff", newDateDropOff)
 
         // setNewBooking(prev => ({ ...prev, date_pick_up: newDatePickUp }))
         // setNewBooking(prev => ({ ...prev, date_drop_off: newDateDropOff }))

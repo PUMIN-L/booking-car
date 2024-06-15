@@ -3,7 +3,7 @@ const upload = require("../middleware/upload")
 const carController = require("../controllers/car-controller")
 const { registerCarValidator } = require("../middleware/validator-car-middleware")
 const authenticate = require("../middleware/authenticate-user")
-const bookingController = require("../controllers/booking-controller")
+
 
 const carRouter = express.Router()
 
@@ -16,6 +16,6 @@ carRouter.post(
 
 carRouter.get("/", authenticate, carController.getAllcar)
 carRouter.post("/:carId", authenticate, carController.getCarById)
-carRouter.get("/getAvailableCar", carController.getAvailableCar)
+carRouter.get("/getAvailableCar", authenticate, carController.getAvailableCar)
 
 module.exports = carRouter

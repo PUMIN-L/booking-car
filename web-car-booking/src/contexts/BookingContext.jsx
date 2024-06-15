@@ -2,18 +2,10 @@ import { createContext, useEffect, useState } from "react";
 import { STATUS } from "../constants";
 import useAuth from "../hooks/useAuth";
 import bookingApi from "../apis/booking-api";
-import dayjs from 'dayjs'
-
-
-
 
 export const BookingContext = createContext()
 
-
-
 export default function BookingContextProvider({ children }) {
-
-
 
     const { authUser } = useAuth()
 
@@ -43,11 +35,11 @@ export default function BookingContextProvider({ children }) {
 
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
-    const [showDataBooking, setShowDataBooking] = useState(showDataBookingInit)
+    // const [showDataBooking, setShowDataBooking] = useState(showDataBookingInit)
     const [myBooking, setMyBooking] = useState([])
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
-    // const [currentBooking, setCurrentBooking] = useState({})
-    // const [isBookingLoading, setIsBookingLoading] = useState(true)
+    const [allBooking, setAllBooking] = useState([])
+
 
 
 
@@ -72,34 +64,18 @@ export default function BookingContextProvider({ children }) {
                 const myBooking = await bookingApi.getBookingByUserId(objId)
                 setMyBooking(myBooking.data.myBooking)
             }
-
         }
 
         getBookingByUserId()
 
+        const getAllBookingFunction = async () => {
+            const dataAllBooking = await bookingApi.getAllBooking()
+            // console.log(dataAllBooking.data.allBooking)
+            setAllBooking(dataAllBooking.data.allBooking)
+        }
+        getAllBookingFunction()
+
     }, [authUser])
-
-    // useEffect(() => {
-    //     console.log(dataCreateBooking)
-    //     setShowDataBooking(prev => ({ ...prev, monthPickUp: dataCreateBooking.date_pick_up.split("").slice(5, 7).join("") }))
-    //     setShowDataBooking(prev => ({ ...prev, monthDropOff: dataCreateBooking.date_drop_off.split("").slice(5, 7).join("") }))
-    //     setShowDataBooking(prev => ({ ...prev, dayPickUp: dataCreateBooking.date_pick_up.split("").slice(8, 10).join("") }))
-    //     setShowDataBooking(prev => ({ ...prev, dayDropOff: dataCreateBooking.date_drop_off.split("").slice(8, 10).join("") }))
-    // }, [dataCreateBooking])
-
-    // const getBooking = async (bookingId) => {
-    //     try {
-    //         const booking = await bookingApi.getBookingById(bookingId)
-    //         setCurrentBooking(booking.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     } finally {
-    //         setIsBookingLoading(false)
-    //     }
-
-    // }
-
-
 
 
 
@@ -108,9 +84,9 @@ export default function BookingContextProvider({ children }) {
         setDataCreateBooking,
         dataCreateBooking,
         myBooking,
-        showDataBooking,
         setMyBooking,
-        dataDateAndTime, setDataDateAndTime
+        dataDateAndTime, setDataDateAndTime,
+        allBooking, setAllBooking
     }} >
 
         {children}

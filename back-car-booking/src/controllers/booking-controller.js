@@ -75,6 +75,21 @@ bookingController.updateBooking = async (req, res, next) => {
     }
 }
 
+bookingController.getAllBooking = async (req, res, next) => {
+    try {
+        if (req.user.id !== 1) {
+            createError(400, "You are not admin")
+        }
+        const allBooking = await bookingService.getAllBooking()
+        res.status(200).json({ allBooking })
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+}
+
+
+
 
 
 module.exports = bookingController

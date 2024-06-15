@@ -27,10 +27,6 @@ export default function CreateBookingForm() {
         const dateTimeDropOff = `${dataDateAndTime.dateDropOff} ${dataDateAndTime.timeDropOff}`
         const dateTimeDropOffDayJs = dayjs(dateTimeDropOff).toISOString()
 
-        console.log("this", dataDateAndTime)
-        console.log(dateTimePickUpDayJs)
-        console.log(dateTimeDropOffDayJs)
-
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
     }
@@ -39,7 +35,6 @@ export default function CreateBookingForm() {
         const getCarSelect = async () => {
             try {
                 const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
-                console.log("dataCreateBooking", dataCreateBooking)
                 setAllCarData(selectCar.data.result)
             } catch (error) {
                 console.log(error)

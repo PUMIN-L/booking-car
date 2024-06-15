@@ -7,5 +7,6 @@ bookingService.getBookingByUserId = (userId) => prisma.reservations.findMany({ w
 bookingService.deleteBookingById = (bookingId) => prisma.reservations.delete({ where: { id: bookingId } })
 bookingService.getBookingById = (bookingId) => prisma.reservations.findUnique({ where: { id: bookingId } })
 bookingService.updateBooking = (bookingId, data) => prisma.reservations.update({ where: { id: bookingId }, data })
+bookingService.getAllBooking = () => prisma.reservations.findMany()
 
 module.exports = bookingService

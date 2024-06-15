@@ -10,6 +10,7 @@ bookingRoute.post("/getMyBooking", authenticate, bookingController.getBookingByU
 bookingRoute.delete("/delete/:idBooking", authenticate, bookingController.deleteBooking)
 bookingRoute.get("/myBooking/:bookingId", authenticate, bookingController.getBookingById)
 bookingRoute.patch("/myBooking/updateBooking", authenticate, bookingController.updateBooking)
+bookingRoute.get("/getAllBooking", authenticate, bookingController.getAllBooking)
 
 
 module.exports = bookingRoute

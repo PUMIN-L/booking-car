@@ -18,7 +18,7 @@ const init = {
     timeDropOff: "",
 }
 
-function BookingCard({ el, handleClikeDelete }) {
+function BookingCard({ el, handleClikeDelete, user }) {
 
     const navigate = useNavigate()
 
@@ -45,7 +45,7 @@ function BookingCard({ el, handleClikeDelete }) {
             dayPickUp: dayP, timePickUp: timeP, monthPickUp: monthP,
             yearPickUp: yearP, timeDropOff: timeD, dayDropOff: dayD, monthDropOff: monthD
         })
-        console.log("show", dateTimeShow)
+
     }, [])
 
     const handleClickEdit = (el) => {
@@ -66,6 +66,12 @@ function BookingCard({ el, handleClikeDelete }) {
 
             <div>
                 <div className=" p-2">
+                    {/* USER ***********************/}
+                    <div className="flex gap-6 justify-start items-center  mb-2">
+                        {user ? <h3 className="text-2xl font-bold">{`USER : ${el.user_id}`}</h3> : null}
+                    </div>
+
+
                     <div className="flex gap-6 justify-start items-center  mb-2">
                         <h3 className="text-2xl font-bold">Pick-up</h3>
                         <h2 className="pl-[1.85rem] text-xl font-semibold">

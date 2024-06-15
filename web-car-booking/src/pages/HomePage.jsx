@@ -17,9 +17,9 @@ export default function HomePage() {
             <div className="flex mt-[4rem] max-w-[75rem] m-auto ">
                 <CreateBookingForm />
             </div>
-            <div className="m-auto">
+            {/* <div className="m-auto">
                 <Footer />
-            </div>
+            </div> */}
 
         </>
     )
