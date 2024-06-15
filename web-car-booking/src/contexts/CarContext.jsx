@@ -48,5 +48,6 @@ export default function CarContextProvider({ children }) {
 
 
 
-    return <CarContext.Provider value={{ isLoadingCar, allCarData, setAllCarData, getCatById, currentCar, saveCarToBooking }} >{children}</CarContext.Provider>
+    return <CarContext.Provider value={{ isLoadingCar, allCarData, setAllCarData, getCatById, currentCar, saveCarToBooking }} >
+        {children}</CarContext.Provider>
 }

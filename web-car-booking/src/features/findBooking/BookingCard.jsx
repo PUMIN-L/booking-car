@@ -5,6 +5,7 @@ import useCar from "../../hooks/useCar"
 import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
 import { useNavigate } from "react-router-dom"
+import useUser from "../../hooks/useUser"
 
 
 const init = {
@@ -18,14 +19,16 @@ const init = {
     timeDropOff: "",
 }
 
-function BookingCard({ el, handleClikeDelete, user }) {
+function BookingCard({ el, handleClikeDelete }) {
 
     const navigate = useNavigate()
 
     const { allCarData } = useCar()
+    const { allUser } = useUser()
 
     const [carInformation, setCarInformation] = useState([])
     const [dateTimeShow, setDateTimeShow] = useState(init)
+    const [user, setUser] = useState("")
 
     useEffect(() => {
         setCarInformation(allCarData.filter(item => item.id === el.car_id))
@@ -45,8 +48,13 @@ function BookingCard({ el, handleClikeDelete, user }) {
             dayPickUp: dayP, timePickUp: timeP, monthPickUp: monthP,
             yearPickUp: yearP, timeDropOff: timeD, dayDropOff: dayD, monthDropOff: monthD
         })
+        // console.log(el.user_id)
+        const dataUser = allUser.filter(user => user.id === el.user_id)
+        setUser(dataUser)
+
 
     }, [])
+
 
     const handleClickEdit = (el) => {
         navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}&carId=${el.car_id}`)
@@ -68,7 +76,7 @@ function BookingCard({ el, handleClikeDelete, user }) {
                 <div className=" p-2">
                     {/* USER ***********************/}
                     <div className="flex gap-6 justify-start items-center  mb-2">
-                        {user ? <h3 className="text-2xl font-bold">{`USER : ${el.user_id}`}</h3> : null}
+                        {user ? <h3 className="text-2xl font-bold">{`USER : ${user[0]?.first_name}`}</h3> : null}
                     </div>
 
 

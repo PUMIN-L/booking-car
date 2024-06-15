@@ -8,7 +8,7 @@ export default function UserContextProvider({ children }) {
 
 
 
-    const [alluser, setAllUser] = useState([])
+    const [allUser, setAllUser] = useState([])
     const [isLoagingAllUser, setIsLoadingAllUser] = useState(true)
 
     useEffect(() => {
@@ -16,6 +16,7 @@ export default function UserContextProvider({ children }) {
             try {
                 const dataAllUser = await userApi.getAlluser()
                 setAllUser(dataAllUser.data.allUser)
+                // console.log(alluser)
             } catch (error) {
                 console.log(error)
             } finally {
@@ -27,7 +28,7 @@ export default function UserContextProvider({ children }) {
         fetchAllUser()
     }, [])
 
-    return <UserContext.Provider value={{ isLoagingAllUser, alluser }}>
+    return <UserContext.Provider value={{ isLoagingAllUser, allUser }}>
         {children}
     </UserContext.Provider>
 }

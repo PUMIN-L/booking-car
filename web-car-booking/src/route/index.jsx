@@ -12,7 +12,8 @@ import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
 import FindAllBooking from "../features/findAllBooking/FindAllBooking"
 import UserContextProvider from "../contexts/UserContext"
-import ProtectRouteFindAllBooking from "../features/findAllBooking/ProtectRouteFindAllBooking"
+import ProtectRouteLoadingCar from "../features/findAllBooking/ProtectRouteLoadingCar"
+import ProtectRouteForLoadingCar from "../features/findBooking/ProtectRouteForLoadingCar"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -29,11 +30,11 @@ const router = createBrowserRouter([
         children: [
             { path: "/", element: <HomePage /> },
             { path: "/createBooking/:carId", element: <CarContextProvider> <ConfirmBooking /></CarContextProvider> },
-            { path: "/myBooking", element: <MyBooking /> },
+            { path: "/myBooking", element: <ProtectRouteForLoadingCar><UserContextProvider><MyBooking /></UserContextProvider> </ProtectRouteForLoadingCar> },
             { path: "/myBooking/editMyBooking/:bookingId", element: <EditBookingFrom /> },
             {
-                path: "/allBooking", element: <UserContextProvider> <ProtectRouteFindAllBooking>
-                    <FindAllBooking /></ProtectRouteFindAllBooking> </UserContextProvider>
+                path: "/allBooking", element: <UserContextProvider> <ProtectRouteLoadingCar>
+                    <FindAllBooking /></ProtectRouteLoadingCar> </UserContextProvider>
             }
         ]
     },

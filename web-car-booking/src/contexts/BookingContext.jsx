@@ -17,13 +17,6 @@ export default function BookingContextProvider({ children }) {
         date_drop_off: "",
     }
 
-    const showDataBookingInit = {
-        monthPickUp: "",
-        monthDropOff: "",
-        dayPickUp: "",
-        dayDropOff: "",
-    }
-
     const dataDateAndTimeInit = {
         datePickUp: "",
         timePickUp: "",
@@ -32,16 +25,12 @@ export default function BookingContextProvider({ children }) {
     }
 
 
-
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
-    // const [showDataBooking, setShowDataBooking] = useState(showDataBookingInit)
     const [myBooking, setMyBooking] = useState([])
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
     const [allBooking, setAllBooking] = useState([])
-
-
-
+    const [isLoadingBooking, setIsLoadingBooking] = useState(true)
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {
@@ -68,14 +57,22 @@ export default function BookingContextProvider({ children }) {
 
         getBookingByUserId()
 
+    }, [authUser])
+
+    useEffect(() => {
         const getAllBookingFunction = async () => {
-            const dataAllBooking = await bookingApi.getAllBooking()
-            // console.log(dataAllBooking.data.allBooking)
-            setAllBooking(dataAllBooking.data.allBooking)
+            try {
+                const dataAllBooking = await bookingApi.getAllBooking()
+                setAllBooking(dataAllBooking.data.allBooking)
+            } catch (error) {
+                console.log(error)
+                next(error)
+            } finally {
+                setIsLoadingBooking(false)
+            }
         }
         getAllBookingFunction()
-
-    }, [authUser])
+    }, [])
 
 
 
@@ -86,7 +83,8 @@ export default function BookingContextProvider({ children }) {
         myBooking,
         setMyBooking,
         dataDateAndTime, setDataDateAndTime,
-        allBooking, setAllBooking
+        allBooking, setAllBooking,
+        isLoadingBooking
     }} >
 
         {children}
