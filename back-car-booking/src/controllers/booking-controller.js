@@ -1,5 +1,4 @@
 const bookingService = require("../services/booking-service")
-const carService = require("../services/car-service")
 const createError = require("../utils/create-error")
 
 const bookingController = {}
@@ -12,7 +11,6 @@ bookingController.createBooking = async (req, res, next) => {
             createError(400, "User is Invalid")
         }
         const result = await bookingService.createBooking(req.body)
-        // res.status(200).json({ message: "create booking is OK", result })
         res.status(200).json({ result })
     } catch (error) {
         console.log(error)
@@ -26,7 +24,7 @@ bookingController.getBookingByUserId = async (req, res, next) => {
             createError(400, "User is Invalid")
         }
         const myBooking = await bookingService.getBookingByUserId(req.body.id)
-        // res.status(200).json({ message: "get Bookin By Id id ok", myBooking })
+
         res.status(200).json({ myBooking })
     } catch (error) {
         console.log(error)
@@ -43,9 +41,6 @@ bookingController.deleteBooking = async (req, res, next) => {
         }
         const result = await bookingService.deleteBookingById(+req.params.idBooking)
         res.status(200).json({ result })
-
-
-        // res.status(200).json({ message: "Delete booking is OK", result })
 
     } catch (error) {
         next(error)

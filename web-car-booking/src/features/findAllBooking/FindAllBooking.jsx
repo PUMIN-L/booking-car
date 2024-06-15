@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react"
 import bookingApi from "../../apis/booking-api"
 import useBooking from "../../hooks/useBooking"
+import useUser from "../../hooks/useUser"
 import BookingCard from "../findBooking/BookingCard"
 
 
@@ -8,6 +10,15 @@ export default function FindAllBooking() {
 
 
     const { setAllBooking, allBooking } = useBooking()
+    const { alluser } = useUser()
+
+    const [user, setUser] = useState("")
+
+    useEffect(() => {
+        // console.log(dataUser)
+        const dataUser = alluser.filter(item => item.id = el.user_id)
+        console.log(dataUser)
+    }, [])
 
     const handleClikeDelete = async (bookingId) => {
         const result = await bookingApi.deleteBookingById(bookingId)
