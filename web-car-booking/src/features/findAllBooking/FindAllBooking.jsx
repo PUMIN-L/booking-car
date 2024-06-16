@@ -5,26 +5,36 @@ import useUser from "../../hooks/useUser"
 import BookingCard from "../findBooking/BookingCard"
 import SelectForFindBooking from "./SelectForFindBooking"
 
+// const selectStateInit = {
+//     "selectByUser": false,
+//     "selectByCar": false,
+//     "selectByStatus": false
+// }
 
+const selectValueInit = {
+    "valueSelectByUser": -1,
+    "valueSelectByCar": -1,
+    "valueSelectByStatus": ""
+}
 
 export default function FindAllBooking() {
 
 
     const { setAllBooking, allBooking, bookingFromSelect, setBookingFromSelect, getAllBookingFunctionOutUseEffect } = useBooking()
 
+    const [selectValue, setSelectValue] = useState(selectValueInit)
 
     useEffect(() => {
         getAllBookingFunctionOutUseEffect()
-
     }, [])
 
     useEffect(() => {
         setBookingFromSelect(allBooking)
     }, [allBooking])
 
-    // useEffect(() => {
-    //     console.log(bookingFromSelect)
-    // }, [bookingFromSelect])
+    useEffect(() => {
+        console.log(selectValue)
+    }, [selectValue])
 
 
     const handleClikeDelete = async (bookingId) => {
@@ -35,8 +45,19 @@ export default function FindAllBooking() {
     const handelChangeSelectByUserId = (e) => {
         setBookingFromSelect(allBooking)
         if (e.target.value) {
+            // setSelectState({ ...selectState, selectByUser: true })
             const selectBookingByUser = allBooking.filter(el => el.user_id === +e.target.value)
             setBookingFromSelect(selectBookingByUser)
+            setSelectValue({ ...selectValue, valueSelectByUser: +e.target.value })
+        }
+
+        // if (e.target.value && selectState.selectByCar) {
+        //     const selectBookingByUser = allBooking.filter(el => el.user_id === +e.target.value && )
+        //     setBookingFromSelect(selectBookingByUser)
+        // }
+
+        if (!e.target.value) {
+            setSelectValue({ ...selectValue, valueSelectByUser: -1 })
         }
     }
 
@@ -44,8 +65,14 @@ export default function FindAllBooking() {
 
         setBookingFromSelect(allBooking)
         if (e.target.value) {
+            // setSelectState({ ...selectState, selectByCar: true })
             const selectBookingByUser = allBooking.filter(el => el.car_id === +e.target.value)
             setBookingFromSelect(selectBookingByUser)
+            setSelectValue({ ...selectValue, valueSelectByCar: +e.target.value })
+        }
+
+        if (!e.target.value) {
+            setSelectValue({ ...selectValue, valueSelectByCar: -1 })
         }
 
     }
@@ -53,8 +80,14 @@ export default function FindAllBooking() {
     const handekChangeSelectByStatus = (e) => {
         setBookingFromSelect(allBooking)
         if (e.target.value) {
+            // setSelectState({ ...selectState, selectByStatus: true })
             const selectBookingByStatus = allBooking.filter(el => el.status === e.target.value)
             setBookingFromSelect(selectBookingByStatus)
+            setSelectValue({ ...selectValue, valueSelectByStatus: e.target.value })
+        }
+
+        if (!e.target.value) {
+            setSelectValue({ ...selectValue, valueSelectByStatus: "" })
         }
     }
 
@@ -71,7 +104,6 @@ export default function FindAllBooking() {
 
             <div className="  max-w-[65rem] m-auto flex flex-col gap-3 p-5 pb-10 ">
                 {bookingFromSelect.toReversed().map(el => {
-                    // console.log(el.id)
                     return <BookingCard key={el.id} el={el} handleClikeDelete={handleClikeDelete}
                         path="/allBooking" />
                 })}
