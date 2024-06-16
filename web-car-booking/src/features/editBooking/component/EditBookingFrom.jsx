@@ -28,16 +28,21 @@ export default function EditBookingFrom() {
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
     const carId = searchParams.get("carId")
+    const path = searchParams.get("path")
 
 
     const { allCarData } = useCar()
-    const { myBooking, setMyBooking } = useBooking()
+    const { myBooking, setMyBooking, setAllBooking, allBooking, bookingFromSelect, setBookingFromSelect,
+        getAllBookingFunctionOutUseEffect
+    } = useBooking()
 
     const [currentCar, setCurrentCar] = useState([])
     const [newBooking, setNewBooking] = useState({})
     const [dateTimeShow, setDateTimeShow] = useState(init)
     const [valueInputTime, setValueInputTime] = useState({})
     const [newArr, SetNewArr] = useState([])
+    const [newArrAllBooking, SetNewArrAllBooking] = useState([])
+
 
     useEffect(() => {
         const getBooking = async () => {
@@ -48,6 +53,8 @@ export default function EditBookingFrom() {
         getBooking()
 
     }, [])
+
+
 
     useEffect(() => {
 
@@ -86,6 +93,7 @@ export default function EditBookingFrom() {
         if (!valueInputTime.datePickUpInput || !valueInputTime.timePickUpInput || !valueInputTime.dateDropOffInput || !valueInputTime.timeDropOffInput) {
             return alert("ERROR !! You have to select Date-Time PickUp and Date-Time Drop off")
         }
+        console.log(valueInputTime)
         const newDatePickUp = dayjs(`${valueInputTime.datePickUpInput} ${valueInputTime.timePickUpInput}`).toISOString()
         const newDateDropOff = dayjs(`${valueInputTime.dateDropOffInput} ${valueInputTime.timeDropOffInput}`).toISOString()
 
@@ -93,10 +101,18 @@ export default function EditBookingFrom() {
         // setNewBooking(prev => ({ ...prev, date_drop_off: newDateDropOff }))
 
         const result = await bookingApi.updateBooking({ ...newBooking, date_pick_up: newDatePickUp, date_drop_off: newDateDropOff })
-        const numberListOfArrInMyBooking = myBooking.findIndex(el => el.id === result.data.result.id)
-        newArr[numberListOfArrInMyBooking] = result.data.result
-        setMyBooking([...newArr])
-        navigate("/mybooking")
+
+        if (path === "/myBooking") {
+            const numberListOfArrInMyBooking = myBooking.findIndex(el => el.id === result.data.result.id)
+            newArr[numberListOfArrInMyBooking] = result.data.result
+            setMyBooking([...newArr])
+        }
+
+        if (path === "/allBooking") {
+            getAllBookingFunctionOutUseEffect()
+        }
+
+        navigate(`${path}`)
     }
 
 
@@ -164,7 +180,7 @@ export default function EditBookingFrom() {
                 {/* Button */}
                 <div className="flex flex-col gap-5 mt-8 ">
                     <Button text="EDIT NOW" color="green" onClick={handleClickEditNow} />
-                    <Button text="CANCEL" color="red" onClick={() => navigate("/myBooking")} />
+                    <Button text="CANCEL" color="red" onClick={() => navigate(`${path}`)} />
                 </div>
             </div>
 

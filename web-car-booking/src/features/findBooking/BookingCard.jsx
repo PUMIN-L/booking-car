@@ -6,6 +6,7 @@ import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
 import { useNavigate } from "react-router-dom"
 import useUser from "../../hooks/useUser"
+import useBooking from "../../hooks/useBooking"
 
 
 const init = {
@@ -48,17 +49,15 @@ function BookingCard({ el, handleClikeDelete, path }) {
             dayPickUp: dayP, timePickUp: timeP, monthPickUp: monthP,
             yearPickUp: yearP, timeDropOff: timeD, dayDropOff: dayD, monthDropOff: monthD
         })
-        // console.log(el.user_id)
         const dataUser = allUser.filter(user => user.id === el.user_id)
         setUser(dataUser)
-        console.log("reeee")
 
     }, [allUser])
 
 
     const handleClickEdit = (el) => {
-        navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}
-            &carId=${el.car_id}&path=${path}`)
+        navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}&carId=${el.car_id}&path=${path}`)
+
     }
 
 
@@ -77,7 +76,7 @@ function BookingCard({ el, handleClikeDelete, path }) {
                 <div className=" p-2">
                     {/* USER ***********************/}
                     <div className="flex gap-6 justify-start items-center  mb-2">
-                        {user ? <h3 className="text-2xl font-bold">{`USER : ${user[0]?.first_name}`}</h3> : null}
+                        {path === "/myBooking" ? null : user ? <h3 className="text-2xl font-bold">{`USER : ${user[0]?.first_name}`}</h3> : null}
                     </div>
 
 
@@ -102,7 +101,7 @@ function BookingCard({ el, handleClikeDelete, path }) {
             {/* right */}
             <div className=" min-w-[12rem] p-2 mr-5 flex flex-col gap-2 my-2 ">
                 <h2 className="text-2xl font-bold">Status</h2>
-                <h2 className="text-2xl font-bold">RESERVED</h2>
+                <h2 className="text-2xl font-bold">{el.status}</h2>
                 <div className="flex gap-2">
                     <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />
                     <Button text="Delete" color="red" onClick={() => handleClikeDelete(el.id)} />

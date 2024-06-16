@@ -31,6 +31,7 @@ export default function BookingContextProvider({ children }) {
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
     const [allBooking, setAllBooking] = useState([])
     const [isLoadingBooking, setIsLoadingBooking] = useState(true)
+    const [bookingFromSelect, setBookingFromSelect] = useState([])
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {
@@ -64,6 +65,7 @@ export default function BookingContextProvider({ children }) {
             try {
                 const dataAllBooking = await bookingApi.getAllBooking()
                 setAllBooking(dataAllBooking.data.allBooking)
+                setBookingFromSelect(dataAllBooking.data.allBooking)
             } catch (error) {
                 console.log(error)
                 next(error)
@@ -72,7 +74,20 @@ export default function BookingContextProvider({ children }) {
             }
         }
         getAllBookingFunction()
-    }, [])
+    }, [authUser])
+
+    const getAllBookingFunctionOutUseEffect = async () => {
+        try {
+            const dataAllBooking = await bookingApi.getAllBooking()
+            setAllBooking(dataAllBooking.data.allBooking)
+            setBookingFromSelect(dataAllBooking.data.allBooking)
+        } catch (error) {
+            console.log(error)
+            next(error)
+        } finally {
+            setIsLoadingBooking(false)
+        }
+    }
 
 
 
@@ -84,7 +99,9 @@ export default function BookingContextProvider({ children }) {
         setMyBooking,
         dataDateAndTime, setDataDateAndTime,
         allBooking, setAllBooking,
-        isLoadingBooking
+        isLoadingBooking,
+        bookingFromSelect, setBookingFromSelect,
+        getAllBookingFunctionOutUseEffect
     }} >
 
         {children}

@@ -72,7 +72,7 @@ bookingController.updateBooking = async (req, res, next) => {
 
 bookingController.getAllBooking = async (req, res, next) => {
     try {
-        if (req.user.id !== 1) {
+        if (req.user.id !== 1 && !req.user.is_admin) {
             createError(400, "You are not admin")
         }
         const allBooking = await bookingService.getAllBooking()

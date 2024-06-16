@@ -1,4 +1,4 @@
-export default function Input({ placeholder, name, onChange, value, err, correctValue }) {
+export default function Input({ placeholder, name, onChange, value, err, correctValue, type }) {
     return (
         <>
             <input
@@ -10,6 +10,7 @@ export default function Input({ placeholder, name, onChange, value, err, correct
                 name={name}
                 onChange={onChange}
                 value={value}
+                type={type}
             />
             {err ? <small className="text-red-500 mt-[-1rem]">{err}</small> : null}
         </>

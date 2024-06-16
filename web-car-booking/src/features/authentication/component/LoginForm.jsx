@@ -50,6 +50,7 @@ export default function LoginForm() {
             navigate("/")
         } catch (error) {
             console.log(error)
+            alert("Username or password is invalid")
         }
     }
 
@@ -59,7 +60,7 @@ export default function LoginForm() {
             onSubmit={(e) => handalSubmit(e)}
         >
             <Input onChange={(e) => handalInputLogin(e)} err={errInputLogin.emailOrMobile} name="emailOrMobile" placeholder="Mobile or Email" />
-            <Input onChange={(e) => handalInputLogin(e)} err={errInputLogin.password} name="password" placeholder="Password" />
+            <Input onChange={(e) => handalInputLogin(e)} err={errInputLogin.password} name="password" placeholder="Password" type="password" />
             <Button type="submit" text="LOGIN" color="green" />
         </form>
     )
