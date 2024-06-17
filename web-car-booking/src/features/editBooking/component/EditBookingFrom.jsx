@@ -41,6 +41,9 @@ export default function EditBookingFrom() {
     const [valueInputTime, setValueInputTime] = useState({})
     const [newArr, SetNewArr] = useState([])
 
+    const date = Date()
+    const currentTime = dayjs(date).toISOString()
+
     useEffect(() => {
         const getBooking = async () => {
             const booking = await bookingApi.getBookingById(bookingId)
@@ -65,6 +68,8 @@ export default function EditBookingFrom() {
         const dayD = dayjs(`${dropOff}`).get("date")
         const monthD = dayjs(`${dropOff}`).get("month")
         const yearD = dayjs(`${dropOff}`).get("year")
+
+
 
 
         setDateTimeShow({
@@ -92,8 +97,7 @@ export default function EditBookingFrom() {
         const newDatePickUp = dayjs(`${valueInputTime.datePickUpInput} ${valueInputTime.timePickUpInput}`).toISOString()
         const newDateDropOff = dayjs(`${valueInputTime.dateDropOffInput} ${valueInputTime.timeDropOffInput}`).toISOString()
         // Check time update brfore 5 houes or not
-        const date = Date()
-        const currentTime = dayjs(date).toISOString()
+
         const limitTimeForUpdate = dayjs(currentTime).add(5, 'hour').toISOString()
 
         if (newDatePickUp < limitTimeForUpdate) {
@@ -131,7 +135,9 @@ export default function EditBookingFrom() {
         navigate(`${path}`)
     }
 
-
+    console.log("newBooking.date_drop_off: ", newBooking.date_drop_off)
+    console.log("currentTime: ", currentTime)
+    console.log("true or false", newBooking.date_drop_off > currentTime)
     return (
         <section className="flex gap-16 p-8 m-auto mt-10 border-4 rounded-3xl max-w-[57rem]">
             <div>
@@ -195,7 +201,8 @@ export default function EditBookingFrom() {
                 </div>
                 {/* Button */}
                 <div className="flex flex-col gap-5 mt-8 ">
-                    <Button text="EDIT NOW" color="green" onClick={handleClickEditNow} />
+
+                    {newBooking.date_drop_off > currentTime ? <Button text="EDIT NOW" color="green" onClick={handleClickEditNow} /> : null}
                     <Button text="CANCEL" color="red" onClick={() => navigate(`${path}`)} />
                 </div>
             </div>

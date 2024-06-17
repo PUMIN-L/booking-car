@@ -31,6 +31,9 @@ function BookingCard({ el, handleClikeDelete, path }) {
     const [dateTimeShow, setDateTimeShow] = useState(init)
     const [user, setUser] = useState("")
 
+    const date = Date()
+    const currentTime = dayjs(date).toISOString()
+
     useEffect(() => {
         setCarInformation(allCarData.filter(item => item.id === el.car_id))
 
@@ -103,8 +106,12 @@ function BookingCard({ el, handleClikeDelete, path }) {
                 <h2 className="text-2xl font-bold">Status</h2>
                 <h2 className="text-2xl font-bold">{el.status}</h2>
                 <div className="flex gap-2">
-                    <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />
-                    <Button text="Delete" color="red" onClick={() => handleClikeDelete(el.id)} />
+
+                    {el.date_drop_off < currentTime ? <Button text="View" color="green" onClick={() => handleClickEdit(el)} /> :
+                        <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />}
+
+                    {path === "/myBooking" && el.date_drop_off < currentTime ? null :
+                        <Button text="Delete" color="red" onClick={() => handleClikeDelete(el.id)} />}
                 </div>
             </div>
         </div>
