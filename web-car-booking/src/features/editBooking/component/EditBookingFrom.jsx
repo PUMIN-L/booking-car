@@ -7,6 +7,7 @@ import TimeForm from "../../createBooking/components/TimeForm"
 import { DAY, MONTHNUM, TIME } from "../../../constants"
 import dayjs from 'dayjs'
 import useBooking from "../../../hooks/useBooking"
+import carApi from "../../../apis/car-api"
 
 const init = {
     dayPickUp: "",
@@ -32,17 +33,13 @@ export default function EditBookingFrom() {
 
 
     const { allCarData } = useCar()
-    const { myBooking, setMyBooking, setAllBooking, allBooking, bookingFromSelect, setBookingFromSelect,
-        getAllBookingFunctionOutUseEffect
-    } = useBooking()
+    const { myBooking, setMyBooking, getAllBookingFunctionOutUseEffect } = useBooking()
 
     const [currentCar, setCurrentCar] = useState([])
     const [newBooking, setNewBooking] = useState({})
     const [dateTimeShow, setDateTimeShow] = useState(init)
     const [valueInputTime, setValueInputTime] = useState({})
     const [newArr, SetNewArr] = useState([])
-    const [newArrAllBooking, SetNewArrAllBooking] = useState([])
-
 
     useEffect(() => {
         const getBooking = async () => {
@@ -53,8 +50,6 @@ export default function EditBookingFrom() {
         getBooking()
 
     }, [])
-
-
 
     useEffect(() => {
 
@@ -93,13 +88,34 @@ export default function EditBookingFrom() {
         if (!valueInputTime.datePickUpInput || !valueInputTime.timePickUpInput || !valueInputTime.dateDropOffInput || !valueInputTime.timeDropOffInput) {
             return alert("ERROR !! You have to select Date-Time PickUp and Date-Time Drop off")
         }
-        console.log(valueInputTime)
+
         const newDatePickUp = dayjs(`${valueInputTime.datePickUpInput} ${valueInputTime.timePickUpInput}`).toISOString()
         const newDateDropOff = dayjs(`${valueInputTime.dateDropOffInput} ${valueInputTime.timeDropOffInput}`).toISOString()
+        // Check time update brfore 5 houes or not
+        const date = Date()
+        const currentTime = dayjs(date).toISOString()
+        const limitTimeForUpdate = dayjs(currentTime).add(5, 'hour').toISOString()
+
+        if (newDatePickUp < limitTimeForUpdate) {
+            return alert("Reservations must be made 5 hours before pick-up time")
+        }
+
+        if (newDateDropOff <= newDatePickUp) {
+            return alert("Time drop off must be more than time pick up")
+        }
+
+        if (newBooking.date_pick_up !== newDatePickUp || newBooking.date_drop_off !== newDateDropOff) {
+            const resAvailableCar = await carApi.getAvailableCar(newDatePickUp, newDateDropOff)
+            const availableCar = resAvailableCar.data.result
+            const isThisCarIsAvailable = availableCar.findIndex(el => el.id === +carId)
+
+            if (isThisCarIsAvailable < 0) {
+                return alert("This car is'n available at this time, You have to change the time")
+            }
+        }
 
         // setNewBooking(prev => ({ ...prev, date_pick_up: newDatePickUp }))
         // setNewBooking(prev => ({ ...prev, date_drop_off: newDateDropOff }))
-
         const result = await bookingApi.updateBooking({ ...newBooking, date_pick_up: newDatePickUp, date_drop_off: newDateDropOff })
 
         if (path === "/myBooking") {

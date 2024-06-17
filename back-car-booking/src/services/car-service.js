@@ -17,7 +17,7 @@ left join (select car_id from reservations where date_pick_up >= ${pickUp}  and 
  left join (select car_id from reservations where date_pick_up >= ${pickUp} and date_drop_off > ${dropOff} 
  and date_pick_up <= ${dropOff} and date_drop_off > ${pickUp} ) as t4 on t4.car_id = c.id
  left join (select car_id,id from reservations where date_pick_up = ${pickUp} and date_drop_off = ${dropOff})
- as t5 on t4.car_id = c.id where t1.car_id is null and t2.car_id is null and t3.car_id is null and t4.car_id is null and t5.car_id is null  `
+ as t5 on t4.car_id = c.id where t1.car_id is null and t2.car_id is null and t3.car_id is null and t4.car_id is null and t5.car_id is null`
 
 module.exports = carService
 

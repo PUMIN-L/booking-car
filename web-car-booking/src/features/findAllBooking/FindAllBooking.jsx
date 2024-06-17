@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react"
 import bookingApi from "../../apis/booking-api"
 import useBooking from "../../hooks/useBooking"
-import useUser from "../../hooks/useUser"
 import BookingCard from "../findBooking/BookingCard"
 import SelectForFindBooking from "./SelectForFindBooking"
-
-// const selectStateInit = {
-//     "selectByUser": false,
-//     "selectByCar": false,
-//     "selectByStatus": false
-// }
 
 const selectValueInit = {
     "valueSelectByUser": -1,
@@ -32,8 +25,62 @@ export default function FindAllBooking() {
         setBookingFromSelect(allBooking)
     }, [allBooking])
 
+
     useEffect(() => {
-        console.log(selectValue)
+
+        if (selectValue.valueSelectByUser > -1
+            && selectValue.valueSelectByCar > -1 && selectValue.valueSelectByStatus !== "") {
+
+            const selectBooking = allBooking.filter(el => el.user_id === selectValue.valueSelectByUser &&
+                el.car_id === selectValue.valueSelectByCar && el.status === selectValue.valueSelectByStatus)
+            setBookingFromSelect(selectBooking)
+            return
+        }
+
+        if (selectValue.valueSelectByUser > -1 && selectValue.valueSelectByCar > -1) {
+
+            const selectBooking = allBooking.filter(el => el.user_id === selectValue.valueSelectByUser &&
+                el.car_id === selectValue.valueSelectByCar)
+            setBookingFromSelect(selectBooking)
+            return
+        }
+
+        if (selectValue.valueSelectByUser > -1 && selectValue.valueSelectByStatus !== "") {
+
+            const selectBooking = allBooking.filter(el => el.user_id === selectValue.valueSelectByUser &&
+                el.status === selectValue.valueSelectByStatus)
+            setBookingFromSelect(selectBooking)
+            return
+        }
+
+        if (selectValue.valueSelectByCar > -1 && selectValue.valueSelectByStatus !== "") {
+
+            const selectBooking = allBooking.filter(el => el.car_id === selectValue.valueSelectByCar &&
+                el.status === selectValue.valueSelectByStatus)
+            setBookingFromSelect(selectBooking)
+            return
+        }
+
+        //  ----------------------------------------------------------- // 
+
+        if (selectValue.valueSelectByUser > -1) {
+            const selectBookingByUser = allBooking.filter(el => el.user_id === selectValue.valueSelectByUser)
+            setBookingFromSelect(selectBookingByUser)
+            return
+        }
+
+        if (selectValue.valueSelectByCar > -1) {
+            const selectBookingByCar = allBooking.filter(el => el.car_id === selectValue.valueSelectByCar)
+            setBookingFromSelect(selectBookingByCar)
+            return
+        }
+
+        if (selectValue.valueSelectByStatus !== "") {
+            const selectBookingByStatus = allBooking.filter(el => el.status === selectValue.valueSelectByStatus)
+            setBookingFromSelect(selectBookingByStatus)
+            return
+        }
+
     }, [selectValue])
 
 
@@ -43,52 +90,37 @@ export default function FindAllBooking() {
     }
 
     const handelChangeSelectByUserId = (e) => {
+
         setBookingFromSelect(allBooking)
+
         if (e.target.value) {
-            // setSelectState({ ...selectState, selectByUser: true })
-            const selectBookingByUser = allBooking.filter(el => el.user_id === +e.target.value)
-            setBookingFromSelect(selectBookingByUser)
-            setSelectValue({ ...selectValue, valueSelectByUser: +e.target.value })
+            return setSelectValue({ ...selectValue, valueSelectByUser: +e.target.value })
         }
 
-        // if (e.target.value && selectState.selectByCar) {
-        //     const selectBookingByUser = allBooking.filter(el => el.user_id === +e.target.value && )
-        //     setBookingFromSelect(selectBookingByUser)
-        // }
-
-        if (!e.target.value) {
-            setSelectValue({ ...selectValue, valueSelectByUser: -1 })
-        }
+        setSelectValue({ ...selectValue, valueSelectByUser: -1 })
     }
 
     const handelChangeSelectByCar = (e) => {
 
         setBookingFromSelect(allBooking)
+
         if (e.target.value) {
-            // setSelectState({ ...selectState, selectByCar: true })
-            const selectBookingByUser = allBooking.filter(el => el.car_id === +e.target.value)
-            setBookingFromSelect(selectBookingByUser)
-            setSelectValue({ ...selectValue, valueSelectByCar: +e.target.value })
+            return setSelectValue({ ...selectValue, valueSelectByCar: +e.target.value })
         }
 
-        if (!e.target.value) {
-            setSelectValue({ ...selectValue, valueSelectByCar: -1 })
-        }
 
+        setSelectValue({ ...selectValue, valueSelectByCar: -1 })
     }
 
     const handekChangeSelectByStatus = (e) => {
+
         setBookingFromSelect(allBooking)
+
         if (e.target.value) {
-            // setSelectState({ ...selectState, selectByStatus: true })
-            const selectBookingByStatus = allBooking.filter(el => el.status === e.target.value)
-            setBookingFromSelect(selectBookingByStatus)
-            setSelectValue({ ...selectValue, valueSelectByStatus: e.target.value })
+            return setSelectValue({ ...selectValue, valueSelectByStatus: e.target.value })
         }
 
-        if (!e.target.value) {
-            setSelectValue({ ...selectValue, valueSelectByStatus: "" })
-        }
+        setSelectValue({ ...selectValue, valueSelectByStatus: "" })
     }
 
     return (

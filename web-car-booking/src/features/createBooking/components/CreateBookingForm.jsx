@@ -11,7 +11,7 @@ import carApi from "../../../apis/car-api";
 export default function CreateBookingForm() {
 
     const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime } = useBooking()
-    const { allCarData, setAllCarData } = useCar()
+    const { allCarData } = useCar()
 
     const [allCars, setAllCars] = useState()
 
@@ -25,9 +25,35 @@ export default function CreateBookingForm() {
         const dateTimeDropOff = `${dataDateAndTime.dateDropOff} ${dataDateAndTime.timeDropOff}`
         const dateTimeDropOffDayJs = dayjs(dateTimeDropOff).toISOString()
 
+        const date = Date()
+        const currentTime = dayjs(date).toISOString()
+        const limitTimeForBook = dayjs(currentTime).add(5, 'hour').toISOString()
+
+        if (dateTimePickUpDayJs < limitTimeForBook) {
+            return alert("Reservations must be made 5 hours before pick-up time")
+        }
+
+        if (dateTimeDropOffDayJs <= dateTimePickUpDayJs) {
+            return alert("Time drop off must be more than time pick up")
+        }
+
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
     }
+
+    // useEffect(() => {
+    // const date = Date()
+    // console.log(date)
+    // const currentTime = dayjs(date).toISOString()
+    // console.log("Current Time :", currentTime)
+    // console.log("Current Time :", currentTime)
+    // const testTime1 = dayjs("2024-06-17T02:00:00.000Z").toISOString()
+    // console.log("testTime 1 :", testTime1)
+    // const testTime2 = dayjs("2024-06-17T02:00:00.000Z").subtract(2, 'hour').toISOString()
+    // console.log("testTime 2 :", testTime2)
+    // const testTime2 = dayjs(currentTime).subtract(2, 'hour').toISOString()
+    // console.log("testTime 2 :", testTime2)
+    // }, [])
 
     useEffect(() => {
 
