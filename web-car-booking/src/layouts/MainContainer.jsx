@@ -6,7 +6,7 @@ export default function MainContainer() {
     return (
         <div>
             < Header />
-            <div className="min-h-[50vh]">
+            <div className="min-h-[55vh]">
                 <Outlet />
             </div>
             <Footer />

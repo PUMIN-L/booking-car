@@ -6,7 +6,6 @@ import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
 import { useNavigate } from "react-router-dom"
 import useUser from "../../hooks/useUser"
-import useBooking from "../../hooks/useBooking"
 
 
 const init = {

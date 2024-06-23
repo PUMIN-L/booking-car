@@ -10,10 +10,11 @@ import carApi from "../../../apis/car-api";
 
 export default function CreateBookingForm() {
 
-    const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime } = useBooking()
+    const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime, isShowText, setIsShowText } = useBooking()
     const { allCarData } = useCar()
 
     const [allCars, setAllCars] = useState()
+    // const [isShowText, setIsShowText] = useState()
 
     const handleClickSearch = () => {
         if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
@@ -39,21 +40,9 @@ export default function CreateBookingForm() {
 
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
+        setIsShowText(true)
     }
 
-    // useEffect(() => {
-    // const date = Date()
-    // console.log(date)
-    // const currentTime = dayjs(date).toISOString()
-    // console.log("Current Time :", currentTime)
-    // console.log("Current Time :", currentTime)
-    // const testTime1 = dayjs("2024-06-17T02:00:00.000Z").toISOString()
-    // console.log("testTime 1 :", testTime1)
-    // const testTime2 = dayjs("2024-06-17T02:00:00.000Z").subtract(2, 'hour').toISOString()
-    // console.log("testTime 2 :", testTime2)
-    // const testTime2 = dayjs(currentTime).subtract(2, 'hour').toISOString()
-    // console.log("testTime 2 :", testTime2)
-    // }, [])
 
     useEffect(() => {
 
@@ -73,6 +62,30 @@ export default function CreateBookingForm() {
         setAllCars(allCarData)
     }, [allCarData])
 
+    // useEffect(() => {
+    //     setIsShowText(false)
+    // }, [dataDateAndTime])
+
+    const handleChangeDatePickUp = (e) => {
+        setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })
+        setIsShowText(false)
+    }
+
+    const handleChangeTimePickUp = (e) => {
+        setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })
+        setIsShowText(false)
+    }
+
+    const handleChangeDateDropOff = (e) => {
+        setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })
+        setIsShowText(false)
+    }
+
+    const handleChangeTimeDropOff = (e) => {
+        setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })
+        setIsShowText(false)
+    }
+
 
     return (
         <>
@@ -84,16 +97,16 @@ export default function CreateBookingForm() {
                     <h1 className="text-x font-bold text-4xl ">Create booking</h1>
                     <TimeForm
                         title="Pick-up (date and time)"
-                        onChangeDate={e => setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })}
-                        onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })}
+                        onChangeDate={e => handleChangeDatePickUp(e)}
+                        onChangeTime={(e) => handleChangeTimePickUp(e)}
                         valueDay={dataDateAndTime.datePickUp}
                         valueTime={dataDateAndTime.timePickUp}
 
                     />
                     <TimeForm
                         title="Return (date and time)"
-                        onChangeDate={(e) => setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })}
-                        onChangeTime={(e) => setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })}
+                        onChangeDate={(e) => handleChangeDateDropOff(e)}
+                        onChangeTime={(e) => handleChangeTimeDropOff(e)}
                         valueDay={dataDateAndTime.dateDropOff}
                         valueTime={dataDateAndTime.timeDropOff}
 
@@ -104,18 +117,23 @@ export default function CreateBookingForm() {
 
                 </form>
             </div>
-            <div className="max-w-[30rem] min-w-[30rem] h-[30rem] p-4 rounded-xl m-auto overflow-auto">
-                {
-                    allCars?.map(el => {
-                        return <CarCard
-                            key={el.id}
-                            el={el}
-                            img_car={`http://localhost:8288/${el.img_car}`}
-                        />
+            <div >
+                {isShowText ? <h1 className="text-2xl font-bold  pl-[20rem]">Choose a car..</h1> : ""}
+                <div className="max-w-[30rem] min-w-[30rem] h-[30rem] p-4 rounded-xl m-auto overflow-auto ">
 
-                    })
-                }
+                    {
+                        allCars?.map(el => {
+                            return <CarCard
+                                key={el.id}
+                                el={el}
+                                img_car={`http://localhost:8288/${el.img_car}`}
+                            />
+
+                        })
+                    }
+                </div>
             </div>
+
         </>
     )
 }

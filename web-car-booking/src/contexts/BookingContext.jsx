@@ -32,6 +32,7 @@ export default function BookingContextProvider({ children }) {
     const [allBooking, setAllBooking] = useState([])
     const [isLoadingBooking, setIsLoadingBooking] = useState(true)
     const [bookingFromSelect, setBookingFromSelect] = useState([])
+    const [isShowText, setIsShowText] = useState()
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {
@@ -101,7 +102,8 @@ export default function BookingContextProvider({ children }) {
         allBooking, setAllBooking,
         isLoadingBooking,
         bookingFromSelect, setBookingFromSelect,
-        getAllBookingFunctionOutUseEffect
+        getAllBookingFunctionOutUseEffect,
+        isShowText, setIsShowText
     }} >
 
         {children}
