@@ -4,11 +4,20 @@ import { useNavigate } from "react-router-dom"
 import Modal2 from "../components/Modal2"
 import RegisterCarContainer from "../features/createCAr/component/RegisterCarContainer"
 import { useEffect, useState } from "react"
+import useBooking from "../hooks/useBooking"
+
+const dataDateAndTimeInit = {
+    datePickUp: "",
+    timePickUp: "",
+    dateDropOff: "",
+    timeDropOff: ""
+}
 
 
 export default function Dropdown() {
 
     const { logout, authUser, isOpenModal2, setIsOpenModal2 } = useAuth()
+    const { setIsShowText, setDataDateAndTime } = useBooking()
     const navigate = useNavigate()
 
     const [openDropDown, setOpenDropDown] = useState(true)
@@ -16,6 +25,8 @@ export default function Dropdown() {
     const handleClickLogout = () => {
         logout()
         navigate("/login")
+        setIsShowText(false)
+        setDataDateAndTime(dataDateAndTimeInit) // --- 
     }
 
     useEffect(() => {
