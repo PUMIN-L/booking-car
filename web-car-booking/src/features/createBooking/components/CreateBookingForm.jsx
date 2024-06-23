@@ -62,10 +62,6 @@ export default function CreateBookingForm() {
         setAllCars(allCarData)
     }, [allCarData])
 
-    // useEffect(() => {
-    //     setIsShowText(false)
-    // }, [dataDateAndTime])
-
     const handleChangeDatePickUp = (e) => {
         setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })
         setIsShowText(false)

@@ -27,9 +27,9 @@ export default function CarCard({ el }) {
         <div
             role="button"
             onClick={handleOnClickCard}
-            className="card lg:card-side shadow-xl my-5 rounded-2xl bg-black h-40 ">
+            className="card lg:card-side shadow-xl my-5 rounded-2xl  h-40 ">
             <figure><img src={img_car} alt="Album" /></figure>
-            <div className="card-body min-w-[14rem]  bg-neutral-950 rounded-r-2xl border border-neutral flex flex-col align-middle">
+            <div className="card-body min-w-[14rem] bg-neutral-950 rounded-r-2xl border border-neutral flex flex-col align-middle">
                 <div>
                     <h2 className="card-title text-neutral-content text-2xl">{`${el.brand} ${el.model}`}</h2>
                 </div>

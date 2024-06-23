@@ -77,22 +77,22 @@ function BookingCard({ el, handleClikeDelete, path }) {
             <div>
                 <div className=" p-2">
                     {/* USER ***********************/}
-                    <div className="flex gap-6 justify-start items-center  mb-2">
-                        {path === "/myBooking" ? null : user ? <h3 className="text-2xl font-bold">{`USER : ${user[0]?.first_name}`}</h3> : null}
+                    <div className="flex gap-6 justify-start items-center mb-2 ">
+                        {path === "/myBooking" ? null : user ? <h3 className="text-2xl font-bold text-neutral-content">{`USER : ${user[0]?.first_name}`}</h3> : null}
                     </div>
 
 
                     <div className="flex gap-6 justify-start items-center  mb-2">
-                        <h3 className="text-2xl font-bold">Pick-up</h3>
-                        <h2 className="pl-[1.85rem] text-xl font-semibold">
+                        <h3 className="text-2xl font-bold text-neutral-content">Pick-up</h3>
+                        <h2 className="pl-[1.85rem] text-xl text-neutral-content font-semibold">
                             {` ${MONTH[dateTimeShow.monthPickUp] || "--"} ${dateTimeShow.dayPickUp || "--"},
                              ${dateTimeShow.yearPickUp || "----"} - Time ${TIME[dateTimeShow.timePickUp] || "--:--"} `}
                         </h2>
                     </div>
 
                     <div className="flex gap-6 justify-start items-center">
-                        <h3 className="text-2xl font-bold">Droup-off</h3>
-                        <h2 className="text-xl font-semibold">
+                        <h3 className="text-2xl font-bold text-neutral-content">Droup-off</h3>
+                        <h2 className="text-xl font-semibold text-neutral-content">
                             {` ${MONTH[dateTimeShow.monthDropOff] || "--"} ${dateTimeShow.dayDropOff || "--"}, 
                             ${dateTimeShow.yearDropOff || "----"} - Time ${TIME[dateTimeShow.timeDropOff] || "--:--"} `}
                         </h2>
@@ -102,8 +102,8 @@ function BookingCard({ el, handleClikeDelete, path }) {
             </div>
             {/* right */}
             <div className=" min-w-[12rem] p-2 mr-5 flex flex-col gap-2 my-2 ">
-                <h2 className="text-2xl font-bold">Status</h2>
-                <h2 className="text-2xl font-bold">{el.status}</h2>
+                <h2 className="text-2xl font-bold text-neutral-content">Status</h2>
+                <h2 className="text-2xl font-bold text-neutral-content">{el.status}</h2>
                 <div className="flex gap-2">
 
                     {el.date_drop_off < currentTime ? <Button text="View" color="green" onClick={() => handleClickEdit(el)} /> :
