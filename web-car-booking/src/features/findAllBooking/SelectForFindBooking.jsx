@@ -24,8 +24,14 @@ export default function SelectForFindBooking({ nameSelect, onChange, w }) {
                     className=""
                 >{nameSelect}</option>
 
-                {nameSelect === "Select By User" ? allUser.map(user => <option key={user.id}
-                    value={user.id}>{user.first_name}</option>) : null}
+                {nameSelect === "Select By User" ? allUser.map(user => {
+
+                    if (user.id !== 12) {
+                        return <option key={user.id}
+                            value={user.id}>{user.first_name}</option>
+                    }
+
+                }) : null}
 
                 {nameSelect === "Select By Car" ? allCarData.map(car => <option key={car.id}
                     value={car.id}>{`${car.brand} ${car.model} ${car.license_plate}`}</option>) : null}
@@ -40,7 +46,6 @@ export default function SelectForFindBooking({ nameSelect, onChange, w }) {
                 ) : null}
 
                 Select Status
-
             </select>
         </div>
     )

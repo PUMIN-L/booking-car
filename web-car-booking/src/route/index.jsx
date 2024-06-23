@@ -11,9 +11,11 @@ import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
 import FindAllBooking from "../features/findAllBooking/FindAllBooking"
+
 import UserContextProvider from "../contexts/UserContext"
 import ProtectRouteLoadingCar from "../features/findAllBooking/ProtectRouteLoadingCar"
 import ProtectRouteForLoadingCar from "../features/findBooking/ProtectRouteForLoadingCar"
+import AdminConfirmBooking from "../features/adminConfirmBooking/AdminConfirmBooking"
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -35,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: "/allBooking", element: <UserContextProvider> <ProtectRouteLoadingCar>
                     <FindAllBooking /></ProtectRouteLoadingCar> </UserContextProvider>
+            },
+            {
+                path: "/adminConfirmBooking", element: <UserContextProvider><ProtectRouteLoadingCar>
+                    <AdminConfirmBooking /></ProtectRouteLoadingCar></UserContextProvider>
             }
         ]
     },

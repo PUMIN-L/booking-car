@@ -36,20 +36,25 @@ export default function Dropdown() {
 
     }, [openDropDown])
 
-    const handleClinkToHome = () => {
+    const handleClickToHome = () => {
         setOpenDropDown(false)
         navigate("/")
 
     }
 
-    const handleClinkToMyBooking = () => {
+    const handleClickToMyBooking = () => {
         setOpenDropDown(false)
         navigate("/myBooking")
     }
 
-    const handleClinkToAllBooking = () => {
+    const handleClickToAllBooking = () => {
         setOpenDropDown(false)
         navigate("/allBooking")
+    }
+
+    const handleClickConfirmBooking = () => {
+        setOpenDropDown(false)
+        navigate("/adminConfirmBooking")
     }
 
     return (
@@ -66,10 +71,11 @@ export default function Dropdown() {
                             Profile
                         </a>
                     </li>
-                    <li onClick={handleClinkToHome}><a>Home page</a></li>
-                    <li onClick={handleClinkToMyBooking}><a>My booking</a></li>
+                    <li onClick={handleClickToHome}><a>Home page</a></li>
+                    <li onClick={handleClickToMyBooking}><a>My booking</a></li>
                     {authUser?.is_admin ? <li onClick={() => setIsOpenModal2(true)}><a>Register Car</a></li> : null}
-                    {authUser?.is_admin ? <li onClick={handleClinkToAllBooking}><a>All Booking</a></li> : null}
+                    {authUser?.is_admin ? <li onClick={handleClickToAllBooking}><a>All Booking</a></li> : null}
+                    {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null}
                     <li><a>Edit profile</a></li>
 
                     <li onClick={handleClickLogout} ><a>Logout</a></li>

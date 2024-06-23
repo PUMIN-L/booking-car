@@ -14,7 +14,6 @@ export default function CreateBookingForm() {
     const { allCarData } = useCar()
 
     const [allCars, setAllCars] = useState()
-    // const [isShowText, setIsShowText] = useState()
 
     const handleClickSearch = () => {
         if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
