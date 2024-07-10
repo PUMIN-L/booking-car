@@ -1,11 +1,10 @@
 
 import { useEffect, useState } from "react"
 import Button from "../../components/Button"
-import useCar from "../../hooks/useCar"
 import { MONTH, TIME } from "../../constants"
 import dayjs from 'dayjs'
 import { useNavigate } from "react-router-dom"
-import useUser from "../../hooks/useUser"
+import { useStore } from "../../store/useStore"
 
 
 const init = {
@@ -23,8 +22,10 @@ function BookingCard({ el, handleClikeDelete, path }) {
 
     const navigate = useNavigate()
 
-    const { allCarData } = useCar()
-    const { allUser } = useUser()
+
+    const allCarDataStore = useStore((state) => state.allCar.data)
+    const allUserStore = useStore((state) => state.allUser.data)
+
 
     const [carInformation, setCarInformation] = useState([])
     const [dateTimeShow, setDateTimeShow] = useState(init)
@@ -34,7 +35,7 @@ function BookingCard({ el, handleClikeDelete, path }) {
     const currentTime = dayjs(date).toISOString()
 
     useEffect(() => {
-        setCarInformation(allCarData.filter(item => item.id === el.car_id))
+        setCarInformation(allCarDataStore.filter(item => item.id === el.car_id))
 
         const timeP = dayjs(`${el.date_pick_up}`).get('hour')
         const dayP = dayjs(`${el.date_pick_up}`).get("date")
@@ -51,10 +52,10 @@ function BookingCard({ el, handleClikeDelete, path }) {
             dayPickUp: dayP, timePickUp: timeP, monthPickUp: monthP,
             yearPickUp: yearP, timeDropOff: timeD, dayDropOff: dayD, monthDropOff: monthD
         })
-        const dataUser = allUser.filter(user => user.id === el.user_id)
+        const dataUser = allUserStore.filter(user => user.id === el.user_id)
         setUser(dataUser)
 
-    }, [allUser])
+    }, [allUserStore])
 
 
     const handleClickEdit = (el) => {

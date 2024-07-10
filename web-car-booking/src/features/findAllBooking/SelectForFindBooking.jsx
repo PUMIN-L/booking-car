@@ -1,10 +1,12 @@
 import useCar from "../../hooks/useCar"
-import useUser from "../../hooks/useUser"
+import { useStore } from "../../store/useStore"
 
 
 export default function SelectForFindBooking({ nameSelect, onChange, w }) {
 
-    const { allUser } = useUser()
+
+    const allUserStore = useStore(state => state.allUser.data)
+
     const { allCarData } = useCar()
 
     const width = {
@@ -24,7 +26,7 @@ export default function SelectForFindBooking({ nameSelect, onChange, w }) {
                     className=""
                 >{nameSelect}</option>
 
-                {nameSelect === "Select By User" ? allUser.map(user => {
+                {nameSelect === "Select By User" ? allUserStore.map(user => {
 
                     if (user.id !== 12) {
                         return <option key={user.id}

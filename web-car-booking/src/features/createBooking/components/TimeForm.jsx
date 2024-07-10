@@ -9,7 +9,6 @@ export default function TimeForm({ title = "", onChangeDate, name, onChangeTime,
             <div className="flex gap-2 ">
 
                 <input
-
                     className="p-2 rounded-lg focus:outline-blue-900 grow"
                     type="date"
                     id={name}

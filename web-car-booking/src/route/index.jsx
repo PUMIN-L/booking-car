@@ -11,11 +11,12 @@ import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
 import FindAllBooking from "../features/findAllBooking/FindAllBooking"
-
-import UserContextProvider from "../contexts/UserContext"
-import ProtectRouteLoadingCar from "../features/findAllBooking/ProtectRouteLoadingCar"
-import ProtectRouteForLoadingCar from "../features/findBooking/ProtectRouteForLoadingCar"
 import AdminConfirmBooking from "../features/adminConfirmBooking/AdminConfirmBooking"
+import Completion from "../features/payment/Completion"
+import Payment from "../features/payment/Payment"
+import PaymentPage from "../pages/PaymentPage"
+
+
 
 
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
@@ -31,17 +32,14 @@ const router = createBrowserRouter([
         element: (<ProtectedRoute><MainContainer /></ProtectedRoute>),
         children: [
             { path: "/", element: <HomePage /> },
-            { path: "/createBooking/:carId", element: <CarContextProvider> <ConfirmBooking /></CarContextProvider> },
-            { path: "/myBooking", element: <ProtectRouteForLoadingCar><UserContextProvider><MyBooking /></UserContextProvider> </ProtectRouteForLoadingCar> },
+            { path: "/createBooking/:carId", element: <ConfirmBooking /> },
+            { path: "/myBooking", element: <MyBooking /> },
             { path: "/myBooking/editMyBooking/:bookingId", element: <EditBookingFrom /> },
-            {
-                path: "/allBooking", element: <UserContextProvider> <ProtectRouteLoadingCar>
-                    <FindAllBooking /></ProtectRouteLoadingCar> </UserContextProvider>
-            },
-            {
-                path: "/adminConfirmBooking", element: <UserContextProvider><ProtectRouteLoadingCar>
-                    <AdminConfirmBooking /></ProtectRouteLoadingCar></UserContextProvider>
-            }
+            { path: "/allBooking", element: <FindAllBooking /> },
+            { path: "/adminConfirmBooking", element: <AdminConfirmBooking /> },
+            { path: "/payment", element: <PaymentPage /> },
+            { path: "/completion", element: <Completion /> },
+
         ]
     },
     {

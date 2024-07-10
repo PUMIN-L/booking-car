@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@stripe/react-stripe-js':
+        specifier: ^2.7.3
+        version: 2.7.3(@stripe/stripe-js@4.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@stripe/stripe-js':
+        specifier: ^4.1.0
+        version: 4.1.0
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -26,6 +32,12 @@ importers:
       react-router-dom:
         specifier: ^6.23.1
         version: 6.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      stripe:
+        specifier: ^16.2.0
+        version: 16.2.0
+      zustand:
+        specifier: ^4.5.4
+        version: 4.5.4(@types/react@18.3.3)(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: ^18.2.66
@@ -35,7 +47,7 @@ importers:
         version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.2.1
-        version: 4.3.0(vite@5.2.12)
+        version: 4.3.0(vite@5.2.12(@types/node@20.14.10))
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -62,7 +74,7 @@ importers:
         version: 3.4.3
       vite:
         specifier: ^5.2.0
-        version: 5.2.12
+        version: 5.2.12(@types/node@20.14.10)
 
 packages:
 
@@ -481,6 +493,17 @@ packages:
   '@sideway/pinpoint@2.0.0':
     resolution: {integrity: sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==}
 
+  '@stripe/react-stripe-js@2.7.3':
+    resolution: {integrity: sha512-05t6oY7cmAJt7asknmeoI4z4GnutgKRZ7dcdTWCkeYclONzIRMuMTiyjBMQ/q3I2sdNizSl25YZ8G6Lg4nN1aw==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+
+  '@stripe/stripe-js@4.1.0':
+    resolution: {integrity: sha512-HhstGRUz/4JdbZpb26OcOf8Qb/cFR02arvHvgz4sPFLSnI6ZNHC53Jc6JP/FGNwxtrF719YyUnK0gGy4oyhucQ==}
+    engines: {node: '>=12.16'}
+
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -495,6 +518,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/node@20.14.10':
+    resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -1442,6 +1468,10 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
+  qs@6.12.3:
+    resolution: {integrity: sha512-AWJm14H1vVaO/iNZ4/hO+HyaTehuy9nRqVdkTqlJt0HWvBiBIEXFmb4C0DGeYo3Xes9rrEW+TxHsaigCbN5ICQ==}
+    engines: {node: '>=0.6'}
+
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
@@ -1596,6 +1626,10 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
+  stripe@16.2.0:
+    resolution: {integrity: sha512-kNHb5x6mlQJ8V92Afn+F+uyHG3U0+Mc1pOYxDkbEh/kI3oF63URnUt6dwTQthELYWBy04arerm2XjwgtzEPDEA==}
+    engines: {node: '>=12.*'}
+
   sucrase@3.35.0:
     resolution: {integrity: sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -1666,6 +1700,9 @@ packages:
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   update-browserslist-db@1.0.16:
     resolution: {integrity: sha512-KVbTxlBYlckhF5wgfyZXTWnMn7MMZjMu9XG8bPlliUOP9ThaF4QnhP8qrjrH7DRzHfSk0oQv1wToW+iA5GajEQ==}
     hasBin: true
@@ -1674,6 +1711,11 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
+
+  use-sync-external-store@1.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -1752,6 +1794,21 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zustand@4.5.4:
+    resolution: {integrity: sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      '@types/react': '>=16.8'
+      immer: '>=9.0.6'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
 
 snapshots:
 
@@ -2106,6 +2163,15 @@ snapshots:
 
   '@sideway/pinpoint@2.0.0': {}
 
+  '@stripe/react-stripe-js@2.7.3(@stripe/stripe-js@4.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@stripe/stripe-js': 4.1.0
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
+  '@stripe/stripe-js@4.1.0': {}
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.24.6
@@ -2129,6 +2195,10 @@ snapshots:
 
   '@types/estree@1.0.5': {}
 
+  '@types/node@20.14.10':
+    dependencies:
+      undici-types: 5.26.5
+
   '@types/prop-types@15.7.12': {}
 
   '@types/react-dom@18.3.0':
@@ -2142,14 +2212,14 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react@4.3.0(vite@5.2.12)':
+  '@vitejs/plugin-react@4.3.0(vite@5.2.12(@types/node@20.14.10))':
     dependencies:
       '@babel/core': 7.24.6
       '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.24.6)
       '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.24.6)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.12
+      vite: 5.2.12(@types/node@20.14.10)
     transitivePeerDependencies:
       - supports-color
 
@@ -3205,6 +3275,10 @@ snapshots:
 
   punycode@2.3.1: {}
 
+  qs@6.12.3:
+    dependencies:
+      side-channel: 1.0.6
+
   queue-microtask@1.2.3: {}
 
   react-dom@18.3.1(react@18.3.1):
@@ -3412,6 +3486,11 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
+  stripe@16.2.0:
+    dependencies:
+      '@types/node': 20.14.10
+      qs: 6.12.3
+
   sucrase@3.35.0:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
@@ -3522,6 +3601,8 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
+  undici-types@5.26.5: {}
+
   update-browserslist-db@1.0.16(browserslist@4.23.0):
     dependencies:
       browserslist: 4.23.0
@@ -3532,14 +3613,19 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
+  use-sync-external-store@1.2.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   util-deprecate@1.0.2: {}
 
-  vite@5.2.12:
+  vite@5.2.12(@types/node@20.14.10):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.18.0
     optionalDependencies:
+      '@types/node': 20.14.10
       fsevents: 2.3.3
 
   which-boxed-primitive@1.0.2:
@@ -3605,3 +3691,10 @@ snapshots:
   yaml@2.4.3: {}
 
   yocto-queue@0.1.0: {}
+
+  zustand@4.5.4(@types/react@18.3.3)(react@18.3.1):
+    dependencies:
+      use-sync-external-store: 1.2.0(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.3
+      react: 18.3.1

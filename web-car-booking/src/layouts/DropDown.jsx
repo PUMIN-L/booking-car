@@ -57,6 +57,11 @@ export default function Dropdown() {
         navigate("/adminConfirmBooking")
     }
 
+    const handleClickPayment = () => {
+        setOpenDropDown(false)
+        navigate("/payment")
+    }
+
     return (
         <>
             <div className="dropdown dropdown-end">
@@ -76,6 +81,7 @@ export default function Dropdown() {
                     {authUser?.is_admin ? <li onClick={() => setIsOpenModal2(true)}><a>Register Car</a></li> : null}
                     {authUser?.is_admin ? <li onClick={handleClickToAllBooking}><a>All Booking</a></li> : null}
                     {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null}
+                    <li onClick={handleClickPayment} ><a>Payment</a></li>
                     <li><a>Edit profile</a></li>
 
                     <li onClick={handleClickLogout} ><a>Logout</a></li>

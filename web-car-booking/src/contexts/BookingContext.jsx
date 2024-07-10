@@ -17,14 +17,13 @@ export default function BookingContextProvider({ children }) {
         date_drop_off: "",
     }
 
+
     const dataDateAndTimeInit = {
         datePickUp: "",
         timePickUp: "",
         dateDropOff: "",
         timeDropOff: ""
     }
-
-
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
     const [myBooking, setMyBooking] = useState([])
@@ -33,6 +32,7 @@ export default function BookingContextProvider({ children }) {
     const [isLoadingBooking, setIsLoadingBooking] = useState(true)
     const [bookingFromSelect, setBookingFromSelect] = useState([])
     const [isShowText, setIsShowText] = useState()
+
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {

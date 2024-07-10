@@ -1,12 +1,12 @@
-import { useNavigate, useSearchParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import Button from "../../../components/Button";
 import useCar from "../../../hooks/useCar";
 import { useEffect, useState } from "react";
 import useBooking from "../../../hooks/useBooking";
-import Footer from "./Footer";
 import { MONTH, TIME } from "../../../constants";
 import bookingApi from "../../../apis/booking-api";
 import dayjs from 'dayjs'
+import { useStore } from "../../../store/useStore";
 
 
 const init = {
@@ -23,20 +23,21 @@ const init = {
 export default function ConfirmBooking() {
 
     const navigate = useNavigate()
-
+    let { carId } = useParams()
     const [searchParams] = useSearchParams()
 
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
 
-    const { getCatById, currentCar, saveCarToBooking } = useCar()
+    const { saveCarToBooking } = useCar()
+    const currentCarStore = useStore((store) => store.currentCar)
     const { dataCreateBooking, setDataCreateBooking, setMyBooking, myBooking, setDataDateAndTime } = useBooking()
 
     const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 
     useEffect(() => {
-        getCatById()
-        saveCarToBooking()
+        // saveCarToBooking()
+        setDataCreateBooking({ ...dataCreateBooking, car_id: +carId })
         const timeP = dayjs(`${pickUp}`).get('hour')
         const dayP = dayjs(`${pickUp}`).get("date")
         const monthP = dayjs(`${pickUp}`).get("month")
@@ -47,6 +48,8 @@ export default function ConfirmBooking() {
         const monthD = dayjs(`${dropOff}`).get("month")
         const yearD = dayjs(`${dropOff}`).get("year")
 
+        setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dropOff, "date_pick_up": pickUp }))
+
         setDateTimeShowConfirm(prev => ({
             ...prev, yearDropOff: yearD, timePickUp: timeP
             , dayPickUp: dayP, monthPickUp: monthP, yearPickUp: yearP, timeDropOff: timeD,
@@ -56,6 +59,8 @@ export default function ConfirmBooking() {
     }, [])
 
     const handleClickBookNow = async () => {
+        console.log("dataCreateBooking", dataCreateBooking)
+
         const result = await bookingApi.createBooking(dataCreateBooking)
         setMyBooking([...myBooking, result.data.result])
 
@@ -75,16 +80,16 @@ export default function ConfirmBooking() {
                 <div>
                     <h1
                         className=" font-bold text-5xl m-2"
-                    >{`${currentCar.brand} ${currentCar.model}`}
+                    >{`${currentCarStore.brand} ${currentCarStore.model}`}
                     </h1>
                     <h2
                         className="font-bold text-4xl m-2"
                     >
-                        {`${currentCar.license_plate}`}
+                        {`${currentCarStore.license_plate}`}
                     </h2>
                     <div className="m-2 mt-5 w-[25rem] h-[20rem]  rounded-2xl">
                         <img
-                            src={`http://localhost:8288/${currentCar.img_car}`}
+                            src={`http://localhost:8288/${currentCarStore.img_car}`}
                             className="max-w-[30rem] max-h-[20rem] w-full object-cover rounded-2xl"
                         />
                     </div>
