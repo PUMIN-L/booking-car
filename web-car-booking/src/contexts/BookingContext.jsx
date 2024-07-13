@@ -28,8 +28,8 @@ export default function BookingContextProvider({ children }) {
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
     const [myBooking, setMyBooking] = useState([])
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
-    const [allBooking, setAllBooking] = useState([])
-    const [isLoadingBooking, setIsLoadingBooking] = useState(true)
+    const [allBooking, setAllBooking] = useState([]) //
+    const [isLoadingBooking, setIsLoadingBooking] = useState(true) // 2
     const [bookingFromSelect, setBookingFromSelect] = useState([])
     const [isShowText, setIsShowText] = useState()
 
@@ -69,7 +69,7 @@ export default function BookingContextProvider({ children }) {
                 setBookingFromSelect(dataAllBooking.data.allBooking)
             } catch (error) {
                 console.log(error)
-                next(error)
+
             } finally {
                 setIsLoadingBooking(false)
             }

@@ -1,13 +1,10 @@
-import useCar from "../../hooks/useCar"
 import { useStore } from "../../store/useStore"
 
 
 export default function SelectForFindBooking({ nameSelect, onChange, w }) {
 
-
     const allUserStore = useStore(state => state.allUser.data)
-
-    const { allCarData } = useCar()
+    const allCarData = useStore((state) => state.allCar.data)
 
     const width = {
         "16rem": "min-w-[16rem]"

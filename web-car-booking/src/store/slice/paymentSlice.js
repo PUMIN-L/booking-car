@@ -1,6 +1,6 @@
 import departmentApi from "../../apis/department-api"
 
-export const paymentSlice = (set, get) => ({
+export const paymentSlice = (set) => ({
     amountMoney: 0,
     loadingMoney: false,
     getMoney: async () => {
@@ -8,8 +8,6 @@ export const paymentSlice = (set, get) => ({
             set(() => ({ loadingMoney: true }))
             const response = await departmentApi.getMoney()
             set(() => ({ amountMoney: response.data.result }))
-            const amountMoney = get().amountMoney
-            console.log("amountMoney = ", amountMoney)
         } catch (error) {
             console.log(error)
         } finally {

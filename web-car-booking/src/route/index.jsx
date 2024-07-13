@@ -17,8 +17,6 @@ import Payment from "../features/payment/Payment"
 import PaymentPage from "../pages/PaymentPage"
 
 
-
-
 // const MainContainer = lazy(() => import("../layouts/MainContainer"))
 // const LoginPage = lazy(() => import("../pages/LoginPage"))
 // const HomePage = lazy(() => import("../pages/HomePage"))

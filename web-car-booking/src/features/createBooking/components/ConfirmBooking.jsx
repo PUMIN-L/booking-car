@@ -29,14 +29,13 @@ export default function ConfirmBooking() {
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
 
-    const { saveCarToBooking } = useCar()
+
     const currentCarStore = useStore((store) => store.currentCar)
     const { dataCreateBooking, setDataCreateBooking, setMyBooking, myBooking, setDataDateAndTime } = useBooking()
 
     const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 
     useEffect(() => {
-        // saveCarToBooking()
         setDataCreateBooking({ ...dataCreateBooking, car_id: +carId })
         const timeP = dayjs(`${pickUp}`).get('hour')
         const dayP = dayjs(`${pickUp}`).get("date")

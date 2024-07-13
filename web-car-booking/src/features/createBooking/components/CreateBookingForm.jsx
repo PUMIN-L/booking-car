@@ -3,7 +3,6 @@ import Button from "../../../components/Button";
 import CarCard from "./CarCard";
 import TimeForm from "./TimeForm";
 import useBooking from "../../../hooks/useBooking"
-import useCar from "../../../hooks/useCar";
 import dayjs from 'dayjs'
 import { useEffect, useState } from "react";
 import carApi from "../../../apis/car-api";
@@ -12,7 +11,11 @@ import { useStore } from "../../../store/useStore";
 export default function CreateBookingForm() {
 
     const allCarDataStore = useStore((state) => state.allCar.data)
-    const { dataCreateBooking, setDataCreateBooking, dataDateAndTime, setDataDateAndTime, isShowText, setIsShowText } = useBooking()
+    const isShowText = useStore((state) => state.isShowText)
+    const setIsShowText = useStore((state) => state.setIsShowText)
+    const dataDateAndTime = useStore((state) => state.dataDateAndTime)
+    const setDataDateAndTime = useStore((state) => state.setDataDateAndTime)
+    const { dataCreateBooking, setDataCreateBooking } = useBooking()
 
     const [allCars, setAllCars] = useState()
 
@@ -62,25 +65,29 @@ export default function CreateBookingForm() {
     }, [allCarDataStore, dataDateAndTime])
 
     const handleChangeDatePickUp = (e) => {
-        setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })
+        // setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })
+        setDataDateAndTime({ datePickUp: e.target.value })
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": "" }))
         setIsShowText(false)
     }
 
     const handleChangeTimePickUp = (e) => {
-        setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })
+        // setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })
+        setDataDateAndTime({ timePickUp: e.target.value })
         setDataCreateBooking(prev => ({ ...prev, "date_pick_up": "" }))
         setIsShowText(false)
     }
 
     const handleChangeDateDropOff = (e) => {
-        setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })
+        // setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })
+        setDataDateAndTime({ dateDropOff: e.target.value })
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": "" }))
         setIsShowText(false)
     }
 
     const handleChangeTimeDropOff = (e) => {
-        setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })
+        // setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })
+        setDataDateAndTime({ timeDropOff: e.target.value })
         setDataCreateBooking(prev => ({ ...prev, "date_drop_off": "" }))
         setIsShowText(false)
     }
@@ -105,7 +112,6 @@ export default function CreateBookingForm() {
         }
 
     }, [])
-
 
     return (
         <>
@@ -140,8 +146,8 @@ export default function CreateBookingForm() {
             <div >
                 {isShowText ? <h1 className="text-2xl font-bold  pl-[20rem]">Choose a car..</h1> : ""}
                 <div className="max-w-[30rem] min-w-[30rem] h-[30rem] p-4 rounded-xl m-auto overflow-auto ">
-
                     {
+
                         allCars?.map(el => {
                             return <CarCard
                                 key={el.id}

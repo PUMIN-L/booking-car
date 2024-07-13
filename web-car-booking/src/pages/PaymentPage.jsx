@@ -29,7 +29,7 @@ export default function PaymentPage() {
                 onSubmit={(e) => handleClickCheckout(e)}
                 className="p-5 rounded-lg flex flex-col items-center justify-center"
             >
-                <p>How mush do you want tp pay?</p>
+                <p>How mush do you want to pay?</p>
                 <input
                     type="number"
                     className="p-2 rounded-lg min-w-[14rem] mt-5"

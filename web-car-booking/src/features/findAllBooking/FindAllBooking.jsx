@@ -3,6 +3,8 @@ import bookingApi from "../../apis/booking-api"
 import useBooking from "../../hooks/useBooking"
 import BookingCard from "../findBooking/BookingCard"
 import SelectForFindBooking from "./SelectForFindBooking"
+import { useStore } from "../../store/useStore"
+import Spinner from "../../components/Spiner"
 
 const selectValueInit = {
     "valueSelectByUser": -1,
@@ -13,7 +15,14 @@ const selectValueInit = {
 export default function FindAllBooking() {
 
 
-    const { setAllBooking, allBooking, bookingFromSelect, setBookingFromSelect, getAllBookingFunctionOutUseEffect } = useBooking()
+    const { setAllBooking, bookingFromSelect, setBookingFromSelect, getAllBookingFunctionOutUseEffect } = useBooking()
+    const fetchAllBooking = useStore((state) => state.fetchAllBooking)
+    const allBookingLoadings = useStore((state) => state.allBooking.allBookingLoading)
+    const allBooking = useStore((state) => state.allBooking.data)
+
+    useEffect(() => {
+        fetchAllBooking()
+    }, [])
 
     const [selectValue, setSelectValue] = useState(selectValueInit)
 
@@ -121,6 +130,10 @@ export default function FindAllBooking() {
         }
 
         setSelectValue({ ...selectValue, valueSelectByStatus: "" })
+    }
+
+    if (allBookingLoadings) {
+        return <Spinner />
     }
 
     return (

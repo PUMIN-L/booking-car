@@ -4,9 +4,9 @@ import Input from "../../../components/Input";
 import useAuth from "../../../hooks/useAuth";
 import { ImageIcon } from "../../../icons";
 import Select from "../../../components/Select";
-import carApi from "../../../apis/car-api";
 import validatorRegisterCar from "../validator/car-register-validator";
-import useCar from "../../../hooks/useCar";
+import { useStore } from "../../../store/useStore";
+import Spinner from "../../../components/Spiner";
 
 export default function RegisterCarFrom() {
 
@@ -31,7 +31,8 @@ export default function RegisterCarFrom() {
     }
 
     const { setIsOpenModal2 } = useAuth()
-    const { setAllCarData, allCarData } = useCar()
+    const setAllCarDataAfterAddNewCar = useStore((state) => state.setAllCarDataAfterAddNewCar)
+    const registerCarLoading = useStore((state) => state.carLoading)
 
     const fileEl = useRef()
 
@@ -64,8 +65,7 @@ export default function RegisterCarFrom() {
             data.append("transmission", input.transmission)
             data.append("color", input.color)
             data.append("license_plate", input.license_plate)
-            const res = await carApi.registerCar(data)
-            setAllCarData([...allCarData, res.data.dataNewCar])
+            setAllCarDataAfterAddNewCar(data)
             setCorrectValue(false)
             setFile(null)
             setInput(inputInit)
