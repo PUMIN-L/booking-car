@@ -7,13 +7,11 @@ import MainContainer from "../layouts/MainContainer"
 import LoginPage from "../pages/LoginPage"
 import HomePage from "../pages/HomePage"
 import ConfirmBooking from "../features/createBooking/components/ConfirmBooking";
-import CarContextProvider from "../contexts/CarContext"
 import MyBooking from "../features/findBooking/MyBooking"
 import EditBookingFrom from "../features/editBooking/component/EditBookingFrom"
 import FindAllBooking from "../features/findAllBooking/FindAllBooking"
 import AdminConfirmBooking from "../features/adminConfirmBooking/AdminConfirmBooking"
 import Completion from "../features/payment/Completion"
-import Payment from "../features/payment/Payment"
 import PaymentPage from "../pages/PaymentPage"
 
 

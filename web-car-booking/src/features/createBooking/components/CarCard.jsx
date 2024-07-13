@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom"
-import useBooking from "../../../hooks/useBooking"
 import { GEAR } from "../../../constants"
 import { useStore } from "../../../store/useStore"
 
@@ -7,12 +6,10 @@ export default function CarCard({ el }) {
 
     const navigate = useNavigate()
 
-    const { dataCreateBooking, setDataCreateBooking } = useBooking()
-
+    const dataCreateBooking = useStore((state) => state.dataCreateBooking)
     const setCurrentCar = useStore((state) => state.getCatById)
 
-    const img_car = `http://localhost:8288/${el.img_car}`
-
+    const img_car = `${import.meta.env.VITE_API_URL}/${el.img_car}`
 
     const handleOnClickCard = () => {
         if (!dataCreateBooking.date_pick_up || !dataCreateBooking.date_drop_off) {
@@ -21,7 +18,6 @@ export default function CarCard({ el }) {
         setCurrentCar(el.id)
         navigate(`/createBooking/${el.id}/?pickUp=${dataCreateBooking.date_pick_up}&dropOff=${dataCreateBooking.date_drop_off}`)
     }
-
 
     return (
 

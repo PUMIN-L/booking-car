@@ -1,12 +1,13 @@
-
-import Button from "../../../components/Button";
-import CarCard from "./CarCard";
-import TimeForm from "./TimeForm";
-import useBooking from "../../../hooks/useBooking"
 import dayjs from 'dayjs'
 import { useEffect, useState } from "react";
+import CarCard from "./CarCard";
+import TimeForm from "./TimeForm";
 import carApi from "../../../apis/car-api";
+import { STATUS } from "../../../constants";
+import useAuth from "../../../hooks/useAuth";
+import Button from "../../../components/Button";
 import { useStore } from "../../../store/useStore";
+
 
 export default function CreateBookingForm() {
 
@@ -15,12 +16,36 @@ export default function CreateBookingForm() {
     const setIsShowText = useStore((state) => state.setIsShowText)
     const dataDateAndTime = useStore((state) => state.dataDateAndTime)
     const setDataDateAndTime = useStore((state) => state.setDataDateAndTime)
-    const { dataCreateBooking, setDataCreateBooking } = useBooking()
+    const dataCreateBooking = useStore((state) => state.dataCreateBooking)
+    const setDataCreateBooking = useStore((state) => state.setDataCreateBooking)
 
     const [allCars, setAllCars] = useState()
+    const { authUser } = useAuth()
+
+    useEffect(() => {
+        setDataCreateBooking({ user_id: authUser?.id, status: STATUS.RESERVED })
+    }, [authUser])
+
+    useEffect(() => {
+        const getCarSelect = async () => {
+            try {
+                const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
+                setAllCars(selectCar.data.result)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getCarSelect()
+
+    }, [dataCreateBooking])
+
+    useEffect(() => {
+        setAllCars(allCarDataStore)
+    }, [allCarDataStore, dataDateAndTime])
 
     const handleClickSearch = () => {
-        if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp || !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
+        if (!dataDateAndTime.datePickUp || !dataDateAndTime.timePickUp ||
+            !dataDateAndTime.dateDropOff || !dataDateAndTime.timeDropOff) {
             return alert("ERROR !! You have to select Date-Time PickUp and Date-Time Drop off")
         }
         const dateTimePickUp = `${dataDateAndTime.datePickUp} ${dataDateAndTime.timePickUp}`
@@ -40,55 +65,31 @@ export default function CreateBookingForm() {
         if (dateTimeDropOffDayJs <= dateTimePickUpDayJs) {
             return alert("Time drop off must be more than time pick up")
         }
-        setDataCreateBooking(prev => ({ ...prev, "date_pick_up": dateTimePickUpDayJs }))
-        setDataCreateBooking(prev => ({ ...prev, "date_drop_off": dateTimeDropOffDayJs }))
+        setDataCreateBooking({ "date_pick_up": dateTimePickUpDayJs, "date_drop_off": dateTimeDropOffDayJs })
         setIsShowText(true)
     }
 
-
-    useEffect(() => {
-
-        const getCarSelect = async () => {
-            try {
-                const selectCar = await carApi.getAvailableCar(dataCreateBooking.date_pick_up, dataCreateBooking.date_drop_off)
-                setAllCars(selectCar.data.result)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getCarSelect()
-
-    }, [dataCreateBooking])
-
-    useEffect(() => {
-        setAllCars(allCarDataStore)
-    }, [allCarDataStore, dataDateAndTime])
-
     const handleChangeDatePickUp = (e) => {
-        // setDataDateAndTime({ ...dataDateAndTime, datePickUp: e.target.value })
         setDataDateAndTime({ datePickUp: e.target.value })
-        setDataCreateBooking(prev => ({ ...prev, "date_pick_up": "" }))
+        setDataCreateBooking({ "date_pick_up": "" })
         setIsShowText(false)
     }
 
     const handleChangeTimePickUp = (e) => {
-        // setDataDateAndTime({ ...dataDateAndTime, timePickUp: e.target.value })
         setDataDateAndTime({ timePickUp: e.target.value })
-        setDataCreateBooking(prev => ({ ...prev, "date_pick_up": "" }))
+        setDataCreateBooking({ "date_pick_up": "" })
         setIsShowText(false)
     }
 
     const handleChangeDateDropOff = (e) => {
-        // setDataDateAndTime({ ...dataDateAndTime, dateDropOff: e.target.value })
         setDataDateAndTime({ dateDropOff: e.target.value })
-        setDataCreateBooking(prev => ({ ...prev, "date_drop_off": "" }))
+        setDataCreateBooking({ "date_drop_off": "" })
         setIsShowText(false)
     }
 
     const handleChangeTimeDropOff = (e) => {
-        // setDataDateAndTime({ ...dataDateAndTime, timeDropOff: e.target.value })
         setDataDateAndTime({ timeDropOff: e.target.value })
-        setDataCreateBooking(prev => ({ ...prev, "date_drop_off": "" }))
+        setDataCreateBooking({ "date_drop_off": "" })
         setIsShowText(false)
     }
 
@@ -110,7 +111,6 @@ export default function CreateBookingForm() {
         if (dataCreateBooking.date_pick_up && dataCreateBooking.date_drop_off) {
             setIsShowText(true)
         }
-
     }, [])
 
     return (
@@ -127,7 +127,6 @@ export default function CreateBookingForm() {
                         onChangeTime={(e) => handleChangeTimePickUp(e)}
                         valueDay={dataDateAndTime.datePickUp}
                         valueTime={dataDateAndTime.timePickUp}
-
                     />
                     <TimeForm
                         title="Return (date and time)"

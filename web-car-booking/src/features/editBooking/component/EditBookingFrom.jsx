@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 import bookingApi from "../../../apis/booking-api"
 import Button from "../../../components/Button"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
-import useCar from "../../../hooks/useCar"
 import TimeForm from "../../createBooking/components/TimeForm"
 import { DAY, MONTHNUM, TIME } from "../../../constants"
 import dayjs from 'dayjs'
 import useBooking from "../../../hooks/useBooking"
 import carApi from "../../../apis/car-api"
+import { useStore } from "../../../store/useStore"
+
 
 const init = {
     dayPickUp: "",
@@ -31,9 +32,10 @@ export default function EditBookingFrom() {
     const carId = searchParams.get("carId")
     const path = searchParams.get("path")
 
-
-    const { allCarData } = useCar()
-    const { myBooking, setMyBooking, getAllBookingFunctionOutUseEffect } = useBooking()
+    const allCarData = useStore((state) => state.allCar.data)
+    const myBooking = useStore((state) => state.myBooking)
+    const setMyBooking = useStore((state) => state.setMyBooking)
+    const { getAllBookingFunctionOutUseEffect } = useBooking()
 
     const [currentCar, setCurrentCar] = useState([])
     const [newBooking, setNewBooking] = useState({})
@@ -118,8 +120,6 @@ export default function EditBookingFrom() {
             }
         }
 
-        // setNewBooking(prev => ({ ...prev, date_pick_up: newDatePickUp }))
-        // setNewBooking(prev => ({ ...prev, date_drop_off: newDateDropOff }))
         const result = await bookingApi.updateBooking({ ...newBooking, date_pick_up: newDatePickUp, date_drop_off: newDateDropOff })
 
         if (path === "/myBooking") {
@@ -131,13 +131,9 @@ export default function EditBookingFrom() {
         if (path === "/allBooking") {
             getAllBookingFunctionOutUseEffect()
         }
-
         navigate(`${path}`)
     }
 
-    console.log("newBooking.date_drop_off: ", newBooking.date_drop_off)
-    console.log("currentTime: ", currentTime)
-    console.log("true or false", newBooking.date_drop_off > currentTime)
     return (
         <section className="flex gap-16 p-8 m-auto mt-10 border-4 rounded-3xl max-w-[57rem]">
             <div>

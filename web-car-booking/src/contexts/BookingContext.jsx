@@ -24,6 +24,7 @@ export default function BookingContextProvider({ children }) {
         dateDropOff: "",
         timeDropOff: ""
     }
+
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
     const [myBooking, setMyBooking] = useState([])
@@ -56,9 +57,7 @@ export default function BookingContextProvider({ children }) {
                 setMyBooking(myBooking.data.myBooking)
             }
         }
-
         getBookingByUserId()
-
     }, [authUser])
 
     useEffect(() => {
