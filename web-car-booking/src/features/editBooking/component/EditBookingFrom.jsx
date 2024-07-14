@@ -5,10 +5,8 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import TimeForm from "../../createBooking/components/TimeForm"
 import { DAY, MONTHNUM, TIME } from "../../../constants"
 import dayjs from 'dayjs'
-import useBooking from "../../../hooks/useBooking"
 import carApi from "../../../apis/car-api"
 import { useStore } from "../../../store/useStore"
-
 
 const init = {
     dayPickUp: "",
@@ -33,15 +31,14 @@ export default function EditBookingFrom() {
     const path = searchParams.get("path")
 
     const allCarData = useStore((state) => state.allCar.data)
-    const myBooking = useStore((state) => state.myBooking)
+    const myBooking = useStore((state) => state.myBooking.data)
     const setMyBooking = useStore((state) => state.setMyBooking)
-    const { getAllBookingFunctionOutUseEffect } = useBooking()
 
     const [currentCar, setCurrentCar] = useState([])
     const [newBooking, setNewBooking] = useState({})
     const [dateTimeShow, setDateTimeShow] = useState(init)
     const [valueInputTime, setValueInputTime] = useState({})
-    const [newArr, SetNewArr] = useState([])
+    const [newArr, setNewArr] = useState([])
 
     const date = Date()
     const currentTime = dayjs(date).toISOString()
@@ -50,10 +47,9 @@ export default function EditBookingFrom() {
         const getBooking = async () => {
             const booking = await bookingApi.getBookingById(bookingId)
             setNewBooking(booking.data)
-            SetNewArr([...myBooking])
+            setNewArr([...myBooking])
         }
         getBooking()
-
     }, [])
 
     useEffect(() => {
@@ -70,9 +66,6 @@ export default function EditBookingFrom() {
         const dayD = dayjs(`${dropOff}`).get("date")
         const monthD = dayjs(`${dropOff}`).get("month")
         const yearD = dayjs(`${dropOff}`).get("year")
-
-
-
 
         setDateTimeShow({
             ...dateTimeShow, yearDropOff: yearD, monthDropOff: monthD,
@@ -128,9 +121,6 @@ export default function EditBookingFrom() {
             setMyBooking([...newArr])
         }
 
-        if (path === "/allBooking") {
-            getAllBookingFunctionOutUseEffect()
-        }
         navigate(`${path}`)
     }
 

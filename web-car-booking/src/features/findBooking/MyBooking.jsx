@@ -1,7 +1,6 @@
 import BookingCard from "./BookingCard"
-import bookingApi from "../../apis/booking-api"
 import { useStore } from "../../store/useStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import Spinner from "../../components/Spiner"
 
@@ -9,18 +8,23 @@ export default function MyBooking() {
 
     const { authUser } = useAuth()
 
-    const myBooking = useStore((state) => state.myBooking.data)
-    const setMyBooking = useStore((state) => state.setMyBooking)
     const fetchMybooking = useStore((state) => state.fetchMybooking)
     const myBookingLoading = useStore((state) => state.myBooking.myBookingLoading)
+    const deleteBooking = useStore((state) => state.deleteBooking)
+
+    const [myBooking, setMyBooking] = useState([])
 
     useEffect(() => {
-        fetchMybooking(authUser)
+        const featchBooking = async () => {
+            const dataAllBooking = await fetchMybooking(authUser)
+            setMyBooking(dataAllBooking)
+        }
+        featchBooking()
     }, [authUser])
 
     const handleClikeDelete = async (bookingId) => {
-        const result = await bookingApi.deleteBookingById(bookingId)
-        setMyBooking(myBooking.filter(el => el.id !== result.data.result.id))
+        deleteBooking(bookingId)
+        setMyBooking(myBooking.filter(el => el.id !== bookingId))
     }
 
     if (myBookingLoading) {

@@ -83,9 +83,6 @@ export default function BookingContextProvider({ children }) {
             setBookingFromSelect(dataAllBooking.data.allBooking)
         } catch (error) {
             console.log(error)
-            next(error)
-        } finally {
-            setIsLoadingBooking(false)
         }
     }
 

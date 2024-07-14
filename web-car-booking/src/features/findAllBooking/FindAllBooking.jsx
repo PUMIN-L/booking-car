@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import bookingApi from "../../apis/booking-api"
-import useBooking from "../../hooks/useBooking"
 import BookingCard from "../findBooking/BookingCard"
 import SelectForFindBooking from "./SelectForFindBooking"
 import { useStore } from "../../store/useStore"
@@ -14,26 +12,20 @@ const selectValueInit = {
 
 export default function FindAllBooking() {
 
-
-    const { setAllBooking, bookingFromSelect, setBookingFromSelect, getAllBookingFunctionOutUseEffect } = useBooking()
-    const fetchAllBooking = useStore((state) => state.fetchAllBooking)
     const allBookingLoadings = useStore((state) => state.allBooking.allBookingLoading)
-    const allBooking = useStore((state) => state.allBooking.data)
+    const deleteBooking = useStore((state) => state.deleteBooking)
+    const allBookingStore = useStore((state) => state.allBooking.data)
+
+    const [allBooking, setAllBooking] = useState([])
+    const [bookingFromSelect, setBookingFromSelect] = useState([])
 
     useEffect(() => {
-        fetchAllBooking()
-    }, [])
+        setBookingFromSelect(allBookingStore)
+        setAllBooking(allBookingStore)
+        setBookingFromSelect(allBookingStore)
+    }, [allBookingStore])
 
     const [selectValue, setSelectValue] = useState(selectValueInit)
-
-    useEffect(() => {
-        getAllBookingFunctionOutUseEffect()
-    }, [])
-
-    useEffect(() => {
-        setBookingFromSelect(allBooking)
-    }, [allBooking])
-
 
     useEffect(() => {
 
@@ -94,8 +86,8 @@ export default function FindAllBooking() {
 
 
     const handleClikeDelete = async (bookingId) => {
-        const result = await bookingApi.deleteBookingById(bookingId)
-        setAllBooking(allBooking.filter(el => el.id !== result.data.result.id))
+        deleteBooking(bookingId)
+        setBookingFromSelect(allBooking.filter(el => el.id !== bookingId))
     }
 
     const handelChangeSelectByUserId = (e) => {
@@ -116,8 +108,6 @@ export default function FindAllBooking() {
         if (e.target.value) {
             return setSelectValue({ ...selectValue, valueSelectByCar: +e.target.value })
         }
-
-
         setSelectValue({ ...selectValue, valueSelectByCar: -1 })
     }
 
