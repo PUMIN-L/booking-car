@@ -35,7 +35,6 @@ const router = createBrowserRouter([
             { path: "/adminConfirmBooking", element: <AdminConfirmBooking /> },
             { path: "/payment", element: <PaymentPage /> },
             { path: "/completion", element: <Completion /> },
-
         ]
     },
     {

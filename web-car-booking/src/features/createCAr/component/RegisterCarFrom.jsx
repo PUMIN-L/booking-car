@@ -1,12 +1,10 @@
 import { useRef, useState } from "react";
 import Button from "../../../components/Button";
 import Input from "../../../components/Input";
-import useAuth from "../../../hooks/useAuth";
 import { ImageIcon } from "../../../icons";
 import Select from "../../../components/Select";
 import validatorRegisterCar from "../validator/car-register-validator";
 import { useStore } from "../../../store/useStore";
-import Spinner from "../../../components/Spiner";
 
 export default function RegisterCarFrom() {
 
@@ -30,9 +28,9 @@ export default function RegisterCarFrom() {
 
     }
 
-    const { setIsOpenModal2 } = useAuth()
+
     const setAllCarDataAfterAddNewCar = useStore((state) => state.setAllCarDataAfterAddNewCar)
-    const registerCarLoading = useStore((state) => state.carLoading)
+    const setIsOpenModal2 = useStore((state) => state.setIsOpenModal2)
 
     const fileEl = useRef()
 
@@ -75,9 +73,6 @@ export default function RegisterCarFrom() {
             }, 500)
 
         }
-
-
-
 
     }
 

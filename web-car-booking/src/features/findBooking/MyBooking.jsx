@@ -1,16 +1,15 @@
 import BookingCard from "./BookingCard"
 import { useStore } from "../../store/useStore"
 import { useEffect, useState } from "react"
-import useAuth from "../../hooks/useAuth"
 import Spinner from "../../components/Spiner"
 
 export default function MyBooking() {
 
-    const { authUser } = useAuth()
 
     const fetchMybooking = useStore((state) => state.fetchMybooking)
     const myBookingLoading = useStore((state) => state.myBooking.myBookingLoading)
     const deleteBooking = useStore((state) => state.deleteBooking)
+    const authUser = useStore((state) => state.authUser.data)
 
     const [myBooking, setMyBooking] = useState([])
 

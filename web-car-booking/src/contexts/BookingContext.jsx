@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { STATUS } from "../constants";
-import useAuth from "../hooks/useAuth";
 import bookingApi from "../apis/booking-api";
+import { useStore } from "../store/useStore";
 
 export const BookingContext = createContext()
 
 export default function BookingContextProvider({ children }) {
 
-    const { authUser } = useAuth()
+    const authUser = useStore(state => state.authUser.data)
 
     const dataCreateBookingInit = {
         car_id: 0,

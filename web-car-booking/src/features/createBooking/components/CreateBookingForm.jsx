@@ -4,7 +4,6 @@ import CarCard from "./CarCard";
 import TimeForm from "./TimeForm";
 import carApi from "../../../apis/car-api";
 import { STATUS } from "../../../constants";
-import useAuth from "../../../hooks/useAuth";
 import Button from "../../../components/Button";
 import { useStore } from "../../../store/useStore";
 
@@ -18,9 +17,9 @@ export default function CreateBookingForm() {
     const setDataDateAndTime = useStore((state) => state.setDataDateAndTime)
     const dataCreateBooking = useStore((state) => state.dataCreateBooking)
     const setDataCreateBooking = useStore((state) => state.setDataCreateBooking)
+    const authUser = useStore((state) => state.authUser.data)
 
     const [allCars, setAllCars] = useState()
-    const { authUser } = useAuth()
 
     useEffect(() => {
         setDataCreateBooking({ user_id: authUser?.id, status: STATUS.RESERVED })

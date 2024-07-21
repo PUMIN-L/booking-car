@@ -62,14 +62,9 @@ export default function RegisterForm({ setIsOpenModal2 }) {
         }
 
     }
-
-
-
     useEffect(() => {
         setCorrectValue(false)
     }, [])
-
-
 
     return (
         <>

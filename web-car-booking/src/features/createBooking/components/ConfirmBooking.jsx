@@ -1,13 +1,10 @@
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import Button from "../../../components/Button";
-import useCar from "../../../hooks/useCar";
 import { useEffect, useState } from "react";
-import useBooking from "../../../hooks/useBooking";
 import { MONTH, TIME } from "../../../constants";
 import bookingApi from "../../../apis/booking-api";
 import dayjs from 'dayjs'
 import { useStore } from "../../../store/useStore";
-
 
 const init = {
     dayPickUp: "",
@@ -29,9 +26,12 @@ export default function ConfirmBooking() {
     const pickUp = searchParams.get("pickUp")
     const dropOff = searchParams.get("dropOff")
 
-
     const currentCarStore = useStore((store) => store.currentCar)
-    const { dataCreateBooking, setDataCreateBooking, setMyBooking, myBooking, setDataDateAndTime } = useBooking()
+    const setDataDateAndTime = useStore((state) => state.setDataDateAndTime)
+    const dataCreateBooking = useStore((state) => state.dataCreateBooking)
+    const setDataCreateBooking = useStore((state) => state.setDataCreateBooking)
+    const myBooking = useStore((state) => state.myBooking.data)
+    const setMyBooking = useStore((state) => state.setMyBooking)
 
     const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 

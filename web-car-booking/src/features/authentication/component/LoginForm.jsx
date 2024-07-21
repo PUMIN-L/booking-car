@@ -3,7 +3,7 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import validateLogin from "../validator/login-validate";
 import { useNavigate } from "react-router-dom"
-import useAuth from "../../../hooks/useAuth";
+import { useStore } from "../../../store/useStore";
 
 const inputLoginInit = {
     emailOrMobile: "",
@@ -19,8 +19,7 @@ const errInputLoginInit = {
 export default function LoginForm() {
 
     const navigate = useNavigate()
-
-    const { login } = useAuth()
+    const login = useStore(state => state.login)
 
     const [inputLogin, setInputLogin] = useState(inputLoginInit)
     const [errInputLogin, setErrInputLogin] = useState(errInputLoginInit)

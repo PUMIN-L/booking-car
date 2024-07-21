@@ -36,7 +36,7 @@ export const bookingSlice = (set, get) => ({
     },
 
     setMyBooking: (arr) => {
-        const myBooking = get().myBooking
+        const myBooking = get().myBooking.data
         set((state) => ({ myBooking: { ...state.myBooking, data: [...arr, ...myBooking] } }))
     },
 
