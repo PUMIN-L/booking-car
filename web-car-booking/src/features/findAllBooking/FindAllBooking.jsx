@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import BookingCard from "../findBooking/BookingCard"
 import SelectForFindBooking from "./SelectForFindBooking"
 import { useStore } from "../../store/useStore"
-import Spinner from "../../components/Spiner"
+
 
 const selectValueInit = {
     "valueSelectByUser": -1,
@@ -12,7 +12,7 @@ const selectValueInit = {
 
 export default function FindAllBooking() {
 
-    const allBookingLoadings = useStore((state) => state.allBooking.allBookingLoading)
+
     const deleteBooking = useStore((state) => state.deleteBooking)
     const allBookingStore = useStore((state) => state.allBooking.data)
 
@@ -120,10 +120,6 @@ export default function FindAllBooking() {
         }
 
         setSelectValue({ ...selectValue, valueSelectByStatus: "" })
-    }
-
-    if (allBookingLoadings) {
-        return <Spinner />
     }
 
     return (

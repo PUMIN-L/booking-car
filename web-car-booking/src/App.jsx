@@ -10,11 +10,15 @@ function App() {
   const fetchAllCar = useStore(state => state.fetchAllCar)
   const fetchAllBooking = useStore(state => state.fetchAllBooking)
   const fetchUser = useStore(state => state.fetchUser)
+  const fetchMybooking = useStore(state => state.fetchMybooking)
 
-  const allUserLoading = useStore((state) => state.allUserLoading)
+  const allUserLoading = useStore(state => state.allUserLoading)
   const carLoading = useStore(state => state.carLoading)
   const bookingLoading = useStore(state => state.allBooking.allUserLoading)
   const authUserLoading = useStore(state => state.authUser.authUserLoading)
+  const myBookingLoading = useStore(state => state.myBooking.myBookingLoading)
+
+  const authUser = useStore(state => state.authUser.data)
 
   useEffect(() => {
     fetchUser()
@@ -23,11 +27,16 @@ function App() {
     fetchAllBooking()
   }, [fetchAllUser, fetchAllCar, fetchAllBooking, fetchUser])
 
+  useEffect(() => {
+    fetchMybooking(authUser)
+  }, [authUser])
+
   if (
     allUserLoading ||
     carLoading ||
     bookingLoading ||
-    authUserLoading
+    authUserLoading ||
+    myBookingLoading
   ) {
     return <Spinner />
   }

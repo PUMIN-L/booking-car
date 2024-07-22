@@ -11,11 +11,15 @@ userService.findUserbyMobileOrEmail = (mobileOrEmail) => prisma.users.findFirst(
             { mobile_phone: mobileOrEmail }
         ]
     }
+
 })
 
 userService.findUserById = (id) => prisma.users.findUnique({
     where: {
         id
+    },
+    include: {
+        department: true
     }
 })
 

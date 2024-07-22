@@ -35,14 +35,18 @@ export const bookingSlice = (set, get) => ({
         set(() => ({ dataCreateBooking: { ...dataCreateBooking, ...object } }))
     },
 
-    setMyBooking: (arr) => {
+    setMyBooking: (obj) => {
         const myBooking = get().myBooking.data
-        set((state) => ({ myBooking: { ...state.myBooking, data: [...arr, ...myBooking] } }))
+        set((state) => ({ myBooking: { ...state.myBooking, data: [...myBooking, obj] } }))
+    },
+
+    setMyBookingAfterDeleteBookingAndUpdate: (arr) => {
+        set((state) => ({ myBooking: { ...state.myBooking, data: arr } }))
     },
 
     fetchMybooking: async (authUser) => {
         try {
-            set(() => ({ myBookingLoading: true }))
+            set((state) => ({ myBooking: { ...state.myBooking, myBookingLoading: true } }))
             if (authUser?.id) {
                 const objId = { id: authUser?.id }
                 const myBookingResponse = await bookingApi.getBookingByUserId(objId)
@@ -52,7 +56,7 @@ export const bookingSlice = (set, get) => ({
         } catch (error) {
             console.error(error)
         } finally {
-            set(() => ({ myBookingLoading: false }))
+            set((state) => ({ myBooking: { ...state.myBooking, myBookingLoading: false } }))
         }
     },
 

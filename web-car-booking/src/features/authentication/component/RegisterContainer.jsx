@@ -2,10 +2,12 @@ import { useState } from "react";
 import Button from "../../../components/Button";
 import Modal2 from "../../../components/Modal2";
 import RegisterContainer2 from "../component/RegisterContainer2";
+import { useStore } from "../../../store/useStore";
 
 export default function RegisterContainer() {
 
-    const [isOpenModal2, setIsOpenModal2] = useState(false)
+    const isOpenModal2 = useStore(state => state.isOpenModal2)
+    const setIsOpenModal2 = useStore(state => state.setIsOpenModal2)
 
     return (
         <>

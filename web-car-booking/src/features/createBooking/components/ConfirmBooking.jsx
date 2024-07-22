@@ -32,6 +32,7 @@ export default function ConfirmBooking() {
     const setDataCreateBooking = useStore((state) => state.setDataCreateBooking)
     const myBooking = useStore((state) => state.myBooking.data)
     const setMyBooking = useStore((state) => state.setMyBooking)
+    const setIsShowText = useStore((state) => state.setIsShowText)
 
     const [dateTimeShowConfirm, setDateTimeShowConfirm] = useState(init)
 
@@ -58,18 +59,14 @@ export default function ConfirmBooking() {
     }, [])
 
     const handleClickBookNow = async () => {
-        console.log("dataCreateBooking", dataCreateBooking)
-
         const result = await bookingApi.createBooking(dataCreateBooking)
-        setMyBooking([...myBooking, result.data.result])
-
-        setDataDateAndTime(prev => ({
-            ...prev, timeDropOff: "", date_pick_up: "",
+        setMyBooking(result.data.result)
+        setDataDateAndTime({
+            timeDropOff: "", date_pick_up: "",
             date_drop_off: "", datePickUp: "", timePickUp: "", dateDropOff: ""
-        }))
-
+        })
+        setIsShowText(false)
         setDataCreateBooking({ ...dataCreateBooking, date_pick_up: "", date_drop_off: "" })
-
         navigate("/myBooking")
     }
 

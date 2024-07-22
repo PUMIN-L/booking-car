@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import { lazy } from "react"
 
 import RedirectIfLogged from "../features/authentication/component/RedirectIfLogged"
 import ProtectedRoute from "../features/authentication/component/ProtectRoute"
@@ -13,14 +12,7 @@ import FindAllBooking from "../features/findAllBooking/FindAllBooking"
 import AdminConfirmBooking from "../features/adminConfirmBooking/AdminConfirmBooking"
 import Completion from "../features/payment/Completion"
 import PaymentPage from "../pages/PaymentPage"
-
-
-// const MainContainer = lazy(() => import("../layouts/MainContainer"))
-// const LoginPage = lazy(() => import("../pages/LoginPage"))
-// const HomePage = lazy(() => import("../pages/HomePage"))
-// const ProtectedRoute = lazy(() => import("../features/authentication/component/ProtectRoute"))
-// const RedirectIfLogged = lazy(() => import("../features/authentication/component/RedirectIfLogged"))
-
+import Profile from "../pages/Profile"
 
 const router = createBrowserRouter([
     {
@@ -35,6 +27,7 @@ const router = createBrowserRouter([
             { path: "/adminConfirmBooking", element: <AdminConfirmBooking /> },
             { path: "/payment", element: <PaymentPage /> },
             { path: "/completion", element: <Completion /> },
+            { path: "/:prevPath/profile", element: <Profile /> },
         ]
     },
     {

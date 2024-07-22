@@ -8,9 +8,7 @@ export default function ProtectedRoute({ children }) {
     const authUserLoading = useStore((state) => state.authUser.authUserLoading)
 
     if (!authUser && !authUserLoading) {
-        setTimeout(() => {
-            return < Navigate to="/login" />
-        }, 0)
+        return < Navigate to="/login" />
     }
 
     return (

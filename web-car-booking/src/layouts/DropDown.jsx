@@ -30,7 +30,6 @@ export default function Dropdown() {
         setTimeout(() => {
             setOpenDropDown(true)
         }, 100)
-
     }, [openDropDown])
 
     const handleClickToHome = () => {
@@ -49,15 +48,23 @@ export default function Dropdown() {
         navigate("/allBooking")
     }
 
-    const handleClickConfirmBooking = () => {
+    const handleOnClickProfile = () => {
         setOpenDropDown(false)
-        navigate("/adminConfirmBooking")
+        if (window.location.pathname === "/") {
+            return navigate(`home/profile`)
+        }
+        navigate(`${window.location.pathname}/profile`)
     }
 
-    const handleClickPayment = () => {
-        setOpenDropDown(false)
-        navigate("/payment")
-    }
+    // const handleClickConfirmBooking = () => {
+    //     setOpenDropDown(false)
+    //     navigate("/adminConfirmBooking")
+    // }
+
+    // const handleClickPayment = () => {
+    //     setOpenDropDown(false)
+    //     navigate("/payment")
+    // }
 
     return (
         <>
@@ -70,7 +77,7 @@ export default function Dropdown() {
                     </div>
                 </div>
                 {openDropDown ? <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                    <li>
+                    <li onClick={handleOnClickProfile}>
                         <a className="justify-between">
                             Profile
                         </a>
@@ -79,9 +86,9 @@ export default function Dropdown() {
                     <li onClick={handleClickToMyBooking}><a>My booking</a></li>
                     {authUser?.is_admin ? <li onClick={() => setIsOpenModal2(true)}><a>Register Car</a></li> : null}
                     {authUser?.is_admin ? <li onClick={handleClickToAllBooking}><a>All Booking</a></li> : null}
-                    {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null}
-                    <li onClick={handleClickPayment} ><a>Payment</a></li>
-                    <li><a>Edit profile</a></li>
+                    {/* {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null} */}
+                    {/* <li onClick={handleClickPayment} ><a>Payment</a></li> */}
+                    {/* <li><a>Edit profile</a></li> */}
 
                     <li onClick={handleClickLogout} ><a>Logout</a></li>
 

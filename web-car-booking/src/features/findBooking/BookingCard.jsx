@@ -22,7 +22,6 @@ function BookingCard({ el, handleClikeDelete, path }) {
 
     const navigate = useNavigate()
 
-
     const allCarDataStore = useStore((state) => state.allCar.data)
     const allUserStore = useStore((state) => state.allUser.data)
 

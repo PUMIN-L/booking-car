@@ -15,8 +15,6 @@ const authenticate = async (req, res, next) => {
         const accessToken = authentication.split(" ")[1]
         const payload = jwtService.verify(accessToken)
 
-        console.log(payload)
-
         const user = await userService.findUserById(payload.id)
 
         if (!user) {

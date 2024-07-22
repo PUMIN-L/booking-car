@@ -32,7 +32,7 @@ export default function EditBookingFrom() {
 
     const allCarData = useStore((state) => state.allCar.data)
     const myBooking = useStore((state) => state.myBooking.data)
-    const setMyBooking = useStore((state) => state.setMyBooking)
+    const setMyBookingAfterDeleteBookingAndUpdate = useStore((state) => state.setMyBookingAfterDeleteBookingAndUpdate)
 
     const [currentCar, setCurrentCar] = useState([])
     const [newBooking, setNewBooking] = useState({})
@@ -118,7 +118,7 @@ export default function EditBookingFrom() {
         if (path === "/myBooking") {
             const numberListOfArrInMyBooking = myBooking.findIndex(el => el.id === result.data.result.id)
             newArr[numberListOfArrInMyBooking] = result.data.result
-            setMyBooking([...newArr])
+            setMyBookingAfterDeleteBookingAndUpdate([...newArr])
         }
 
         navigate(`${path}`)
