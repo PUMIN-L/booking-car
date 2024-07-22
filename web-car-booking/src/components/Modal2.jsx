@@ -1,7 +1,13 @@
 import { useState } from "react"
+import { useStore } from "../store/useStore"
 
-export default function Modal2({ isOpenModal2, setIsOpenModal2, children, isShowBackButton = true,
+export default function Modal2({ children, isShowBackButton = true,
     title = "", bgColor = "gray", y = "mt-[-2.2rem]", x = "ml-[-5rem]" }) {
+
+
+    const setIsOpenModal2 = useStore((state) => state.setIsOpenModal2)
+    const isOpenModal2 = useStore((state) => state.isOpenModal2)
+
 
     const [showBackButton, setShowBackButton] = useState(isShowBackButton)
 
@@ -10,15 +16,8 @@ export default function Modal2({ isOpenModal2, setIsOpenModal2, children, isShow
         none: ""
     }
 
-    const axisY = {
-        y
-    }
-    const axisX = {
-        x
-    }
-
-
-
+    const axisY = { y }
+    const axisX = { x }
 
     return (
         <>

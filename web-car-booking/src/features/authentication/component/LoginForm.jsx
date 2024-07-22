@@ -3,10 +3,7 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import validateLogin from "../validator/login-validate";
 import { useNavigate } from "react-router-dom"
-import useAuth from "../../../hooks/useAuth";
-import useCar from "../../../hooks/useCar";
-import carApi from "../../../apis/car-api";
-
+import { useStore } from "../../../store/useStore";
 
 const inputLoginInit = {
     emailOrMobile: "",
@@ -22,16 +19,13 @@ const errInputLoginInit = {
 export default function LoginForm() {
 
     const navigate = useNavigate()
-
-    const { login } = useAuth()
-    const { setAllCarData } = useCar()
+    const login = useStore(state => state.login)
 
     const [inputLogin, setInputLogin] = useState(inputLoginInit)
     const [errInputLogin, setErrInputLogin] = useState(errInputLoginInit)
 
     const handalInputLogin = (e) => {
         setInputLogin({ ...inputLogin, [e.target.name]: e.target.value })
-
     }
 
     const handalSubmit = async (e) => {
@@ -43,10 +37,6 @@ export default function LoginForm() {
             }
             setErrInputLogin(errInputLoginInit)
             await login(inputLogin)
-            const gatAllCarData = await carApi.getAllCar()
-            if (gatAllCarData) {
-                setAllCarData(gatAllCarData.data.result)
-            }
             navigate("/")
         } catch (error) {
             console.log(error)

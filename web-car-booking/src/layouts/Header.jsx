@@ -1,10 +1,12 @@
-import useAuth from "../hooks/useAuth";
+
+import { useStore } from "../store/useStore";
 import Dropdown from "./DropDown";
 
 
 export default function Header() {
 
-    const { authUser, logout } = useAuth()
+
+    const authUser = useStore((state) => state.authUser.data)
 
     return (
         <div className="navbar bg-neutral shadow-lg ">

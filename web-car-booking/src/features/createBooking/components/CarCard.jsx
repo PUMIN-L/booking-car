@@ -1,26 +1,23 @@
-import { Link, useNavigate } from "react-router-dom"
-import useCar from "../../../hooks/useCar"
-import useBooking from "../../../hooks/useBooking"
+import { useNavigate } from "react-router-dom"
 import { GEAR } from "../../../constants"
+import { useStore } from "../../../store/useStore"
 
 export default function CarCard({ el }) {
 
     const navigate = useNavigate()
-    const { } = useCar()
 
-    const { dataCreateBooking } = useBooking()
+    const dataCreateBooking = useStore((state) => state.dataCreateBooking)
+    const setCurrentCar = useStore((state) => state.getCatById)
 
-
-    const img_car = `http://localhost:8288/${el.img_car}`
+    const img_car = `${import.meta.env.VITE_API_URL}/${el.img_car}`
 
     const handleOnClickCard = () => {
-        console.log(dataCreateBooking.date_pick_up)
         if (!dataCreateBooking.date_pick_up || !dataCreateBooking.date_drop_off) {
             return alert("ERROR !! You have to search available car first")
         }
+        setCurrentCar(el.id)
         navigate(`/createBooking/${el.id}/?pickUp=${dataCreateBooking.date_pick_up}&dropOff=${dataCreateBooking.date_drop_off}`)
     }
-
 
     return (
 

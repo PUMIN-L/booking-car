@@ -1,11 +1,10 @@
-import useCar from "../../hooks/useCar"
-import useUser from "../../hooks/useUser"
+import { useStore } from "../../store/useStore"
 
 
 export default function SelectForFindBooking({ nameSelect, onChange, w }) {
 
-    const { allUser } = useUser()
-    const { allCarData } = useCar()
+    const allUserStore = useStore(state => state.allUser.data)
+    const allCarData = useStore((state) => state.allCar.data)
 
     const width = {
         "16rem": "min-w-[16rem]"
@@ -24,8 +23,14 @@ export default function SelectForFindBooking({ nameSelect, onChange, w }) {
                     className=""
                 >{nameSelect}</option>
 
-                {nameSelect === "Select By User" ? allUser.map(user => <option key={user.id}
-                    value={user.id}>{user.first_name}</option>) : null}
+                {nameSelect === "Select By User" ? allUserStore.map(user => {
+
+                    if (user.id !== 12) {
+                        return <option key={user.id}
+                            value={user.id}>{user.first_name}</option>
+                    }
+
+                }) : null}
 
                 {nameSelect === "Select By Car" ? allCarData.map(car => <option key={car.id}
                     value={car.id}>{`${car.brand} ${car.model} ${car.license_plate}`}</option>) : null}
@@ -40,7 +45,6 @@ export default function SelectForFindBooking({ nameSelect, onChange, w }) {
                 ) : null}
 
                 Select Status
-
             </select>
         </div>
     )

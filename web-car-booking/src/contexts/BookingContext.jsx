@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import { STATUS } from "../constants";
-import useAuth from "../hooks/useAuth";
 import bookingApi from "../apis/booking-api";
+import { useStore } from "../store/useStore";
 
 export const BookingContext = createContext()
 
 export default function BookingContextProvider({ children }) {
 
-    const { authUser } = useAuth()
+    const authUser = useStore(state => state.authUser.data)
 
     const dataCreateBookingInit = {
         car_id: 0,
@@ -17,6 +17,7 @@ export default function BookingContextProvider({ children }) {
         date_drop_off: "",
     }
 
+
     const dataDateAndTimeInit = {
         datePickUp: "",
         timePickUp: "",
@@ -24,15 +25,15 @@ export default function BookingContextProvider({ children }) {
         timeDropOff: ""
     }
 
-
     const [dataCreateBookingLoading, setDataCreateBookingLoading] = useState(false)
     const [dataCreateBooking, setDataCreateBooking] = useState(dataCreateBookingInit)
     const [myBooking, setMyBooking] = useState([])
     const [dataDateAndTime, setDataDateAndTime] = useState(dataDateAndTimeInit)
-    const [allBooking, setAllBooking] = useState([])
-    const [isLoadingBooking, setIsLoadingBooking] = useState(true)
+    const [allBooking, setAllBooking] = useState([]) //
+    const [isLoadingBooking, setIsLoadingBooking] = useState(true) // 2
     const [bookingFromSelect, setBookingFromSelect] = useState([])
     const [isShowText, setIsShowText] = useState()
+
 
     useEffect(() => {
         const saveUserDatatoBooking = async () => {
@@ -56,9 +57,7 @@ export default function BookingContextProvider({ children }) {
                 setMyBooking(myBooking.data.myBooking)
             }
         }
-
         getBookingByUserId()
-
     }, [authUser])
 
     useEffect(() => {
@@ -69,7 +68,7 @@ export default function BookingContextProvider({ children }) {
                 setBookingFromSelect(dataAllBooking.data.allBooking)
             } catch (error) {
                 console.log(error)
-                next(error)
+
             } finally {
                 setIsLoadingBooking(false)
             }
@@ -84,9 +83,6 @@ export default function BookingContextProvider({ children }) {
             setBookingFromSelect(dataAllBooking.data.allBooking)
         } catch (error) {
             console.log(error)
-            next(error)
-        } finally {
-            setIsLoadingBooking(false)
         }
     }
 

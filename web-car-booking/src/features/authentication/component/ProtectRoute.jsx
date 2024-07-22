@@ -1,25 +1,21 @@
 import Spinner from "../../../components/Spiner";
-import useAuth from "../../../hooks/useAuth";
 import { Navigate } from "react-router-dom"
-import useCar from "../../../hooks/useCar";
+import { useStore } from "../../../store/useStore";
 
 export default function ProtectedRoute({ children }) {
-    const { authUser, isAuthUserLoading } = useAuth()
-    // const { isLoadingCar } = useCar()
 
+    const authUser = useStore((state) => state.authUser.data)
+    const authUserLoading = useStore((state) => state.authUser.authUserLoading)
 
-    if (!authUser && !isAuthUserLoading) {
-        return <Navigate to="/login" />
+    if (!authUser && !authUserLoading) {
+        return < Navigate to="/login" />
     }
 
     return (
         <>
-            {/* {isLoadingCar && <Spinner />} */}
-            {isAuthUserLoading && <Spinner />}
-
+            {authUserLoading && <Spinner />}
             {children}
         </>
-
     )
 
 }
