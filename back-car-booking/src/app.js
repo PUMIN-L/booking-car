@@ -11,7 +11,6 @@ const userRouter = require("./routes/user-route")
 const departmentRouter = require("./routes/department-route")
 const stripeRouter = require("./routes/stripe-route")
 
-
 const app = express()
 app.use(cors())
 

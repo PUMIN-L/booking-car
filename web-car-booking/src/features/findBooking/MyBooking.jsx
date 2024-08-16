@@ -1,15 +1,17 @@
 import BookingCard from "./BookingCard"
 import { useStore } from "../../store/useStore"
 
-
 export default function MyBooking() {
 
     const deleteBooking = useStore((state) => state.deleteBooking)
     const myBooking = useStore((state) => state.myBooking.data)
+    const allBooking = useStore((state) => state.allBooking.data)
     const setMyBookingAfterDeleteBookingAndUpdate = useStore((state) => state.setMyBookingAfterDeleteBookingAndUpdate)
+    const setAllBookingAfterDeleteBookingAndUpdate = useStore((state) => state.setAllBookingAfterDeleteBookingAndUpdate)
     const handleClikeDelete = async (bookingId) => {
         deleteBooking(bookingId)
         setMyBookingAfterDeleteBookingAndUpdate(myBooking.filter(el => el.id !== bookingId))
+        setAllBookingAfterDeleteBookingAndUpdate(allBooking.filter(el => el.id !== bookingId))
     }
 
     return (

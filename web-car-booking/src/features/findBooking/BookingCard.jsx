@@ -18,7 +18,7 @@ const init = {
     timeDropOff: "",
 }
 
-function BookingCard({ el, handleClikeDelete, path }) {
+function BookingCard({ el, handleClikeDelete, path, confirmStatus = "no", handleClickConfirm }) {
 
     const navigate = useNavigate()
 
@@ -59,9 +59,7 @@ function BookingCard({ el, handleClikeDelete, path }) {
 
     const handleClickEdit = (el) => {
         navigate(`/myBooking/editMyBooking/${el.id}?pickUp=${el.date_pick_up}&dropOff=${el.date_drop_off}&carId=${el.car_id}&path=${path}`)
-
     }
-
 
     return (
         <div
@@ -104,10 +102,12 @@ function BookingCard({ el, handleClikeDelete, path }) {
             <div className=" min-w-[12rem] p-2 mr-5 flex flex-col gap-2 my-2 ">
                 <h2 className="text-2xl font-bold text-neutral-content">Status</h2>
                 <h2 className="text-2xl font-bold text-neutral-content">{el.status}</h2>
-                <div className="flex gap-2">
+                <div className="flex gap-2 ">
 
                     {el.date_drop_off < currentTime ? <Button text="View" color="green" onClick={() => handleClickEdit(el)} /> :
-                        <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />}
+                        confirmStatus === "no" && <Button text="Edit" color="green" onClick={() => handleClickEdit(el)} />}
+
+                    {confirmStatus === "yes" && <Button text="Confirm" color="green" onClick={() => handleClickConfirm(el.id)} />}
 
                     {path === "/myBooking" && el.date_drop_off < currentTime ? null :
                         <Button text="Delete" color="red" onClick={() => handleClikeDelete(el.id)} />}

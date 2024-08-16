@@ -14,7 +14,10 @@ export default function FindAllBooking() {
 
 
     const deleteBooking = useStore((state) => state.deleteBooking)
+    const fetchAllBooking = useStore((state) => state.fetchAllBooking)
     const allBookingStore = useStore((state) => state.allBooking.data)
+    const myBooking = useStore((state) => state.myBooking.data)
+    const setMyBookingAfterDeleteBookingAndUpdate = useStore((state) => state.setMyBookingAfterDeleteBookingAndUpdate)
 
     const [allBooking, setAllBooking] = useState([])
     const [bookingFromSelect, setBookingFromSelect] = useState([])
@@ -23,6 +26,7 @@ export default function FindAllBooking() {
         setBookingFromSelect(allBookingStore)
         setAllBooking(allBookingStore)
         setBookingFromSelect(allBookingStore)
+        fetchAllBooking()
     }, [allBookingStore])
 
     const [selectValue, setSelectValue] = useState(selectValueInit)
@@ -88,6 +92,7 @@ export default function FindAllBooking() {
     const handleClikeDelete = async (bookingId) => {
         deleteBooking(bookingId)
         setBookingFromSelect(allBooking.filter(el => el.id !== bookingId))
+        setMyBookingAfterDeleteBookingAndUpdate(myBooking.filter(el => el.id !== bookingId))
     }
 
     const handelChangeSelectByUserId = (e) => {

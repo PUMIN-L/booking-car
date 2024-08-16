@@ -15,7 +15,6 @@ carController.registerCar = async (req, res, next) => {
         }
         data = { ...data, ...req.body }
         data.type_id = +data.type_id
-        console.log(data)
         const dataNewCar = await carService.createCar(data)
         res.status(200).json({ message: "test ok", dataNewCar })
     } catch (error) {

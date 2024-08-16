@@ -56,10 +56,10 @@ export default function Dropdown() {
         navigate(`${window.location.pathname}/profile`)
     }
 
-    // const handleClickConfirmBooking = () => {
-    //     setOpenDropDown(false)
-    //     navigate("/adminConfirmBooking")
-    // }
+    const handleClickConfirmBooking = () => {
+        setOpenDropDown(false)
+        navigate("/adminConfirmBooking")
+    }
 
     // const handleClickPayment = () => {
     //     setOpenDropDown(false)
@@ -86,7 +86,7 @@ export default function Dropdown() {
                     <li onClick={handleClickToMyBooking}><a>My booking</a></li>
                     {authUser?.is_admin ? <li onClick={() => setIsOpenModal2(true)}><a>Register Car</a></li> : null}
                     {authUser?.is_admin ? <li onClick={handleClickToAllBooking}><a>All Booking</a></li> : null}
-                    {/* {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null} */}
+                    {authUser?.is_admin ? <li onClick={handleClickConfirmBooking}><a>Confirm Booking</a></li> : null}
                     {/* <li onClick={handleClickPayment} ><a>Payment</a></li> */}
                     {/* <li><a>Edit profile</a></li> */}
 

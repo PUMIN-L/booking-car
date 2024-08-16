@@ -22,7 +22,7 @@ export default function CreateBookingForm() {
     const [allCars, setAllCars] = useState()
 
     useEffect(() => {
-        setDataCreateBooking({ user_id: authUser?.id, status: STATUS.RESERVED })
+        setDataCreateBooking({ user_id: authUser?.id, status: STATUS.PANDING })
     }, [authUser])
 
     useEffect(() => {

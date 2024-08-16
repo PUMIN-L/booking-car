@@ -60,6 +60,7 @@ export default function ConfirmBooking() {
 
     const handleClickBookNow = async () => {
         const result = await bookingApi.createBooking(dataCreateBooking)
+        //
         setMyBooking(result.data.result)
         setDataDateAndTime({
             timeDropOff: "", date_pick_up: "",

@@ -24,26 +24,6 @@ export const bookingSlice = (set, get) => ({
             set((state) => ({ allBooking: { ...state.allBooking, allBookingLoading: false } }))
         }
     },
-
-    setDataDateAndTime: (keyAndValueObject) => {
-        const dataDateAndTime = get().dataDateAndTime
-        set(() => ({ dataDateAndTime: { ...dataDateAndTime, ...keyAndValueObject } }))
-    },
-
-    setDataCreateBooking: (object) => {
-        const dataCreateBooking = get().dataCreateBooking
-        set(() => ({ dataCreateBooking: { ...dataCreateBooking, ...object } }))
-    },
-
-    setMyBooking: (obj) => {
-        const myBooking = get().myBooking.data
-        set((state) => ({ myBooking: { ...state.myBooking, data: [...myBooking, obj] } }))
-    },
-
-    setMyBookingAfterDeleteBookingAndUpdate: (arr) => {
-        set((state) => ({ myBooking: { ...state.myBooking, data: arr } }))
-    },
-
     fetchMybooking: async (authUser) => {
         try {
             set((state) => ({ myBooking: { ...state.myBooking, myBookingLoading: true } }))
@@ -60,12 +40,70 @@ export const bookingSlice = (set, get) => ({
         }
     },
 
+    setDataDateAndTime: (keyAndValueObject) => {
+        const dataDateAndTime = get().dataDateAndTime
+        set(() => ({ dataDateAndTime: { ...dataDateAndTime, ...keyAndValueObject } }))
+    },
+
+    setDataCreateBooking: (object) => {
+        const dataCreateBooking = get().dataCreateBooking
+        set(() => ({ dataCreateBooking: { ...dataCreateBooking, ...object } }))
+    },
+    //
+    setMyBooking: (obj) => {
+        const myBooking = get().myBooking.data
+        const allBooking = get().allBooking.data
+        set((state) => ({ myBooking: { ...state.myBooking, data: [...myBooking, obj] } }))
+        set((state) => ({ allBooking: { ...state.allBooking, data: [...allBooking, obj] } }))
+    },
+
+    setMyBookingAfterConfirm: (index, newObj) => {
+        const myBooking = get().myBooking.data
+        const myBookingClone = myBooking
+        myBookingClone[index] = newObj
+        set((state) => ({ myBooking: { ...state.myBooking, data: myBookingClone } }))
+    },
+
+    setMyBookingAfterDeleteBookingAndUpdate: (arr) => {
+        set((state) => ({ myBooking: { ...state.myBooking, data: arr } }))
+    },
+
+    setAllBookingAfterDeleteBookingAndUpdate: (arr) => {
+        set((state) => ({ allBooking: { ...state.allBooking, data: arr } }))
+    },
+
+
+
+
     deleteBooking: async (bookingId) => {
         try {
             set(() => ({ bookingLoading: true }))
             const result = await bookingApi.deleteBookingById(bookingId)
             const { data } = get().allBooking
             set((state) => ({ allBooking: { ...state.allBooking, data: data.filter(el => el.id !== result.data.result.id) } }))
+        } catch (error) {
+            console.error(error)
+        } finally {
+            set(() => ({ bookingLoading: false }))
+        }
+    },
+
+    getBookingById: async (bookingId) => {
+        try {
+            set(() => ({ bookingLoading: true }))
+            const booking = await bookingApi.getBookingById(bookingId)
+            return booking.data
+        } catch (error) {
+            console.error(error)
+        } finally {
+            set(() => ({ bookingLoading: false }))
+        }
+    },
+
+    updateBooking: async (dataUpdate) => {
+        try {
+            set(() => ({ bookingLoading: true }))
+            await bookingApi.updateBooking(dataUpdate)
         } catch (error) {
             console.error(error)
         } finally {
