@@ -2,7 +2,7 @@ import authApi from "../../apis/aut-api"
 import { getAccessToken, removeAccessToken, setAccessToken } from "../../utils/local-storage"
 
 export const authSlice = (set) => ({
-    authUser: { data: null, error: null, authUserLoading: false },
+    authUser: { data: null, error: null, authUserLoading: true },
     isOpenModal2: false,
 
 
