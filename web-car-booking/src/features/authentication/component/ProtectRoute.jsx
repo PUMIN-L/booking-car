@@ -11,6 +11,12 @@ export default function ProtectedRoute({ children }) {
         return < Navigate to="/login" />
     }
 
+
+    // const { authUser, isAuthUserLoading } = useAuth()
+
+    // if (!authUser && !isAuthUserLoading) {
+    //     return <Navigate to="/login" />
+    // }
     return (
         <>
             {authUserLoading && <Spinner />}

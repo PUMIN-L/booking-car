@@ -17,7 +17,7 @@ import Profile from "../pages/Profile"
 const router = createBrowserRouter([
     {
         path: "/",
-        element: (<ProtectedRoute><MainContainer /></ProtectedRoute>),
+        element: <ProtectedRoute><MainContainer /></ProtectedRoute>,
         children: [
             { path: "/", element: <HomePage /> },
             { path: "/createBooking/:carId", element: <ConfirmBooking /> },

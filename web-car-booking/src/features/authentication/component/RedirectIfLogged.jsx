@@ -18,6 +18,4 @@ export default function RedirectIfLogged({ children }) {
             {children}
         </>
     )
-
-
 }
